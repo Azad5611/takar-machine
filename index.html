@@ -249,6 +249,23 @@ function render() {
  });
 }
 
+const expenseCategories = [
+  ["Eating and Other Bills", "🍽️"],
+  ["মোবাইল রিচার্জ", "📲"],
+  ["Send to home", "🏡"],
+  ["Personal Expenses", "👤"],
+  ["Hair Cutting", "💈"],
+  ["কসমেটিকস", "💄"],
+  ["Shopping", "🛍️"],
+  ["বাজার খরচ", "🥬"]
+];
+
+const incomeCategories = [
+  ["Salary", "💰"],
+  ["Before Month Cash", "🪙"],
+  ["Eating Bill", "🍛"]
+];
+  
 function showForm(type) {
   kind = type;
   $("formCard").hidden = false;
