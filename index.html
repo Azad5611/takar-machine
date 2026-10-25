@@ -356,6 +356,48 @@ document.querySelectorAll("nav button").forEach(button=>{
  });
 });
 render();
+  const budgetKey = "takarBudgets";
+
+function loadBudgets() {
+  const budgets = JSON.parse(localStorage.getItem(budgetKey) || "{}");
+  const category = document.getElementById("budgetCategory");
+  const list = document.getElementById("budgetList");
+
+  if (!category || !list) return;
+
+  category.innerHTML = incomeCategories.length
+    ? expenseCategories.map(([name, icon]) =>
+        `<option value="${name}">${icon} ${name}</option>`
+      ).join("")
+    : "";
+
+  list.innerHTML = Object.entries(budgets).map(([name, limit]) => `
+    <div class="transaction">
+      <strong>${name}</strong>
+      <span>Monthly limit: SAR ${Number(limit).toFixed(2)}</span>
+    </div>
+  `).join("") || "<p>No budgets added yet.</p>";
+}
+
+document.getElementById("saveBudget")?.addEventListener("click", () => {
+  const category = document.getElementById("budgetCategory").value;
+  const limit = Number(document.getElementById("budgetLimit").value);
+
+  if (!category || !Number.isFinite(limit) || limit <= 0) {
+    alert("Enter a valid monthly budget.");
+    return;
+  }
+
+  const budgets = JSON.parse(localStorage.getItem(budgetKey) || "{}");
+  budgets[category] = limit;
+  localStorage.setItem(budgetKey, JSON.stringify(budgets));
+
+  document.getElementById("budgetLimit").value = "";
+  loadBudgets();
+  alert("Budget saved!");
+});
+
+loadBudgets();
 </script>                                                            
 </body>
 </html>
