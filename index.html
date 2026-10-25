@@ -346,6 +346,26 @@ function showBudget() {
   loadBudgets();
                                                              }
 
+function openProfileMenu(menu) {
+  if (menu === "budget") {
+    document.querySelectorAll("section").forEach(s => s.hidden = true);
+    document.getElementById("budgetPage").hidden = false;
+    loadBudgets();
+    document.querySelectorAll("nav button").forEach(b =>
+      b.classList.remove("active")
+    );
+    return;
+  }
+
+  if (menu === "wallet") {
+    alert("Wallet menu is coming soon.");
+  } else if (menu === "pin") {
+    alert("PIN Security is coming soon.");
+  } else if (menu === "savings") {
+    alert("Savings Planning is coming soon.");
+  }
+    }
+  
 function goHome() {
   $("home").hidden = false;
   $("otherPage").hidden = true;
