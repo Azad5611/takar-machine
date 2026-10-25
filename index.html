@@ -153,6 +153,21 @@ footer { text-align:center; color:var(--muted); font-size:12px; padding:18px 0; 
       <p id="pageDescription">Your recorded money activity will appear here.</p>
       <button class="primary" onclick="goHome()" id="homeButton">Back to home</button>
     </div>
+    <section id="budgetPage" hidden>
+  <div class="card">
+    <h2>Monthly Budget</h2>
+    <label for="budgetCategory">Expense category</label>
+    <select id="budgetCategory"></select>
+    <label for="budgetLimit">Monthly limit (SAR)</label>
+    <input id="budgetLimit" type="number" min="0.01"
+      step="0.01" placeholder="Enter budget" />
+    <button class="primary" id="saveBudget">Save budget</button>
+  </div>
+  <div class="card">
+    <h2>Your budgets</h2>
+    <div id="budgetList"></div>
+  </div>
+    </section>
   </section>
   <footer id="footerText">Takar Machine · Your personal money journal</footer>
 </main>
@@ -341,6 +356,6 @@ document.querySelectorAll("nav button").forEach(button=>{
  });
 });
 render();
-</script>                                                              </script
+</script>                                                            
 </body>
 </html>
