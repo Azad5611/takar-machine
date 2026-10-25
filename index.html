@@ -320,7 +320,9 @@ function showBudget() {
                                                              }
 
 function goHome() {
- $("home").hidden=false; $("otherPage").hidden=true;
+  $("home").hidden = false;
+  $("otherPage").hidden = true;
+  $("budgetPage").hidden = true;
 }
 $("entryForm").addEventListener("submit",event=>{
  event.preventDefault();
@@ -348,20 +350,43 @@ $("language").addEventListener("click",()=>{
  lang=lang==="en"?"bn":"en";
  localStorage.setItem("tm-language",lang); render();
 });
-document.querySelectorAll("nav button").forEach(button=>{
- button.addEventListener("click",()=>{
-  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-  button.classList.add("active");
-  const page=button.dataset.page;
-  if(page==="home") {goHome();return;}
-  $("home").hidden=true; $("otherPage").hidden=false;
-  const names={transactions:translations[lang].money,
-   budgets:translations[lang].budget,savings:translations[lang].savings,
-   settings:translations[lang].settings};
-  $("pageTitle").textContent=names[page];
-  $("pageDescription").textContent=page==="transactions"?
-   translations[lang].recent:"This section will be built in a later step.";
- });
+document.querySelectorAll("nav button").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll("nav button").forEach(b =>
+      b.classList.remove("active")
+    );
+    button.classList.add("active");
+
+    const page = button.dataset.page;
+
+    if (page === "home") {
+      goHome();
+      return;
+    }
+
+    $("home").hidden = true;
+    $("otherPage").hidden = true;
+    $("budgetPage").hidden = true;
+
+    if (page === "budgets") {
+      showBudget();
+      return;
+    }
+
+    $("otherPage").hidden = false;
+
+    const names = {
+      transactions: translations[lang].money,
+      savings: translations[lang].savings,
+      settings: translations[lang].settings
+    };
+
+    $("pageTitle").textContent = names[page] || "Takar Machine";
+    $("pageDescription").textContent =
+      page === "transactions"
+        ? translations[lang].recent
+        : "This section will be built in a later step.";
+  });
 });
 render();
   const budgetKey = "takarBudgets";
