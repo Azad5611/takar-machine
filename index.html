@@ -385,12 +385,20 @@ document.querySelectorAll("nav button").forEach(button => {
     );
     button.classList.add("active");
 
-    const page = button.dataset.page;
+        const page = button.dataset.page;
+
+    if (page === "profile") {
+      $("home").hidden = true;
+      $("otherPage").hidden = true;
+      $("budgetPage").hidden = true;
+      $("profilePage").hidden = false;
+      return;
+    }
 
     if (page === "home") {
       goHome();
       return;
-    }
+   }
 
     $("home").hidden = true;
     $("otherPage").hidden = true;
