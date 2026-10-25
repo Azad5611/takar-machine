@@ -147,13 +147,16 @@ footer { text-align:center; color:var(--muted); font-size:12px; padding:18px 0; 
     </div>
   </section>
 
-  <section id="otherPage" hidden>
-    <div class="card">
-      <h2 id="pageTitle">Transactions</h2>
-      <p id="pageDescription">Your recorded money activity will appear here.</p>
-      <button class="primary" onclick="goHome()" id="homeButton">Back to home</button>
-    </div>
-    <section id="budgetPage" hidden>
+  
+<section id="otherPage" hidden>
+  <div class="card">
+    <h2 id="pageTitle">Transactions</h2>
+    <p id="pageDescription">Your recorded money activity will appear here.</p>
+    <button class="primary" onclick="goHome()" id="homeButton">Back to home</button>
+  </div>
+</section>
+
+<section id="budgetPage" hidden>
   <div class="card">
     <h2>Monthly Budget</h2>
     <label for="budgetCategory">Expense category</label>
@@ -167,11 +170,10 @@ footer { text-align:center; color:var(--muted); font-size:12px; padding:18px 0; 
     <h2>Your budgets</h2>
     <div id="budgetList"></div>
   </div>
-    </section>
-  </section>
-  <footer id="footerText">Takar Machine · Your personal money journal</footer>
-</main>
+</section>
 
+<footer id="footerText">Takar Machine · Your personal money journal</footer>
+</main>
 <nav>
   <button class="active" data-page="home"><span>⌂</span><b data-en="Home" data-bn="হোম">Home</b></button>
   <button data-page="transactions"><span>▤</span><b data-en="Money" data-bn="আয়-ব্যয়">Money</b></button>
