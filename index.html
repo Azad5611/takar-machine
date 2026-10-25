@@ -249,6 +249,7 @@ function render() {
    row.append(left,right); $("transactions").append(row);
  });
 }
+
 function showForm(type) {
   kind = type;
   $("formCard").hidden = false;
@@ -258,22 +259,27 @@ function showForm(type) {
     : translations[lang].addExpense;
 
   const category = $("entryCategory");
-  const options = category.querySelectorAll("optgroup");
+  const categories = type === "income"
+    ? incomeCategories
+    : expenseCategories;
 
-  options.forEach(group => {
-    group.hidden = type === "income"
-      ? group.label !== "Income"
-      : group.label !== "Expense";
+  category.replaceChildren();
+
+  categories.forEach(([name, icon]) => {
+    const option = document.createElement("option");
+    option.value = name;
+    option.textContent = `${icon} ${name}`;
+    category.appendChild(option);
   });
 
-  category.value = type === "income"
-    ? "Salary"
-    : "Eating and Other Bills";
+  category.selectedIndex = 0;
 
   $("formCard").scrollIntoView({
     behavior: "smooth",
     block: "center"
   });
+}
+
 }
 function goHome() {
  $("home").hidden=false; $("otherPage").hidden=true;
