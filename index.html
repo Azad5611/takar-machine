@@ -391,6 +391,7 @@ document.querySelectorAll("nav button").forEach(button => {
 render();
   const budgetKey = "takarBudgets";
 
+
 function loadBudgets() {
   const budgets = JSON.parse(localStorage.getItem(budgetKey) || "{}");
   const category = document.getElementById("budgetCategory");
@@ -398,11 +399,9 @@ function loadBudgets() {
 
   if (!category || !list) return;
 
-  category.innerHTML = incomeCategories.length
-    ? expenseCategories.map(([name, icon]) =>
-        `<option value="${name}">${icon} ${name}</option>`
-      ).join("")
-    : "";
+  category.innerHTML = expenseCategories.map(([name, icon]) =>
+    `<option value="${name}">${icon} ${name}</option>`
+  ).join("");
 
   list.innerHTML = Object.entries(budgets).map(([name, limit]) => `
     <div class="transaction">
@@ -411,6 +410,7 @@ function loadBudgets() {
     </div>
   `).join("") || "<p>No budgets added yet.</p>";
 }
+
 
 document.getElementById("saveBudget")?.addEventListener("click", () => {
   const category = document.getElementById("budgetCategory").value;
