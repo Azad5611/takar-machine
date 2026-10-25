@@ -309,6 +309,11 @@ function showForm(type) {
     behavior: "smooth",
     block: "center"
   });
+  function showBudget() {
+  document.querySelectorAll("section").forEach(s => s.hidden = true);
+  document.getElementById("budgetPage").hidden = false;
+  loadBudgets();
+  }
 }
 
 function goHome() {
