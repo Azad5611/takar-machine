@@ -249,11 +249,31 @@ function render() {
  });
 }
 function showForm(type) {
- kind=type; $("formCard").hidden=false;
- $("formTitle").textContent=type==="income"?
-  translations[lang].addIncome:translations[lang].addExpense;
- $("entryCategory").value=type==="income"?"Salary":"Food";
- $("formCard").scrollIntoView({behavior:"smooth",block:"center"});
+  kind = type;
+  $("formCard").hidden = false;
+
+  $("formTitle").textContent = type === "income"
+    ? translations[lang].addIncome
+    : translations[lang].addExpense;
+
+  const category = $("entryCategory");
+  const options = category.querySelectorAll("optgroup");
+
+  options.forEach(group => {
+    group.hidden = type === "income"
+      ? group.label !== "Income"
+      : group.label !== "Expense";
+  });
+
+  category.value = type === "income"
+    ? "Salary"
+    : "Eating and Other Bills";
+
+  $("formCard").scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
 }
 function goHome() {
  $("home").hidden=false; $("otherPage").hidden=true;
