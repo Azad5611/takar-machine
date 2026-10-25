@@ -118,7 +118,7 @@ footer { text-align:center; color:var(--muted); font-size:12px; padding:18px 0; 
         <label id="amountLabel" for="entryAmount">Amount (SAR)</label>
         <input id="entryAmount" type="number" min="0.01" max="1000000000"
           step="0.01" required inputmode="decimal" placeholder="0.00">
-        <label id="categoryLabel" for="entryCategory">
+        <label id="categoryLabel" for="entryCategory">Category</label>
         
 <select id="entryCategory">
   <optgroup label="Expense">
@@ -137,8 +137,7 @@ footer { text-align:center; color:var(--muted); font-size:12px; padding:18px 0; 
     <option value="Eating Bill">🍛 Eating Bill</option>
   </optgroup>
 </select>
-      </label>
-
+    
         <button class="primary" id="saveButton" type="submit">Save transaction</button>
       </form>
     </div>
