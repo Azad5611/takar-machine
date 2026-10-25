@@ -171,10 +171,37 @@ footer { text-align:center; color:var(--muted); font-size:12px; padding:18px 0; 
     <div id="budgetList"></div>
   </div>
 </section>
-
+<section id="profilePage" hidden>
+  <h2 style="margin: 10px 5px 20px;">প্রোফাইল</h2>  <div class="card" style="display:flex;align-items:center;gap:15px;">
+    <div style="width:80px;height:80px;border-radius:50%;background:#9224aa;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold;">
+      AA
+    </div>
+    <div>
+      <h2 style="margin:0 0 5px;">Azad ali</h2>
+      <div style="color:#77717e;">My Account</div>
+      <small>Personal money manager</small>
+    </div>
+  </div>  <button class="card" onclick="openProfileMenu('wallet')" style="width:100%;text-align:left;border:1px solid #eee8f0;">
+    👛 <strong>আমার ওয়ালেট</strong>
+    <br><small>View your wallet and balance</small>
+  </button>  <button class="card" onclick="openProfileMenu('pin')" style="width:100%;text-align:left;border:1px solid #eee8f0;">
+    🔐 <strong>PIN Security</strong>
+    <br><small>Protect your account</small>
+  </button>  <button class="card" onclick="openProfileMenu('budget')" style="width:100%;text-align:left;border:1px solid #eee8f0;">
+    🟠 <strong>বাজেট পরিকল্পনা</strong>
+    <br><small>মাসিক বাজেট তৈরি ও ট্র্যাক করুন</small>
+  </button>  <button class="card" onclick="openProfileMenu('savings')" style="width:100%;text-align:left;border:1px solid #eee8f0;">
+    🎯 <strong>সঞ্চয় পরিকল্পনা</strong>
+    <br><small>সঞ্চয়ের লক্ষ্য তৈরি ও ট্র্যাক করুন</small>
+  </button>
+</section>
 <footer id="footerText">Takar Machine · Your personal money journal</footer>
 </main>
 <nav>
+  <button data-page="profile">
+  <span>👤</span>
+  <b>Profile</b>
+  </button>
   <button class="active" data-page="home"><span>⌂</span><b data-en="Home" data-bn="হোম">Home</b></button>
   <button data-page="transactions"><span>▤</span><b data-en="Money" data-bn="আয়-ব্যয়">Money</b></button>
   <button data-page="budgets"><span>▦</span><b data-en="Budget" data-bn="বাজেট">Budget</b></button>
