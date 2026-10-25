@@ -304,16 +304,17 @@ function showForm(type) {
   });
 
   category.selectedIndex = 0;
-
   $("formCard").scrollIntoView({
     behavior: "smooth",
     block: "center"
   });
-  function showBudget() {
-  document.querySelectorAll("section").forEach(s => s.hidden = true);
-  document.getElementById("budgetPage").hidden = false;
+}
+
+function showBudget() {
+  $("home").hidden = true;
+  $("otherPage").hidden = true;
+  $("budgetPage").hidden = false;
   loadBudgets();
-  }
 }
 
 function goHome() {
