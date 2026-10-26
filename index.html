@@ -502,24 +502,20 @@ function openProfileMenu(menu) {
 
   if (menu === "wallet") {
   document.querySelectorAll("section").forEach(s => s.hidden = true);
-
   $("walletPage").hidden = false;
+  updateWalletSummary();
 
-  $("walletBalance").textContent = money(
-    transactions.reduce((sum, t) =>
-      sum + (t.type === "income" ? t.amount : -t.amount), 0)
-  );
-
-  $("walletIncome").textContent = money(
-    transactions.filter(t => t.type === "income")
-      .reduce((sum, t) => sum + t.amount, 0)
-  );
-
-  $("walletExpenses").textContent = money(
-    transactions.filter(t => t.type === "expense")
-      .reduce((sum, t) => sum + t.amount, 0)
-  );
-
+  const list = $("walletList");
+  list.innerHTML = `
+    <div class="wallet-card">
+      <div class="wallet-card-icon">💳</div>
+      <div class="wallet-card-info">
+        <strong>My Wallet</strong>
+        <small>Available balance</small>
+      </div>
+      <div class="wallet-card-balance">${$("walletTotal").textContent}</div>
+    </div>
+  `;
   return;
   } else if (menu === "pin") {
     alert("PIN Security is coming soon.");
