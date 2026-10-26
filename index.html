@@ -1,717 +1,465 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#9224aa">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#9224aa">
 <title>Takar Machine</title>
 <style>
-:root {
-  --purple:#9224aa; --green:#16845b; --red:#d95360;
-  --bg:#f8f6fa; --card:#fff; --text:#292431; --muted:#77717e;
-}
-* { box-sizing:border-box; }
-body {
-  margin:0; font-family:system-ui,Arial,sans-serif;
-  background:var(--bg); color:var(--text);
-}
-header {
-  background:var(--purple); color:white;
-  padding:24px 18px 28px; border-radius:0 0 24px 24px;
-}
-.top { display:flex; align-items:center; justify-content:space-between; }
-h1 { font-size:25px; margin:0; }
-button,select,input { font:inherit; }
-button { cursor:pointer; }
-.lang {
-  color:white; background:#ffffff20; border:1px solid #ffffff80;
-  padding:8px 12px; border-radius:12px;
-}
-main { max-width:650px; margin:auto; padding:18px 15px 100px; }
-.label { font-size:13px; color:var(--muted); }
-.balance { font-size:32px; font-weight:750; margin:5px 0 18px; }
-.cards { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.card {
-  background:var(--card); border:1px solid #eee8f0;
-  border-radius:18px; padding:16px; margin-bottom:14px;
-  box-shadow:0 2px 8px #33204408;
-}
-.metric { font-size:20px; font-weight:700; margin-top:8px; }
-.green { color:var(--green); } .red { color:var(--red); }
-h2 { font-size:18px; margin:4px 0 14px; }
-.actions { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.action {
-  border:0; border-radius:13px; padding:13px 5px;
-  font-weight:650; background:#f0e2f4; color:var(--purple);
-}
-.action.expense { background:#fce9eb; color:var(--red); }
-.transaction {
-  display:flex; align-items:center; justify-content:space-between;
-  gap:10px; padding:13px 0; border-bottom:1px solid #eee9f0;
-}
-.transaction:last-child { border-bottom:0; }
-.name { font-weight:650; overflow-wrap:anywhere; }
-small { color:var(--muted); }
-nav {
-  position:fixed; bottom:0; left:0; right:0;
-  display:flex; justify-content:space-around; gap:3px;
-  background:#fffffffa; border-top:1px solid #eee8f0;
-  padding:10px 4px max(10px,env(safe-area-inset-bottom));
-}
-nav button {
-  flex:1; border:0; background:none; color:var(--muted);
-  padding:7px 0; font-size:12px; border-radius:10px;
-}
-nav button.active { color:var(--purple); background:#f5e9f8; }
-nav span { display:block; font-size:20px; margin-bottom:3px; }
-input,select {
-  width:100%; padding:12px; margin:6px 0 12px;
-  border:1px solid #d9d2dd; border-radius:10px; background:white;
-}
-.primary {
-  width:100%; background:var(--purple); color:white; border:0;
-  border-radius:12px; padding:13px; font-weight:700;
-}
-.empty { color:var(--muted); padding:15px 0; text-align:center; }
-footer { text-align:center; color:var(--muted); font-size:12px; padding:18px 0; }
-[hidden] { display:none !important; }
-  
-/* Wallet design */
-.wallet-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 24px;
-}
-.wallet-header h2 {
-  flex: 1;
-  margin: 0;
-  font-size: 21px;
-}
-.wallet-back, .wallet-icon {
-  border: 0;
-  background: transparent;
-  font-size: 24px;
-  padding: 5px;
-}
-.wallet-total {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  padding: 22px 14px;
-  background: white;
-  border: 1px solid #e5e1e6;
-  border-radius: 20px;
-  margin-bottom: 22px;
-}
-.wallet-total strong {
-  display: block;
-  font-size: 22px;
-  margin-top: 8px;
-}
-.wallet-count {
-  color: #77717e;
-  white-space: nowrap;
-}
-.wallet-actions {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
-  margin-bottom: 35px;
-}
-.wallet-actions button {
-  background: white;
-  border: 1px solid #e5e1e6;
-  border-radius: 18px;
-  min-height: 125px;
-  padding: 10px 3px;
-  font-size: 12px;
-}
-.wallet-action-icon {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 12px;
-  border: 1px solid #8bc6ef;
-  border-radius: 50%;
-  font-size: 27px;
-}
-.wallet-action-icon.add { color: #50ad5e; border-color: #9bd1a5; }
-.wallet-action-icon.transfer { color: #efa93f; border-color: #f3c779; }
-.wallet-action-icon.create { color: #2695e4; }
-.wallet-section-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  font-size: 19px;
-}
-.wallet-section-title span {
-  flex: 1;
-  height: 1px;
-  background: #e5e1e6;
-}
-.wallet-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 17px 12px;
-  margin-bottom: 15px;
-  background: white;
-  border: 1px solid #e5e1e6;
-  border-radius: 20px;
-}
-.wallet-card-icon {
-  font-size: 28px;
-  padding: 12px;
-  background: #e8f4fd;
-  border-radius: 15px;
-}
-.wallet-card-info { flex: 1; min-width: 0; }
-.wallet-card-info small { display: block; margin-top: 6px; }
-.wallet-card-balance { font-weight: bold; white-space: nowrap; }
-.wallet-menu {
-  border: 0;
-  background: transparent;
-  font-size: 22px;
-}
-  
+:root{--purple:#9224aa;--theme-color:#9224aa;--green:#16845b;--red:#d95360;--bg:#f8f6fa;--card:#fff;--text:#292431;--muted:#77717e}*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}header{background:var(--purple);color:white;padding:24px 18px 28px;border-radius:0 0 24px 24px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:25px;margin:0}button,select,input{font:inherit}button{cursor:pointer}.lang{color:white;background:#ffffff20;border:1px solid #ffffff80;padding:8px 12px;border-radius:12px}main{max-width:650px;margin:auto;padding:18px 15px 100px}.label{font-size:13px;color:var(--muted)}.balance{font-size:32px;font-weight:750;margin:5px 0 18px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{background:var(--card);border:1px solid #eee8f0;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px #33204408}.metric{font-size:20px;font-weight:700;margin-top:8px}.green{color:var(--green)}.red{color:var(--red)}h2{font-size:18px;margin:4px 0 14px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}.action{border:0;border-radius:13px;padding:13px 5px;font-weight:650;background:#f0e2f4;color:var(--purple)}.action.expense{background:#fce9eb;color:var(--red)}.transaction{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid #eee9f0}.transaction:last-child{border-bottom:0}.name{font-weight:650;overflow-wrap:anywhere}small{color:var(--muted)}nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;gap:3px;background:#fffffffa;border-top:1px solid #eee8f0;padding:10px 4px max(10px,env(safe-area-inset-bottom));z-index:5}nav button{flex:1;border:0;background:none;color:var(--muted);padding:7px 0;font-size:12px;border-radius:10px}nav button.active{color:var(--purple);background:#f5e9f8}nav span{display:block;font-size:20px;margin-bottom:3px}input,select{width:100%;padding:12px;margin:6px 0 12px;border:1px solid #d9d2dd;border-radius:10px;background:white}.primary{width:100%;background:var(--purple);color:white;border:0;border-radius:12px;padding:13px;font-weight:700}.empty{color:var(--muted);padding:15px 0;text-align:center}footer{text-align:center;color:var(--muted);font-size:12px;padding:18px 0}[hidden]{display:none!important}
+.wallet-header{display:flex;align-items:center;gap:10px;margin-bottom:24px}.wallet-header h2{flex:1;margin:0;font-size:21px}.wallet-back,.wallet-icon{border:0;background:transparent;font-size:24px;padding:5px}.wallet-total{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:22px 14px;background:white;border:1px solid #e5e1e6;border-radius:20px;margin-bottom:22px}.wallet-total strong{display:block;font-size:22px;margin-top:8px}.wallet-count{color:#77717e;white-space:nowrap}.wallet-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:35px}.wallet-actions button{background:white;border:1px solid #e5e1e6;border-radius:18px;min-height:125px;padding:10px 3px;font-size:12px}.wallet-action-icon{display:grid;place-items:center;width:48px;height:48px;margin:0 auto 12px;border:1px solid #8bc6ef;border-radius:50%;font-size:27px}.wallet-action-icon.add{color:#50ad5e;border-color:#9bd1a5}.wallet-action-icon.transfer{color:#efa93f;border-color:#f3c779}.wallet-action-icon.create{color:#2695e4}.wallet-section-title{display:flex;align-items:center;gap:10px;margin-bottom:20px;font-size:19px}.wallet-section-title span{flex:1;height:1px;background:#e5e1e6}.wallet-card{display:flex;align-items:center;gap:12px;padding:17px 12px;margin-bottom:15px;background:white;border:1px solid #e5e1e6;border-radius:20px}.wallet-card-icon{font-size:28px;padding:12px;background:#e8f4fd;border-radius:15px}.wallet-card-info{flex:1;min-width:0}.wallet-card-info small{display:block;margin-top:6px}.wallet-card-balance{font-weight:bold;white-space:nowrap}.wallet-menu{border:0;background:transparent;font-size:22px}.secondary{width:100%;padding:11px;border:1px solid #ddd2e2;border-radius:10px;background:#fff;color:var(--purple);font-weight:650}.profile-menu{width:100%;text-align:left;border:1px solid #eee8f0;display:block}.form-row{margin-bottom:8px}.form-row label{font-size:14px}
+
+.report-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.report-tabs button,.theme-choice{border:1px solid #ddd2e2;background:#fff;border-radius:10px;padding:10px;color:var(--text)}
+.report-tabs button.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.report-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.report-summary .card{margin-bottom:0}
+.theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:12px 0}
+.theme-choice{display:flex;align-items:center;gap:8px;text-align:left}
+.theme-dot{width:20px;height:20px;border-radius:50%;display:inline-block;flex-shrink:0;border:1px solid #0002}
+.theme-choice.active{outline:2px solid var(--purple);outline-offset:1px}
+.date-range{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 </style>
-</head>
-<body>
-<header>
-  <div class="top">
-    <div>
-      <h1>💜 Takar Machine</h1>
-      <p id="welcome">Your money, under control.</p>
-    </div>
-    <button class="lang" id="language">বাংলা</button>
-  </div>
-  <div class="label" id="balanceLabel" style="color:#f5e9f8">TOTAL BALANCE · SAR</div>
-  <div class="balance" id="balance">0.00</div>
-  <small id="currencyHint" style="color:#f5e9f8">Main currency: SAR</small>
-</header>
-
+</head><body>
+<header><div class="top"><div><h1>💜 Takar Machine</h1><p id="welcome">Your money, under control.</p></div><button class="lang" id="language">বাংলা</button></div><div class="label" id="balanceLabel" style="color:#f5e9f8">TOTAL BALANCE · SAR</div><div class="balance" id="balance">0.00</div><small id="currencyHint" style="color:#f5e9f8">Main currency: SAR</small></header>
 <main>
-  <section id="home">
-    <div class="cards">
-      <div class="card">
-        <div class="label" id="incomeLabel">Total income</div>
-        <div class="metric green" id="income">0.00</div>
-      </div>
-      <div class="card">
-        <div class="label" id="expenseLabel">Total expenses</div>
-        <div class="metric red" id="expenses">0.00</div>
-      </div>
-    </div>
-    <div class="card">
-      <h2 id="quickTitle">Quick entry</h2>
-      <div class="actions">
-        <button class="action" onclick="showForm('income')" id="addIncome">＋ Income</button>
-        <button class="action expense" onclick="showForm('expense')" id="addExpense">− Expense</button>
-      </div>
-    </div>
-    <div class="card" id="formCard" hidden>
-      <h2 id="formTitle">Add transaction</h2>
-      <form id="entryForm">
-        <label id="nameLabel" for="entryName">Description</label>
-        <input id="entryName" maxlength="100" required placeholder="e.g. Salary or groceries">
-        <label id="amountLabel" for="entryAmount">Amount (SAR)</label>
-        <input id="entryAmount" type="number" min="0.01" max="1000000000"
-          step="0.01" required inputmode="decimal" placeholder="0.00">
-        <label id="categoryLabel" for="entryCategory">Category</label>
-        
-<select id="entryCategory">
-  <optgroup label="Expense">
-    <option value="Eating and Other Bills">🍽️ Eating and Other Bills</option>
-    <option value="মোবাইল রিচার্জ">📲 মোবাইল রিচার্জ</option>
-    <option value="Send to home">🏡 Send to home</option>
-    <option value="Personal Expenses">👤 Personal Expenses</option>
-    <option value="Hair Cutting">💈 Hair Cutting</option>
-    <option value="কসমেটিকস">💄 কসমেটিকস</option>
-    <option value="Shopping">🛍️ Shopping</option>
-    <option value="বাজার খরচ">🥬 বাজার খরচ</option>
-  </optgroup>
-  <optgroup label="Income">
-    <option value="Salary">💰 Salary</option>
-    <option value="Before Month Cash">🪙 Before Month Cash</option>
-    <option value="Eating Bill">🍛 Eating Bill</option>
-  </optgroup>
-</select>
-    
-        <button class="primary" id="saveButton" type="submit">Save transaction</button>
-      </form>
-    </div>
-    <div class="card">
-      <h2 id="recentTitle">Recent transactions</h2>
-      <div id="transactions"></div>
-    </div>
-  </section>
-
-  
-<section id="otherPage" hidden>
+<section id="home"><div class="cards"><div class="card"><div class="label" id="incomeLabel">Total income</div><div class="metric green" id="income">0.00</div></div><div class="card"><div class="label" id="expenseLabel">Total expenses</div><div class="metric red" id="expenses">0.00</div></div></div><div class="card"><h2 id="quickTitle">Quick entry</h2><div class="actions"><button class="action" onclick="showForm('income')" id="addIncome">＋ Income</button><button class="action expense" onclick="showForm('expense')" id="addExpense">− Expense</button></div></div><div class="card" id="formCard" hidden><h2 id="formTitle">Add transaction</h2><form id="entryForm"><label id="nameLabel" for="entryName">Description</label><input id="entryName" maxlength="100" required placeholder="e.g. Salary or groceries"><label id="amountLabel" for="entryAmount">Amount (SAR)</label><input id="entryAmount" type="number" min="0.01" max="1000000000" step="0.01" required inputmode="decimal" placeholder="0.00"><label id="categoryLabel" for="entryCategory">Category</label><select id="entryCategory"></select><label for="entryWallet">Wallet</label><select id="entryWallet"></select><label for="entryDate">Date</label><input id="entryDate" type="date" required><button class="primary" id="saveButton" type="submit">Save transaction</button></form></div><div class="card"><h2 id="recentTitle">Recent transactions</h2><div id="transactions"></div></div></section>
+<section id="otherPage" hidden><div class="card"><h2 id="pageTitle">Transactions</h2><p id="pageDescription">Your recorded money activity will appear here.</p><div id="allTransactions"></div><button class="primary" onclick="showPage('home')" id="homeButton">Back to home</button></div></section>
+<section id="budgetPage" hidden><div class="card"><h2>Monthly Budget</h2><label for="budgetCategory">Expense category</label><select id="budgetCategory"></select><label for="budgetLimit">Monthly limit (SAR)</label><input id="budgetLimit" type="number" min="0.01" step="0.01" placeholder="Enter budget"><button class="primary" id="saveBudget">Save budget</button></div><div class="card"><h2>Your budgets</h2><div id="budgetList"></div></div><button class="secondary" onclick="showPage('profile')">Back to profile</button></section>
+<section id="walletPage" hidden><div class="wallet-header"><button class="wallet-back" onclick="showPage('profile')">←</button><h2>আমার ওয়ালেট</h2><button class="wallet-icon" onclick="alert('Wallets are saved on this device in this version.')" aria-label="Wallet information">ⓘ</button><button class="wallet-icon" onclick="editWallets()" aria-label="Wallet settings">⚙</button></div><div class="wallet-total"><div><span>মোট ব্যালেন্স :</span><strong id="walletTotal">SAR 0.00</strong></div><span class="wallet-count" id="walletCount">0 Wallets</span></div><div class="wallet-actions"><button onclick="addWalletMoney()"><span class="wallet-action-icon add">＋</span>টাকা যোগ করুন</button><button onclick="transferWalletMoney()"><span class="wallet-action-icon transfer">⇄</span>ট্রান্সফার</button><button onclick="createWallet()"><span class="wallet-action-icon create">▱</span>নতুন ওয়ালেট</button></div><div class="wallet-section-title"><span></span><strong>সব ওয়ালেট</strong><span></span></div><div id="walletList"></div></section>
+<section id="profilePage" hidden><h2 style="margin:10px 5px 20px">প্রোফাইল</h2><div class="card" style="display:flex;align-items:center;gap:15px"><div style="width:80px;height:80px;border-radius:50%;background:#9224aa;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold">AA</div><div><h2 style="margin:0 0 5px">Azad ali</h2><div style="color:#77717e">My Account</div><small>Personal money manager</small></div></div><button class="card profile-menu" onclick="openProfileMenu('wallet')">💳 <strong>আমার ওয়ালেট</strong><br><small>View your wallet and balance</small></button><button class="card profile-menu" onclick="openProfileMenu('pin')">🔐 <strong>PIN Security</strong><br><small>Protect your account</small></button><button class="card profile-menu" onclick="openProfileMenu('budget')">🟠 <strong>বাজেট পরিকল্পনা</strong><br><small>মাসিক বাজেট তৈরি ও ট্র্যাক করুন</small></button><button class="card profile-menu" onclick="openProfileMenu('savings')">🎯 <strong>সঞ্চয় পরিকল্পনা</strong><br><small>সঞ্চয়ের লক্ষ্য তৈরি ও ট্র্যাক করুন</small></button></section>
+<section id="savingsPage" hidden><div class="card"><h2>সঞ্চয় পরিকল্পনা</h2><p>Savings planning will be built in a later step.</p><button class="primary" onclick="showPage('home')">Back to home</button></div></section>
+<section id="settingsPage" hidden><div class="card"><h2>Settings</h2><p>Language: <strong id="settingsLanguage">English</strong></p><button class="secondary" onclick="toggleLanguage()">Change language</button><p style="margin-top:16px">Your data in this version is saved in this browser on this device.</p><button class="secondary" onclick="exportData()">Export backup (JSON)</button></div></section>
+<section id="hisabPage" hidden>
   <div class="card">
-    <h2 id="pageTitle">Transactions</h2>
-    <p id="pageDescription">Your recorded money activity will appear here.</p>
-    <button class="primary" onclick="goHome()" id="homeButton">Back to home</button>
-  </div>
-</section>
-
-<section id="budgetPage" hidden>
-  <div class="card">
-    <h2>Monthly Budget</h2>
-    <label for="budgetCategory">Expense category</label>
-    <select id="budgetCategory"></select>
-    <label for="budgetLimit">Monthly limit (SAR)</label>
-    <input id="budgetLimit" type="number" min="0.01"
-      step="0.01" placeholder="Enter budget" />
-    <button class="primary" id="saveBudget">Save budget</button>
-  </div>
-  <div class="card">
-    <h2>Your budgets</h2>
-    <div id="budgetList"></div>
-  </div>
-</section>
-  
-
-<section id="walletPage" hidden>
-  <div class="wallet-header">
-    <button class="wallet-back" onclick="showProfile()">←</button>
-    <h2>আমার ওয়ালেট</h2>
-    <button class="wallet-icon" onclick="alert('Wallet help')">ⓘ</button>
-    <button class="wallet-icon" onclick="alert('Wallet settings')">⚙</button>
-  </div>
-
-  <div class="wallet-total">
-    <div>
-      <span>মোট ব্যালেন্স :</span>
-      <strong id="walletTotal">SAR 0.00</strong>
+    <h2>হিসাবের খাতা · Hisaber Boi</h2>
+    <p>Review income and expenses by day, month, year, or a custom date range.</p>
+    <div class="report-tabs">
+      <button type="button" class="active" data-report="daily" onclick="setReportPeriod('daily')">Daily</button>
+      <button type="button" data-report="monthly" onclick="setReportPeriod('monthly')">Monthly</button>
+      <button type="button" data-report="yearly" onclick="setReportPeriod('yearly')">Yearly</button>
     </div>
-    <span class="wallet-count" id="walletCount">0 Wallets</span>
-  </div>
-
-  <div class="wallet-actions">
-    <button onclick="addWalletMoney()">
-      <span class="wallet-action-icon add">＋</span>
-      টাকা যোগ করুন
-    </button>
-    <button onclick="transferWalletMoney()">
-      <span class="wallet-action-icon transfer">⇄</span>
-      ট্রান্সফার
-    </button>
-    <button onclick="createWallet()">
-      <span class="wallet-action-icon create">▱</span>
-      নতুন ওয়ালেট
-    </button>
-  </div>
-
-  <div class="wallet-section-title">
-    <span></span>
-    <strong>সব ওয়ালেট</strong>
-    <span></span>
-  </div>
-
-  <div id="walletList"></div>
-</section>
-<section id="profilePage" hidden>
-  <h2 style="margin: 10px 5px 20px;">প্রোফাইল</h2>  <div class="card" style="display:flex;align-items:center;gap:15px;">
-    <div style="width:80px;height:80px;border-radius:50%;background:#9224aa;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold;">
-      AA
+    <label for="reportDate">Choose date</label>
+    <input type="date" id="reportDate">
+    <div id="customRange" hidden>
+      <label>Custom date range</label>
+      <div class="date-range">
+        <input type="date" id="reportStart" aria-label="Start date">
+        <input type="date" id="reportEnd" aria-label="End date">
+      </div>
+      <button class="secondary" type="button" onclick="setReportPeriod('custom')">Apply custom range</button>
     </div>
-    <div>
-      <h2 style="margin:0 0 5px;">Azad ali</h2>
-      <div style="color:#77717e;">My Account</div>
-      <small>Personal money manager</small>
-    </div>
-  </div>  <button class="card" onclick="openProfileMenu('wallet')" style="width:100%;text-align:left;border:1px solid #eee8f0;">
-    💳 <strong>আমার ওয়ালেট</strong>
-    <br><small>View your wallet and balance</small>
-  </button>  <button class="card" onclick="openProfileMenu('pin')" style="width:100%;text-align:left;border:1px solid #eee8f0;">
-    🔐 <strong>PIN Security</strong>
-    <br><small>Protect your account</small>
-  </button>  <button class="card" onclick="openProfileMenu('budget')" style="width:100%;text-align:left;border:1px solid #eee8f0;">
-    🟠 <strong>বাজেট পরিকল্পনা</strong>
-    <br><small>মাসিক বাজেট তৈরি ও ট্র্যাক করুন</small>
-  </button>  <button class="card" onclick="openProfileMenu('savings')" style="width:100%;text-align:left;border:1px solid #eee8f0;">
-    🎯 <strong>সঞ্চয় পরিকল্পনা</strong>
-    <br><small>সঞ্চয়ের লক্ষ্য তৈরি ও ট্র্যাক করুন</small>
-  </button>
+    <button class="secondary" type="button" onclick="showCustomRange()">Custom date range</button>
+  </div>
+  <div class="report-summary">
+    <div class="card"><div class="label">Income</div><div class="metric green" id="reportIncome">0.00</div></div>
+    <div class="card"><div class="label">Expenses</div><div class="metric red" id="reportExpenses">0.00</div></div>
+    <div class="card"><div class="label">Net amount</div><div class="metric" id="reportNet">0.00</div></div>
+    <div class="card"><div class="label">Transactions</div><div class="metric" id="reportCount">0</div></div>
+  </div>
+  <div class="card"><h2 id="reportHeading">Today's Hisab</h2><div id="reportTransactions"></div></div>
+  <button class="secondary" type="button" onclick="showPage('profile')">Back to profile</button>
 </section>
-<footer id="footerText">Takar Machine · Your personal money journal</footer>
-</main>
-<nav>
-  <button data-page="profile">
-  <span>👤</span>
-  <b data-en="Profile" data-bn="প্রোফাইল">Profile</b>
-  </button>
-  <button class="active" data-page="home"><span>⌂</span><b data-en="Home" data-bn="হোম">Home</b></button>
-  <button data-page="transactions"><span>▤</span><b data-en="Money" data-bn="আয়-ব্যয়">Money</b></button>
-  <button data-page="savings"><span>◎</span><b data-en="Savings" data-bn="সঞ্চয়">Savings</b></button>
-  <button data-page="settings"><span>⚙</span><b data-en="Settings" data-bn="সেটিংস">Settings</b></button>
-</nav>
-
+<footer id="footerText">Takar Machine · Your personal money journal</footer></main>
+<nav><button data-page="profile"><span>👤</span><b data-en="Profile" data-bn="প্রোফাইল">Profile</b></button><button class="active" data-page="home"><span>⌂</span><b data-en="Home" data-bn="হোম">Home</b></button><button data-page="transactions"><span>▤</span><b data-en="Money" data-bn="আয়-ব্যয়">Money</b></button><button data-page="hisab"><span>📒</span><b data-en="Hisab" data-bn="হিসাব">Hisab</b></button><button data-page="savings"><span>◎</span><b data-en="Savings" data-bn="সঞ্চয়">Savings</b></button><button data-page="settings"><span>⚙</span><b data-en="Settings" data-bn="সেটিংস">Settings</b></button></nav>
 <script>
-const $ = id => document.getElementById(id);
-const translations = {
- en:{
-  welcome:"Your money, under control.",balance:"TOTAL BALANCE",
-  income:"Total income",expenses:"Total expenses",quick:"Quick entry",
-  addIncome:"＋ Income",addExpense:"− Expense",recent:"Recent transactions",
-  name:"Description",amount:"Amount",category:"Category",save:"Save transaction",
-  home:"Home",money:"Money",budget:"Budget",savings:"Savings",settings:"Settings",
-  saved:"Transaction saved.",invalid:"Enter a valid amount.",
-  empty:"No transactions yet. Add your first one!",
-  back:"Back to home",footer:"Takar Machine · Your personal money journal"
- },
- bn:{
-  welcome:"আপনার টাকার হিসাব, আপনার নিয়ন্ত্রণে।",balance:"মোট ব্যালেন্স",
-  income:"মোট আয়",expenses:"মোট ব্যয়",quick:"দ্রুত যোগ করুন",
-  addIncome:"＋ আয়",addExpense:"− ব্যয়",recent:"সাম্প্রতিক লেনদেন",
-  name:"বিবরণ",amount:"পরিমাণ",category:"ক্যাটাগরি",save:"লেনদেন সংরক্ষণ",
-  home:"হোম",money:"আয়-ব্যয়",budget:"বাজেট",savings:"সঞ্চয়",settings:"সেটিংস",
-  saved:"লেনদেন সংরক্ষিত হয়েছে।",invalid:"সঠিক পরিমাণ লিখুন।",
-  empty:"এখনও কোনো লেনদেন নেই। প্রথমটি যোগ করুন!",
-  back:"হোমে ফিরুন",footer:"টাকার মেশিন · আপনার ব্যক্তিগত হিসাব"
- }
+const $=id=>document.getElementById(id);
+const budgetKey='takarBudgets',walletKey='tm-wallets',transferKey='tm-transfers';
+const translations={
+en:{welcome:'Your money, under control.',balance:'TOTAL BALANCE',income:'Total income',expenses:'Total expenses',quick:'Quick entry',addIncome:'＋ Income',addExpense:'− Expense',recent:'Recent transactions',name:'Description',amount:'Amount',category:'Category',save:'Save transaction',money:'Money',saved:'Transaction saved.',invalid:'Enter a valid amount.',empty:'No transactions yet. Add your first one!',back:'Back to home',footer:'Takar Machine · Your personal money journal'},
+bn:{welcome:'আপনার টাকার হিসাব, আপনার নিয়ন্ত্রণে।',balance:'মোট ব্যালেন্স',income:'মোট আয়',expenses:'মোট ব্যয়',quick:'দ্রুত যোগ করুন',addIncome:'＋ আয়',addExpense:'− ব্যয়',recent:'সাম্প্রতিক লেনদেন',name:'বিবরণ',amount:'পরিমাণ',category:'ক্যাটাগরি',save:'লেনদেন সংরক্ষণ',money:'আয়-ব্যয়',saved:'লেনদেন সংরক্ষিত হয়েছে।',invalid:'সঠিক পরিমাণ লিখুন।',empty:'এখনও কোনো লেনদেন নেই। প্রথমটি যোগ করুন!',back:'হোমে ফিরুন',footer:'টাকার মেশিন · আপনার ব্যক্তিগত হিসাব'}
 };
-let lang = localStorage.getItem("tm-language") || "en";
-let kind = "expense";
-let transactions = [];
-try {
- transactions = JSON.parse(localStorage.getItem("tm-transactions") || "[]");
- if (!Array.isArray(transactions)) transactions = [];
-} catch { transactions = []; }
 
-function money(value) {
- return new Intl.NumberFormat(lang === "bn" ? "bn-BD" : "en-US",
-  {minimumFractionDigits:2,maximumFractionDigits:2}).format(value);
+function readArray(key,fallback){
+try{const v=JSON.parse(localStorage.getItem(key)||'null');return Array.isArray(v)?v:fallback}catch{return fallback}
 }
-function render() {
- const t = translations[lang];
- $("welcome").textContent=t.welcome;
- $("balanceLabel").textContent=t.balance+" · SAR";
- $("incomeLabel").textContent=t.income;
- $("expenseLabel").textContent=t.expenses;
- $("quickTitle").textContent=t.quick;
- $("addIncome").textContent=t.addIncome;
- $("addExpense").textContent=t.addExpense;
- $("recentTitle").textContent=t.recent;
- $("nameLabel").textContent=t.name;
- $("amountLabel").textContent=t.amount+" (SAR)";
- $("categoryLabel").textContent=t.category;
- $("saveButton").textContent=t.save;
- $("homeButton").textContent=t.back;
- $("footerText").textContent=t.footer;
- $("language").textContent=lang==="en"?"বাংলা":"English";
- document.documentElement.lang=lang;
- document.documentElement.dir="ltr";
- document.querySelectorAll("nav b").forEach(b=>{
-   b.textContent=b.dataset[lang];
- });
- const inc=transactions.filter(x=>x.type==="income").reduce((s,x)=>s+x.amount,0);
- const exp=transactions.filter(x=>x.type==="expense").reduce((s,x)=>s+x.amount,0);
- $("balance").textContent=money(inc-exp);
- $("income").textContent="+"+money(inc);
- $("expenses").textContent="-"+money(exp);
- $("transactions").innerHTML="";
- if(!transactions.length) {
-   const empty=document.createElement("div");
-   empty.className="empty"; empty.textContent=t.empty;
-   $("transactions").append(empty);
- }
- transactions.slice(0,20).forEach(x=>{
-   const row=document.createElement("div"); row.className="transaction";
-   const left=document.createElement("div");
-   const name=document.createElement("div"); name.className="name";
-   name.textContent=x.name;
-   const detail=document.createElement("small");
-   detail.textContent=x.category+" · "+x.date;
-   left.append(name,detail);
-   const right=document.createElement("strong");
-   right.className=x.type==="income"?"green":"red";
-   right.textContent=(x.type==="income"?"+":"−")+money(x.amount);
-   row.append(left,right); $("transactions").append(row);
- });
+function readObject(key,fallback){
+try{const v=JSON.parse(localStorage.getItem(key)||'null');return v&&typeof v==='object'&&!Array.isArray(v)?v:fallback}catch{return fallback}
+}
+function persist(key,value){
+try{localStorage.setItem(key,JSON.stringify(value));return true}
+catch{alert('Could not save data on this device. Check browser storage.');return false}
 }
 
-const expenseCategories = [
-  ["Eating and Other Bills", "🍽️"],
-  ["মোবাইল রিচার্জ", "📲"],
-  ["Send to home", "🏡"],
-  ["Personal Expenses", "👤"],
-  ["Hair Cutting", "💈"],
-  ["কসমেটিকস", "💄"],
-  ["Shopping", "🛍️"],
-  ["বাজার খরচ", "🥬"]
+let lang=localStorage.getItem('tm-language')||'en';
+let kind='expense';
+let transactions=readArray('tm-transactions',[]);
+let wallets=readArray(walletKey,[
+{id:'cash',name:'Cash',openingBalance:0,icon:'💵'},
+{id:'card',name:'Card',openingBalance:0,icon:'💳'},
+{id:'bank',name:'Own Bank',openingBalance:0,icon:'🏦'}
+]);
+let transfers=readArray(transferKey,[]);
+
+const expenseCategories=[
+['Eating and Other Bills','🍽️'],['মোবাইল রিচার্জ','📲'],
+['Send to home','🏡'],['Personal Expenses','👤'],
+['Hair Cutting','💈'],['কসমেটিকস','💄'],
+['Shopping','🛍️'],['বাজার খরচ','🥬'],
+['Transport','🚌'],['Bills','🧾']
+];
+const incomeCategories=[
+['Salary','💰'],['Before Month Cash','🪙'],
+['Eating Bill','🍛'],['Other Income','➕']
 ];
 
-const incomeCategories = [
-  ["Salary", "💰"],
-  ["Before Month Cash", "🪙"],
-  ["Eating Bill", "🍛"]
+function money(v){
+return new Intl.NumberFormat(lang==='bn'?'bn-BD':'en-US',{
+minimumFractionDigits:2,maximumFractionDigits:2
+}).format(Number(v)||0);
+}
+
+function walletBalance(w){
+return Number(w.openingBalance||0)
++transactions.filter(t=>t.walletId===w.id).reduce((s,t)=>s+(t.type==='income'?Number(t.amount):-Number(t.amount)),0)
++transfers.reduce((s,t)=>s+(t.toWalletId===w.id?Number(t.amount):t.fromWalletId===w.id?-Number(t.amount):0),0);
+}
+
+function totals(){
+const inc=transactions.filter(x=>x.type==='income').reduce((s,x)=>s+Number(x.amount),0);
+const exp=transactions.filter(x=>x.type==='expense').reduce((s,x)=>s+Number(x.amount),0);
+return{inc,exp,bal:wallets.reduce((s,w)=>s+walletBalance(w),0)};
+}
+
+function render(){
+const t=translations[lang];
+$('welcome').textContent=t.welcome;
+$('balanceLabel').textContent=t.balance+' · SAR';
+$('incomeLabel').textContent=t.income;
+$('expenseLabel').textContent=t.expenses;
+$('quickTitle').textContent=t.quick;
+$('addIncome').textContent=t.addIncome;
+$('addExpense').textContent=t.addExpense;
+$('recentTitle').textContent=t.recent;
+$('nameLabel').textContent=t.name;
+$('amountLabel').textContent=t.amount+' (SAR)';
+$('categoryLabel').textContent=t.category;
+$('saveButton').textContent=t.save;
+$('homeButton').textContent=t.back;
+$('footerText').textContent=t.footer;
+$('language').textContent=lang==='en'?'বাংলা':'English';
+$('settingsLanguage').textContent=lang==='en'?'English':'বাংলা';
+document.documentElement.lang=lang;
+document.querySelectorAll('nav b').forEach(b=>b.textContent=b.dataset[lang]);
+const {inc,exp,bal}=totals();
+$('balance').textContent=money(bal);
+$('income').textContent='+'+money(inc);
+$('expenses').textContent='-'+money(exp);
+renderTransactions('transactions',20);
+renderTransactions('allTransactions');
+fillWalletSelect();
+}
+
+function renderTransactions(target,limit){
+const box=$(target);
+if(!box)return;
+box.replaceChildren();
+const arr=transactions.slice(0,limit||transactions.length);
+if(!arr.length){
+const e=document.createElement('div');
+e.className='empty';e.textContent=translations[lang].empty;box.append(e);return;
+}
+arr.forEach(x=>{
+const row=document.createElement('div');row.className='transaction';
+const left=document.createElement('div');
+const name=document.createElement('div');
+const detail=document.createElement('small');
+const right=document.createElement('strong');
+name.className='name';name.textContent=x.name;
+const w=wallets.find(w=>w.id===x.walletId);
+detail.textContent=x.category+' · '+x.date+(w?' · '+w.name:'');
+left.append(name,detail);
+right.className=x.type==='income'?'green':'red';
+right.textContent=(x.type==='income'?'+':'−')+money(x.amount);
+row.append(left,right);box.append(row);
+});
+}
+
+function escapeHtml(s){
+return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function fillWalletSelect(){
+const s=$('entryWallet');if(!s)return;
+const selected=s.value;
+s.innerHTML=wallets.map(w=>`<option value="${escapeHtml(w.id)}">${escapeHtml(w.name)}</option>`).join('');
+if(wallets.some(w=>w.id===selected))s.value=selected;
+}
+
+function showForm(type){
+kind=type;$('formCard').hidden=false;
+$('formTitle').textContent=type==='income'?translations[lang].addIncome:translations[lang].addExpense;
+$('entryCategory').innerHTML=(type==='income'?incomeCategories:expenseCategories).map(([name,icon])=>`<option value="${escapeHtml(name)}">${icon} ${escapeHtml(name)}</option>`).join('');
+$('entryDate').value=isoToday();
+fillWalletSelect();
+$('formCard').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function hideSections(){
+document.querySelectorAll('main section').forEach(s=>s.hidden=true);
+}
+
+function showPage(page){
+hideSections();
+const id=({home:'home',profile:'profilePage',wallet:'walletPage',budget:'budgetPage',transactions:'otherPage',hisab:'hisabPage',savings:'savingsPage',settings:'settingsPage'})[page]||'home';
+$(id).hidden=false;
+document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+if(page==='wallet')renderWallets();
+if(page==='budget')loadBudgets();
+if(page==='transactions'){
+$('pageTitle').textContent=translations[lang].money;
+renderTransactions('allTransactions');
+}
+if(page==='hisab')renderReport();
+window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function openProfileMenu(menu){
+if(menu==='wallet'){showPage('wallet');return;}
+if(menu==='budget'){showPage('budget');return;}
+if(menu==='pin'){alert('PIN Security is coming soon.');return;}
+if(menu==='savings')showPage('savings');
+}
+
+function renderWallets(){
+$('walletTotal').textContent='SAR '+money(wallets.reduce((s,w)=>s+walletBalance(w),0));
+$('walletCount').textContent=wallets.length+' Wallet'+(wallets.length===1?'':'s');
+$('walletList').innerHTML=wallets.map(w=>`<div class="wallet-card"><div class="wallet-card-icon">${w.icon||'💳'}</div><div class="wallet-card-info"><strong>${escapeHtml(w.name)}</strong><small>Balance</small></div><div class="wallet-card-balance">${money(walletBalance(w))}</div><button class="wallet-menu" onclick="walletOptions('${escapeHtml(w.id)}')" aria-label="Wallet options">⋮</button></div>`).join('')||'<p class="empty">No wallets yet. Create one to get started.</p>';
+}
+
+function createWallet(){
+const name=prompt('Enter wallet name (e.g. Cash, Card, STC Bank):');
+if(!name||!name.trim())return;
+if(wallets.some(w=>w.name.toLowerCase()===name.trim().toLowerCase())){alert('A wallet with this name already exists.');return;}
+const raw=prompt('Opening balance in SAR (enter 0 if none):','0');
+if(raw===null)return;
+const openingBalance=Number(raw);
+if(!Number.isFinite(openingBalance)){alert('Enter a valid balance.');return;}
+const icons=['💵','💳','🏦','👛'];
+const next=[...wallets,{id:crypto.randomUUID(),name:name.trim(),openingBalance,icon:icons[wallets.length%icons.length]}];
+if(persist(walletKey,next)){wallets=next;render();renderWallets();}
+}
+
+function walletOptions(id){
+const w=wallets.find(x=>x.id===id);if(!w)return;
+const choice=prompt(`Wallet: ${w.name}\nType 1 to rename, 2 to change opening balance, 3 to delete (only if unused).`);
+if(choice==='1'){
+const name=prompt('New wallet name:',w.name);
+if(name&&name.trim()){w.name=name.trim();persist(walletKey,wallets);renderWallets();fillWalletSelect();}
+}else if(choice==='2'){
+const value=prompt('New opening balance:',String(w.openingBalance||0));
+if(value!==null&&Number.isFinite(Number(value))){w.openingBalance=Number(value);persist(walletKey,wallets);render();renderWallets();}
+}else if(choice==='3'){
+if(transactions.some(t=>t.walletId===id)||transfers.some(t=>t.fromWalletId===id||t.toWalletId===id)){alert('This wallet has records and cannot be deleted.');return;}
+if(confirm(`Delete ${w.name}?`)){wallets=wallets.filter(x=>x.id!==id);persist(walletKey,wallets);render();renderWallets();}
+}
+}
+
+function editWallets(){
+alert('Tap the ⋮ beside a wallet to rename it, edit its opening balance, or delete it if unused.');
+}
+
+function chooseWallet(text){
+const answer=prompt(text,wallets[0]?.id||'');
+return wallets.find(w=>w.id===answer)||null;
+}
+
+function addWalletMoney(){
+if(!wallets.length){createWallet();return;}
+const wallet=chooseWallet('Choose wallet ID:\n'+wallets.map(w=>`${w.id} — ${w.name}`).join('\n'));
+if(!wallet)return;
+const type=prompt('Type income or expense:','income');
+if(!['income','expense'].includes((type||'').toLowerCase()))return;
+const amount=Number(prompt('Amount in SAR:'));
+if(!Number.isFinite(amount)||amount<=0){alert('Enter a valid positive amount.');return;}
+const note=prompt('Description:','Wallet adjustment')||'Wallet adjustment';
+const cats=type.toLowerCase()==='income'?incomeCategories:expenseCategories;
+const record={id:crypto.randomUUID(),type:type.toLowerCase(),name:note,amount,category:cats[0][0],walletId:wallet.id,date:isoToday()};
+if(persist('tm-transactions',[record,...transactions])){transactions.unshift(record);render();renderWallets();}
+}
+
+function transferWalletMoney(){
+if(wallets.length<2){alert('Create at least two wallets before transferring money.');return;}
+const from=chooseWallet('Choose FROM wallet ID:\n'+wallets.map(w=>`${w.id} — ${w.name}`).join('\n'));
+if(!from)return;
+const to=chooseWallet('Choose TO wallet ID:\n'+wallets.filter(w=>w.id!==from.id).map(w=>`${w.id} — ${w.name}`).join('\n'));
+if(!to||to.id===from.id){alert('Choose two different wallets.');return;}
+const amount=Number(prompt('Transfer amount in SAR:'));
+if(!Number.isFinite(amount)||amount<=0){alert('Enter a valid positive amount.');return;}
+if(walletBalance(from)<amount&&!confirm('This transfer exceeds the current wallet balance. Continue?'))return;
+const record={id:crypto.randomUUID(),fromWalletId:from.id,toWalletId:to.id,amount,date:isoToday()};
+if(persist(transferKey,[...transfers,record])){transfers.push(record);render();renderWallets();alert('Transfer saved. It is not counted as income or expense.');}
+}
+
+$('entryForm').addEventListener('submit',e=>{
+e.preventDefault();
+const amount=Number($('entryAmount').value),name=$('entryName').value.trim(),walletId=$('entryWallet').value,date=$('entryDate').value;
+if(!name||!Number.isFinite(amount)||amount<=0||!date){alert(translations[lang].invalid);return;}
+const record={id:crypto.randomUUID(),type:kind,name,amount,category:$('entryCategory').value,walletId,date};
+if(persist('tm-transactions',[record,...transactions])){
+transactions.unshift(record);$('entryForm').reset();$('formCard').hidden=true;render();
+if(!$('walletPage').hidden)renderWallets();
+if(!$('hisabPage').hidden)renderReport();
+}
+});
+
+function toggleLanguage(){
+lang=lang==='en'?'bn':'en';
+localStorage.setItem('tm-language',lang);render();
+if(!$('walletPage').hidden)renderWallets();
+if(!$('hisabPage').hidden)renderReport();
+}
+$('language').addEventListener('click',toggleLanguage);
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+
+function loadBudgets(){
+const budgets=readObject(budgetKey,{});
+$('budgetCategory').innerHTML=expenseCategories.map(([n,i])=>`<option value="${escapeHtml(n)}">${i} ${escapeHtml(n)}</option>`).join('');
+const month=isoToday().slice(0,7);
+$('budgetList').innerHTML=Object.entries(budgets).map(([name,item])=>{
+const amount=typeof item==='number'?item:item.amount;
+const savedMonth=typeof item==='number'?month:item.month;
+const spent=transactions.filter(t=>t.type==='expense'&&t.category===name&&t.date?.slice(0,7)===month).reduce((s,t)=>s+Number(t.amount),0);
+return `<div class="transaction"><div><strong>${escapeHtml(name)}</strong><small style="display:block">${savedMonth===month?'This month':'Budget month: '+savedMonth} · Spent SAR ${money(savedMonth===month?spent:0)}</small></div><strong>SAR ${money(amount)}</strong></div>`;
+}).join('')||'<p class="empty">No budgets added yet.</p>';
+}
+
+$('saveBudget').addEventListener('click',()=>{
+const category=$('budgetCategory').value,limit=Number($('budgetLimit').value);
+if(!category||!Number.isFinite(limit)||limit<=0){alert('Enter a valid monthly budget.');return;}
+const budgets=readObject(budgetKey,{});
+budgets[category]={amount:limit,month:isoToday().slice(0,7)};
+if(persist(budgetKey,budgets)){$('budgetLimit').value='';loadBudgets();alert('Budget saved!');}
+});
+
+function exportData(){
+const data={transactions,wallets,transfers,budgets:readObject(budgetKey,{}),language:lang,theme:localStorage.getItem('tm-theme-color')||'#9224aa'};
+const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+const url=URL.createObjectURL(blob);const a=document.createElement('a');
+a.href=url;a.download='takar-machine-backup.json';a.click();URL.revokeObjectURL(url);
+}
+
+/* Theme Color */
+const themeKey='tm-theme-color';
+const themeOptions=[
+['Purple','#9224aa'],['Blue','#2478d4'],['Green','#16845b'],
+['Red','#d94350'],['Orange','#ed861b'],['Pink','#e64c9b'],
+['Teal','#159e9a'],['Indigo','#4f46c8'],['Black','#25232a'],['Gold','#b8860b']
 ];
-  
-function showForm(type) {
-  kind = type;
-  $("formCard").hidden = false;
 
-  $("formTitle").textContent = type === "income"
-    ? translations[lang].addIncome
-    : translations[lang].addExpense;
-
-  const category = $("entryCategory");
-  const categories = type === "income"
-    ? incomeCategories
-    : expenseCategories;
-
-  category.replaceChildren();
-
-  categories.forEach(([name, icon]) => {
-    const option = document.createElement("option");
-    option.value = name;
-    option.textContent = `${icon} ${name}`;
-    category.appendChild(option);
-  });
-
-  category.selectedIndex = 0;
-
-    $("formCard").scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
-  }
-
-
-function showBudget() {
-  document.querySelectorAll("section").forEach(s => s.hidden = true);
-  document.getElementById("budgetPage").hidden = false;
-  loadBudgets();
+function ensureThemeControls(){
+const settings=$('settingsPage');
+if(!$('themeChoices')){
+const card=settings.querySelector('.card');
+const heading=document.createElement('h3');heading.textContent='🎨 Theme Color';heading.style.marginTop='22px';
+const desc=document.createElement('p');desc.className='label';desc.textContent='Choose a color. Your choice is saved on this device.';
+const grid=document.createElement('div');grid.id='themeChoices';grid.className='theme-grid';
+themeOptions.forEach(([name,color])=>{
+const b=document.createElement('button');b.type='button';b.className='theme-choice';b.dataset.theme=color;
+const dot=document.createElement('span');dot.className='theme-dot';dot.style.background=color;
+b.append(dot,document.createTextNode(name));grid.append(b);
+});
+const label=document.createElement('label');label.htmlFor='customThemeColor';label.textContent='Custom color';
+const picker=document.createElement('input');picker.id='customThemeColor';picker.type='color';picker.value='#9224aa';picker.style.height='48px';picker.style.padding='5px';
+const reset=document.createElement('button');reset.id='resetTheme';reset.type='button';reset.className='secondary';reset.textContent='Reset to default purple';
+card.insertBefore(heading,card.children[2]||null);
+card.insertBefore(desc,card.children[3]||null);
+card.insertBefore(grid,card.children[4]||null);
+card.append(label,picker,reset);
+}
 }
 
-function openProfileMenu(menu) {
-  if (menu === "budget") {
-    document.querySelectorAll("section").forEach(s => s.hidden = true);
-    document.getElementById("budgetPage").hidden = false;
-    loadBudgets();
-
-    document.querySelectorAll("nav button").forEach(b =>
-      b.classList.remove("active")
-    );
-    return;
-  }
-
-  if (menu === "wallet") {
-    document.querySelectorAll("section").forEach(s => s.hidden = true);
-    $("walletPage").hidden = false;
-    updateWalletSummary();
-
-    const wallets = [
-      { name: "Card", balance: -20, icon: "💳" },
-      { name: "STC BANK", balance: 50, icon: "▣" },
-      { name: "Own Bank", balance: 200, icon: "▣" }
-    ];
-
-    $("walletCount").textContent = wallets.length + " Wallets";
-
-    $("walletList").innerHTML = wallets.map(wallet => `
-      <div class="wallet-card">
-        <div class="wallet-card-icon">${wallet.icon}</div>
-        <div class="wallet-card-info">
-          <strong>${wallet.name}</strong>
-          <small>Balance</small>
-        </div>
-        <div class="wallet-card-balance">${money(wallet.balance)}</div>
-      </div>
-    `).join("");
-
-    return;
-  }
-
-  if (menu === "pin") {
-    alert("PIN Security is coming soon.");
-    return;
-  }
-
-  if (menu === "savings") {
-    alert("Savings Planning is coming soon.");
-    return;
-  }
+function applyTheme(color){
+if(!/^#[0-9a-fA-F]{6}$/.test(color))color='#9224aa';
+document.documentElement.style.setProperty('--purple',color);
+const meta=document.querySelector('meta[name="theme-color"]');
+if(meta)meta.setAttribute('content',color);
+localStorage.setItem(themeKey,color);
+const picker=$('customThemeColor');if(picker)picker.value=color;
+document.querySelectorAll('[data-theme]').forEach(b=>b.classList.toggle('active',b.dataset.theme.toLowerCase()===color.toLowerCase()));
+}
+function setupThemes(){
+ensureThemeControls();
+applyTheme(localStorage.getItem(themeKey)||'#9224aa');
+document.querySelectorAll('[data-theme]').forEach(b=>b.addEventListener('click',()=>applyTheme(b.dataset.theme)));
+$('customThemeColor').addEventListener('input',e=>applyTheme(e.target.value));
+$('resetTheme').addEventListener('click',()=>applyTheme('#9224aa'));
 }
 
-function goHome() {
-  $("home").hidden = false;
-  $("otherPage").hidden = true;
-  $("budgetPage").hidden = true;
-  $("profilePage").hidden = true;
-  $("walletPage").hidden = true;
+/* Hisaber Boi reports */
+let reportPeriod='daily';
+let customReportRange=null;
+function isoToday(){return new Date().toISOString().slice(0,10)}
+
+function setReportPeriod(period){
+reportPeriod=period;
+document.querySelectorAll('[data-report]').forEach(b=>b.classList.toggle('active',b.dataset.report===period));
+if(period==='custom'){
+$('customRange').hidden=false;
+}else{
+$('customRange').hidden=true;
+}
+renderReport();
+}
+function showCustomRange(){
+$('customRange').hidden=false;
+reportPeriod='custom';
+document.querySelectorAll('[data-report]').forEach(b=>b.classList.remove('active'));
+}
+function setupReportControls(){
+$('reportDate').value=isoToday();
+$('reportStart').value=isoToday().slice(0,8)+'01';
+$('reportEnd').value=isoToday();
+$('reportDate').addEventListener('change',()=>{customReportRange=null;renderReport()});
+$('reportStart').addEventListener('change',()=>{if(reportPeriod==='custom')renderReport()});
+$('reportEnd').addEventListener('change',()=>{if(reportPeriod==='custom')renderReport()});
+renderReport();
 }
 
-
-$("entryForm").addEventListener("submit",event=>{
- event.preventDefault();
- const amount=Number($("entryAmount").value);
- if(!Number.isFinite(amount)||amount<=0) {
-  alert(translations[lang].invalid); return;
- }
- transactions.unshift({
-  id:crypto.randomUUID(),type:kind,
-  name:$("entryName").value.trim(),
-  amount,category:$("entryCategory").value,
-  date:new Date().toISOString().slice(0,10)
- });
- try {
-  localStorage.setItem("tm-transactions",JSON.stringify(transactions));
- } catch {
-  transactions.shift();
-  alert("Could not save data on this device. Check browser storage.");
-  return;
- }
- $("entryForm").reset(); $("formCard").hidden=true;
- render();
+function renderReport(){
+let from,to,label;
+if(reportPeriod==='custom'){
+from=$('reportStart').value;to=$('reportEnd').value;
+if(!from||!to||from>to){
+$('reportHeading').textContent='Choose a valid date range';
+$('reportTransactions').innerHTML='<p class="empty">Select a start date and end date.</p>';
+return;
+}
+label=from+' → '+to;
+}else if(reportPeriod==='monthly'){
+const d=$('reportDate').value||isoToday();
+from=d.slice(0,7)+'-01';
+const [y,m]=d.slice(0,7).split('-').map(Number);
+to=new Date(y,m,0).toISOString().slice(0,10);
+label=d.slice(0,7);
+}else if(reportPeriod==='yearly'){
+const y=Number(($('reportDate').value||isoToday()).slice(0,4));
+from=y+'-01-01';to=y+'-12-31';label=String(y);
+}else{
+from=to=$('reportDate').value||isoToday();label=from;
+}
+const rows=transactions.filter(t=>t.date>=from&&t.date<=to);
+const income=rows.filter(t=>t.type==='income').reduce((s,t)=>s+Number(t.amount||0),0);
+const expenses=rows.filter(t=>t.type==='expense').reduce((s,t)=>s+Number(t.amount||0),0);
+$('reportIncome').textContent='+'+money(income);
+$('reportExpenses').textContent='−'+money(expenses);
+$('reportNet').textContent=(income-expenses<0?'−':'')+money(Math.abs(income-expenses));
+$('reportCount').textContent=String(rows.length);
+$('reportHeading').textContent=reportPeriod==='daily'?"Today's Hisab":reportPeriod==='monthly'?'Monthly Hisab':reportPeriod==='yearly'?'Yearly Hisab':'Custom Date Hisab';
+const box=$('reportTransactions');box.replaceChildren();
+rows.sort((a,b)=>b.date.localeCompare(a.date)).forEach(t=>{
+const row=document.createElement('div');row.className='transaction';
+const left=document.createElement('div'),name=document.createElement('div'),detail=document.createElement('small'),amount=document.createElement('strong');
+name.className='name';name.textContent=t.name;detail.textContent=`${t.category} · ${t.date}`;
+left.append(name,detail);amount.className=t.type==='income'?'green':'red';
+amount.textContent=(t.type==='income'?'+':'−')+money(t.amount);
+row.append(left,amount);box.append(row);
 });
-$("language").addEventListener("click",()=>{
- lang=lang==="en"?"bn":"en";
- localStorage.setItem("tm-language",lang); render();
-});
-document.querySelectorAll("nav button").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll("nav button").forEach(b =>
-      b.classList.remove("active")
-    );
-    button.classList.add("active");
+if(!rows.length){const e=document.createElement('div');e.className='empty';e.textContent='No transactions recorded for this period.';box.append(e);}
+}
 
-        const page = button.dataset.page;
-
-    if (page === "profile") {
-      $("home").hidden = true;
-      $("otherPage").hidden = true;
-      $("budgetPage").hidden = true;
-      $("profilePage").hidden = false;
-      return;
-    }
-
-    if (page === "home") {
-      goHome();
-      return;
-   }
-
-    $("home").hidden = true;
-    $("otherPage").hidden = true;
-    $("budgetPage").hidden = true;
-
-    if (page === "budgets") {
-      showBudget();
-      return;
-    }
-
-    $("otherPage").hidden = false;
-
-    const names = {
-      transactions: translations[lang].money,
-      savings: translations[lang].savings,
-      settings: translations[lang].settings
-    };
-
-    $("pageTitle").textContent = names[page] || "Takar Machine";
-    $("pageDescription").textContent =
-      page === "transactions"
-        ? translations[lang].recent
-        : "This section will be built in a later step.";
-  });
-});
+setupThemes();
+setupReportControls();
 render();
-  const budgetKey = "takarBudgets";
-
-
-function loadBudgets() {
-  const budgets = JSON.parse(localStorage.getItem(budgetKey) || "{}");
-  const category = document.getElementById("budgetCategory");
-  const list = document.getElementById("budgetList");
-
-  if (!category || !list) return;
-
-  category.innerHTML = expenseCategories.map(([name, icon]) =>
-    `<option value="${name}">${icon} ${name}</option>`
-  ).join("");
-
-  list.innerHTML = Object.entries(budgets).map(([name, limit]) => `
-    <div class="transaction">
-      <strong>${name}</strong>
-      <span>Monthly limit: SAR ${Number(limit).toFixed(2)}</span>
-    </div>
-  `).join("") || "<p>No budgets added yet.</p>";
-}
-
-
-document.getElementById("saveBudget")?.addEventListener("click", () => {
-  const category = document.getElementById("budgetCategory").value;
-  const limit = Number(document.getElementById("budgetLimit").value);
-
-  if (!category || !Number.isFinite(limit) || limit <= 0) {
-    alert("Enter a valid monthly budget.");
-    return;
-  }
-
-  const budgets = JSON.parse(localStorage.getItem(budgetKey) || "{}");
-  budgets[category] = limit;
-  localStorage.setItem(budgetKey, JSON.stringify(budgets));
-
-  document.getElementById("budgetLimit").value = "";
-  loadBudgets();
-  alert("Budget saved!");
-});
-
 loadBudgets();
-  function showProfile() {
-  document.querySelectorAll("section").forEach(s => s.hidden = true);
-  document.getElementById("profilePage").hidden = false;
-}
-
-function updateWalletSummary() {
-  const total = transactions.reduce(
-    (sum, t) => sum + (t.type === "income" ? Number(t.amount) : -Number(t.amount)),
-    0
-  );
-
-  document.getElementById("walletTotal").textContent = money(total);
-  document.getElementById("walletCount").textContent = "1 Wallet";
-
-  const balance = document.querySelector(".wallet-card-balance");
-  if (balance) {
-    balance.textContent = money(total);
-  }
-}
-function addWalletMoney() {
-  const amount = prompt("Enter amount to add:");
-  if (amount === null || amount.trim() === "") return;
-
-  const value = Number(amount);
-  if (!Number.isFinite(value) || value <= 0) {
-    alert("Please enter a valid amount.");
-    return;
-  }
-
-  transactions.push({
-    type: "income",
-    amount: value,
-    note: "Wallet deposit",
-    date: new Date().toISOString().slice(0, 10)
-  });
-
-  localStorage.setItem("tm-transactions", JSON.stringify(transactions));
-  updateWalletSummary();
-  alert("Money added successfully!");
-}
-
-function transferWalletMoney() {
-  alert("Transfer feature will be added next.");
-}
-
-function createWallet() {
-  alert("New wallet feature will be added next.");
-}
-</script>                                                            
+</script>
 </body>
 </html>
