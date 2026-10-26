@@ -75,6 +75,109 @@ input,select {
 .empty { color:var(--muted); padding:15px 0; text-align:center; }
 footer { text-align:center; color:var(--muted); font-size:12px; padding:18px 0; }
 [hidden] { display:none !important; }
+  
+/* Wallet design */
+.wallet-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.wallet-header h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 21px;
+}
+.wallet-back, .wallet-icon {
+  border: 0;
+  background: transparent;
+  font-size: 24px;
+  padding: 5px;
+}
+.wallet-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 22px 14px;
+  background: white;
+  border: 1px solid #e5e1e6;
+  border-radius: 20px;
+  margin-bottom: 22px;
+}
+.wallet-total strong {
+  display: block;
+  font-size: 22px;
+  margin-top: 8px;
+}
+.wallet-count {
+  color: #77717e;
+  white-space: nowrap;
+}
+.wallet-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  margin-bottom: 35px;
+}
+.wallet-actions button {
+  background: white;
+  border: 1px solid #e5e1e6;
+  border-radius: 18px;
+  min-height: 125px;
+  padding: 10px 3px;
+  font-size: 12px;
+}
+.wallet-action-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 12px;
+  border: 1px solid #8bc6ef;
+  border-radius: 50%;
+  font-size: 27px;
+}
+.wallet-action-icon.add { color: #50ad5e; border-color: #9bd1a5; }
+.wallet-action-icon.transfer { color: #efa93f; border-color: #f3c779; }
+.wallet-action-icon.create { color: #2695e4; }
+.wallet-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 19px;
+}
+.wallet-section-title span {
+  flex: 1;
+  height: 1px;
+  background: #e5e1e6;
+}
+.wallet-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 17px 12px;
+  margin-bottom: 15px;
+  background: white;
+  border: 1px solid #e5e1e6;
+  border-radius: 20px;
+}
+.wallet-card-icon {
+  font-size: 28px;
+  padding: 12px;
+  background: #e8f4fd;
+  border-radius: 15px;
+}
+.wallet-card-info { flex: 1; min-width: 0; }
+.wallet-card-info small { display: block; margin-top: 6px; }
+.wallet-card-balance { font-weight: bold; white-space: nowrap; }
+.wallet-menu {
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+}
+  
 </style>
 </head>
 <body>
