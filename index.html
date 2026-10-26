@@ -357,7 +357,26 @@ function openProfileMenu(menu) {
   }
 
   if (menu === "wallet") {
-    alert("Wallet menu is coming soon.");
+  document.querySelectorAll("section").forEach(s => s.hidden = true);
+
+  $("walletPage").hidden = false;
+
+  $("walletBalance").textContent = money(
+    transactions.reduce((sum, t) =>
+      sum + (t.type === "income" ? t.amount : -t.amount), 0)
+  );
+
+  $("walletIncome").textContent = money(
+    transactions.filter(t => t.type === "income")
+      .reduce((sum, t) => sum + t.amount, 0)
+  );
+
+  $("walletExpenses").textContent = money(
+    transactions.filter(t => t.type === "expense")
+      .reduce((sum, t) => sum + t.amount, 0)
+  );
+
+  return;
   } else if (menu === "pin") {
     alert("PIN Security is coming soon.");
   } else if (menu === "savings") {
