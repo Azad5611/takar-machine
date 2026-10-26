@@ -661,8 +661,12 @@ function updateWalletSummary() {
 
   document.getElementById("walletTotal").textContent = money(total);
   document.getElementById("walletCount").textContent = "1 Wallet";
-}
 
+  const balance = document.querySelector(".wallet-card-balance");
+  if (balance) {
+    balance.textContent = money(total);
+  }
+}
 function addWalletMoney() {
   const amount = prompt("Enter amount to add:");
   if (amount === null || amount.trim() === "") return;
