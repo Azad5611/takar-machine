@@ -407,12 +407,15 @@ function openProfileMenu(menu) {
   }
     }
   
+
 function goHome() {
   $("home").hidden = false;
   $("otherPage").hidden = true;
   $("budgetPage").hidden = true;
   $("profilePage").hidden = true;
+  $("walletPage").hidden = true;
 }
+
 $("entryForm").addEventListener("submit",event=>{
  event.preventDefault();
  const amount=Number($("entryAmount").value);
