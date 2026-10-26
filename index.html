@@ -172,27 +172,45 @@ footer { text-align:center; color:var(--muted); font-size:12px; padding:18px 0; 
   </div>
 </section>
   
+
 <section id="walletPage" hidden>
-  <h2>👛 My Wallet</h2>
-
-  <div class="card">
-    <div class="label">Total Balance (SAR)</div>
-    <div class="balance" id="walletBalance">0.00</div>
+  <div class="wallet-header">
+    <button class="wallet-back" onclick="showProfile()">←</button>
+    <h2>আমার ওয়ালেট</h2>
+    <button class="wallet-icon" onclick="alert('Wallet help')">ⓘ</button>
+    <button class="wallet-icon" onclick="alert('Wallet settings')">⚙</button>
   </div>
 
-  <div class="cards">
-    <div class="card">
-      <div class="label">Total Income</div>
-      <div class="metric green" id="walletIncome">0.00</div>
+  <div class="wallet-total">
+    <div>
+      <span>মোট ব্যালেন্স :</span>
+      <strong id="walletTotal">SAR 0.00</strong>
     </div>
-
-    <div class="card">
-      <div class="label">Total Expenses</div>
-      <div class="metric red" id="walletExpenses">0.00</div>
-    </div>
+    <span class="wallet-count" id="walletCount">0 Wallets</span>
   </div>
 
-  <button class="primary" onclick="goHome()">Back to Home</button>
+  <div class="wallet-actions">
+    <button onclick="addWalletMoney()">
+      <span class="wallet-action-icon add">＋</span>
+      টাকা যোগ করুন
+    </button>
+    <button onclick="transferWalletMoney()">
+      <span class="wallet-action-icon transfer">⇄</span>
+      ট্রান্সফার
+    </button>
+    <button onclick="createWallet()">
+      <span class="wallet-action-icon create">▱</span>
+      নতুন ওয়ালেট
+    </button>
+  </div>
+
+  <div class="wallet-section-title">
+    <span></span>
+    <strong>সব ওয়ালেট</strong>
+    <span></span>
+  </div>
+
+  <div id="walletList"></div>
 </section>
 <section id="profilePage" hidden>
   <h2 style="margin: 10px 5px 20px;">প্রোফাইল</h2>  <div class="card" style="display:flex;align-items:center;gap:15px;">
