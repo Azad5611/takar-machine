@@ -652,6 +652,50 @@ document.getElementById("saveBudget")?.addEventListener("click", () => {
 });
 
 loadBudgets();
+  function showProfile() {
+  document.querySelectorAll("section").forEach(s => s.hidden = true);
+  document.getElementById("profilePage").hidden = false;
+}
+
+function updateWalletSummary() {
+  const total = transactions.reduce(
+    (sum, t) => sum + (t.type === "income" ? Number(t.amount) : -Number(t.amount)),
+    0
+  );
+
+  document.getElementById("walletTotal").textContent = money(total);
+  document.getElementById("walletCount").textContent = "1 Wallet";
+}
+
+function addWalletMoney() {
+  const amount = prompt("Enter amount to add:");
+  if (amount === null || amount.trim() === "") return;
+
+  const value = Number(amount);
+  if (!Number.isFinite(value) || value <= 0) {
+    alert("Please enter a valid amount.");
+    return;
+  }
+
+  transactions.push({
+    type: "income",
+    amount: value,
+    note: "Wallet deposit",
+    date: new Date().toISOString().slice(0, 10)
+  });
+
+  localStorage.setItem("tm-transactions", JSON.stringify(transactions));
+  updateWalletSummary();
+  alert("Money added successfully!");
+}
+
+function transferWalletMoney() {
+  alert("Transfer feature will be added next.");
+}
+
+function createWallet() {
+  alert("New wallet feature will be added next.");
+}
 </script>                                                            
 </body>
 </html>
