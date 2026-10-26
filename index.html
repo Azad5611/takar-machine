@@ -171,6 +171,29 @@ footer { text-align:center; color:var(--muted); font-size:12px; padding:18px 0; 
     <div id="budgetList"></div>
   </div>
 </section>
+  
+<section id="walletPage" hidden>
+  <h2>👛 My Wallet</h2>
+
+  <div class="card">
+    <div class="label">Total Balance (SAR)</div>
+    <div class="balance" id="walletBalance">0.00</div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="label">Total Income</div>
+      <div class="metric green" id="walletIncome">0.00</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Total Expenses</div>
+      <div class="metric red" id="walletExpenses">0.00</div>
+    </div>
+  </div>
+
+  <button class="primary" onclick="goHome()">Back to Home</button>
+</section>
 <section id="profilePage" hidden>
   <h2 style="margin: 10px 5px 20px;">প্রোফাইল</h2>  <div class="card" style="display:flex;align-items:center;gap:15px;">
     <div style="width:80px;height:80px;border-radius:50%;background:#9224aa;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold;">
