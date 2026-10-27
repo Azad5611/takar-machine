@@ -262,6 +262,20 @@
       <small>Member since June 2026</small>
      </div>
      <button class="profile-edit" type="button" onclick="editProfile()" aria-label="Edit profile">✎</button>
+     <input
+ id="tmProfilePhotoInput"
+ type="file"
+ accept="image/*"
+ hidden
+ onchange="handleProfilePhoto(event)"
+>
+<button
+ type="button"
+ onclick="chooseProfilePhoto()"
+ class="profile-photo-change"
+>
+ Change Photo
+</button>
     </div>
 
     <div class="subscription-card">
