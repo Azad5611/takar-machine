@@ -150,12 +150,27 @@ return Number(w.openingBalance||0)
 +transactions.filter(t=>t.walletId===w.id).reduce((s,t)=>s+(t.type==='income'?Number(t.amount):-Number(t.amount)),0)
 +transfers.reduce((s,t)=>s+(t.toWalletId===w.id?Number(t.amount):t.fromWalletId===w.id?-Number(t.amount):0),0);
 }
+let selectedPeriod = 'all';
 
 function totals(){
-const inc=transactions.filter(x=>x.type==='income').reduce((s,x)=>s+Number(x.amount),0);
-const exp=transactions.filter(x=>x.type==='expense').reduce((s,x)=>s+Number(x.amount),0);
+const now=new Date();
+const today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+const month=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+
+const filtered=transactions.filter(x=>{
+if(selectedPeriod==='all')return true;
+if(!x.date)return false;
+if(selectedPeriod==='today')return x.date===today;
+if(selectedPeriod==='month')return x.date.startsWith(month);
+return true;
+});
+
+const inc=filtered.filter(x=>x.type==='income').reduce((s,x)=>s+Number(x.amount),0);
+const exp=filtered.filter(x=>x.type==='expense').reduce((s,x)=>s+Number(x.amount),0);
+
 return{inc,exp,bal:wallets.reduce((s,w)=>s+walletBalance(w),0)};
 }
+
 
 function render(){
 const t=translations[lang];
@@ -185,6 +200,17 @@ renderTransactions('transactions',20);
 renderTransactions('allTransactions');
 fillWalletSelect();
 }
+  
+document.querySelectorAll('.period-btn').forEach(button=>{
+button.addEventListener('click',()=>{
+selectedPeriod=button.dataset.period;
+document.querySelectorAll('.period-btn').forEach(b=>{
+b.classList.toggle('active',b===button);
+});
+render();
+});
+});
+  
 
 function renderTransactions(target,limit){
 const box=$(target);
