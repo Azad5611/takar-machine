@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#9224aa">
-<title>Takar Machine</title>
-<style>
-:root{--purple:#9224aa;--theme-color:#9224aa;--green:#16845b;--red:#d95360;--bg:#f8f6fa;--card:#fff;--text:#292431;--muted:#77717e}*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}header{background:var(--purple);color:white;padding:24px 18px 28px;border-radius:0 0 24px 24px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:25px;margin:0}button,select,input{font:inherit}button{cursor:pointer}.lang{color:white;background:#ffffff20;border:1px solid #ffffff80;padding:8px 12px;border-radius:12px}main{max-width:650px;margin:auto;padding:18px 15px 100px}.label{font-size:13px;color:var(--muted)}.balance{font-size:32px;font-weight:750;margin:5px 0 18px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{background:var(--card);border:1px solid #eee8f0;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px #33204408}.metric{font-size:20px;font-weight:700;margin-top:8px}.green{color:var(--green)}.red{color:var(--red)}h2{font-size:18px;margin:4px 0 14px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}.action{border:0;border-radius:13px;padding:13px 5px;font-weight:650;background:#f0e2f4;color:var(--purple)}.action.expense{background:#fce9eb;color:var(--red)}.transaction{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid #eee9f0}.transaction:last-child{border-bottom:0}.name{font-weight:650;overflow-wrap:anywhere}small{color:var(--muted)}nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;gap:3px;background:#fffffffa;border-top:1px solid #eee8f0;padding:10px 4px max(10px,env(safe-area-inset-bottom));z-index:5}nav button{flex:1;border:0;background:none;color:var(--muted);padding:7px 0;font-size:12px;border-radius:10px}nav button.active{color:var(--purple);background:#f5e9f8}nav span{display:block;font-size:20px;margin-bottom:3px}input,select{width:100%;padding:12px;margin:6px 0 12px;border:1px solid #d9d2dd;border-radius:10px;background:white}.primary{width:100%;background:var(--purple);color:white;border:0;border-radius:12px;padding:13px;font-weight:700}.empty{color:var(--muted);padding:15px 0;text-align:center}footer{text-align:center;color:var(--muted);font-size:12px;padding:18px 0}[hidden]{display:none!important}
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="#9224aa" name="theme-color"/>
+  <title>
+   Takar Machine
+  </title>
+  <style>
+   :root{--purple:#9224aa;--theme-color:#9224aa;--green:#16845b;--red:#d95360;--bg:#f8f6fa;--card:#fff;--text:#292431;--muted:#77717e}*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}header{background:var(--purple);color:white;padding:24px 18px 28px;border-radius:0 0 24px 24px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:25px;margin:0}button,select,input{font:inherit}button{cursor:pointer}.lang{color:white;background:#ffffff20;border:1px solid #ffffff80;padding:8px 12px;border-radius:12px}main{max-width:650px;margin:auto;padding:18px 15px 100px}.label{font-size:13px;color:var(--muted)}.balance{font-size:32px;font-weight:750;margin:5px 0 18px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{background:var(--card);border:1px solid #eee8f0;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px #33204408}.metric{font-size:20px;font-weight:700;margin-top:8px}.green{color:var(--green)}.red{color:var(--red)}h2{font-size:18px;margin:4px 0 14px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}.action{border:0;border-radius:13px;padding:13px 5px;font-weight:650;background:#f0e2f4;color:var(--purple)}.action.expense{background:#fce9eb;color:var(--red)}.transaction{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid #eee9f0}.transaction:last-child{border-bottom:0}.name{font-weight:650;overflow-wrap:anywhere}small{color:var(--muted)}nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;gap:3px;background:#fffffffa;border-top:1px solid #eee8f0;padding:10px 4px max(10px,env(safe-area-inset-bottom));z-index:5}nav button{flex:1;border:0;background:none;color:var(--muted);padding:7px 0;font-size:12px;border-radius:10px}nav button.active{color:var(--purple);background:#f5e9f8}nav span{display:block;font-size:20px;margin-bottom:3px}input,select{width:100%;padding:12px;margin:6px 0 12px;border:1px solid #d9d2dd;border-radius:10px;background:white}.primary{width:100%;background:var(--purple);color:white;border:0;border-radius:12px;padding:13px;font-weight:700}.empty{color:var(--muted);padding:15px 0;text-align:center}footer{text-align:center;color:var(--muted);font-size:12px;padding:18px 0}[hidden]{display:none!important}
   
 .period-card {
   margin-bottom: 14px;
@@ -44,62 +48,450 @@
 .theme-dot{width:20px;height:20px;border-radius:50%;display:inline-block;flex-shrink:0;border:1px solid #0002}
 .theme-choice.active{outline:2px solid var(--purple);outline-offset:1px}
 .date-range{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-</style>
-</head><body>
-<header><div class="top"><div><h1>💜 Takar Machine</h1><p id="welcome">Your money, under control.</p></div><button class="lang" id="language">বাংলা</button></div><div class="label" id="balanceLabel" style="color:#f5e9f8">TOTAL BALANCE · SAR</div><div class="balance" id="balance">0.00</div><small id="currencyHint" style="color:#f5e9f8">Main currency: SAR</small></header>
-<main>
-
-<section id="home">
-<div class="card period-card">
-<div class="label">Hisaber shomoy</div>
-<div style="display:flex;gap:8px;margin-top:10px">
-<button type="button" class="period-btn active" data-period="today">Ajker hisab</button>
-<button type="button" class="period-btn" data-period="month">Ei mash</button>
-<button type="button" class="period-btn" data-period="all">Shob hisab</button>
-</div>
-</div>
-<div class="cards">
   
-<section id="otherPage" hidden><div class="card"><h2 id="pageTitle">Transactions</h2><p id="pageDescription">Your recorded money activity will appear here.</p><div id="allTransactions"></div><button class="primary" onclick="showPage('home')" id="homeButton">Back to home</button></div></section>
-<section id="budgetPage" hidden><div class="card"><h2>Monthly Budget</h2><label for="budgetCategory">Expense category</label><select id="budgetCategory"></select><label for="budgetLimit">Monthly limit (SAR)</label><input id="budgetLimit" type="number" min="0.01" step="0.01" placeholder="Enter budget"><button class="primary" id="saveBudget">Save budget</button></div><div class="card"><h2>Your budgets</h2><div id="budgetList"></div></div><button class="secondary" onclick="showPage('profile')">Back to profile</button></section>
-<section id="walletPage" hidden><div class="wallet-header"><button class="wallet-back" onclick="showPage('profile')">←</button><h2>আমার ওয়ালেট</h2><button class="wallet-icon" onclick="alert('Wallets are saved on this device in this version.')" aria-label="Wallet information">ⓘ</button><button class="wallet-icon" onclick="editWallets()" aria-label="Wallet settings">⚙</button></div><div class="wallet-total"><div><span>মোট ব্যালেন্স :</span><strong id="walletTotal">SAR 0.00</strong></div><span class="wallet-count" id="walletCount">0 Wallets</span></div><div class="wallet-actions"><button onclick="addWalletMoney()"><span class="wallet-action-icon add">＋</span>টাকা যোগ করুন</button><button onclick="transferWalletMoney()"><span class="wallet-action-icon transfer">⇄</span>ট্রান্সফার</button><button onclick="createWallet()"><span class="wallet-action-icon create">▱</span>নতুন ওয়ালেট</button></div><div class="wallet-section-title"><span></span><strong>সব ওয়ালেট</strong><span></span></div><div id="walletList"></div></section>
-<section id="profilePage" hidden><h2 style="margin:10px 5px 20px">প্রোফাইল</h2><div class="card" style="display:flex;align-items:center;gap:15px"><div style="width:80px;height:80px;border-radius:50%;background:#9224aa;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold">AA</div><div><h2 style="margin:0 0 5px">Azad ali</h2><div style="color:#77717e">My Account</div><small>Personal money manager</small></div></div><button class="card profile-menu" onclick="openProfileMenu('wallet')">💳 <strong>আমার ওয়ালেট</strong><br><small>View your wallet and balance</small></button><button class="card profile-menu" onclick="openProfileMenu('pin')">🔐 <strong>PIN Security</strong><br><small>Protect your account</small></button><button class="card profile-menu" onclick="openProfileMenu('budget')">🟠 <strong>বাজেট পরিকল্পনা</strong><br><small>মাসিক বাজেট তৈরি ও ট্র্যাক করুন</small></button><button class="card profile-menu" onclick="openProfileMenu('savings')">🎯 <strong>সঞ্চয় পরিকল্পনা</strong><br><small>সঞ্চয়ের লক্ষ্য তৈরি ও ট্র্যাক করুন</small></button></section>
-<section id="savingsPage" hidden><div class="card"><h2>সঞ্চয় পরিকল্পনা</h2><p>Savings planning will be built in a later step.</p><button class="primary" onclick="showPage('home')">Back to home</button></div></section>
-<section id="settingsPage" hidden><div class="card"><h2>Settings</h2><p>Language: <strong id="settingsLanguage">English</strong></p><button class="secondary" onclick="toggleLanguage()">Change language</button><p style="margin-top:16px">Your data in this version is saved in this browser on this device.</p><button class="secondary" onclick="exportData()">Export backup (JSON)</button></div></section>
-<section id="hisabPage" hidden>
-  <div class="card">
-    <h2>হিসাবের খাতা · Hisaber Boi</h2>
-    <p>Review income and expenses by day, month, year, or a custom date range.</p>
-    <div class="report-tabs">
-      <button type="button" class="active" data-report="daily" onclick="setReportPeriod('daily')">Daily</button>
-      <button type="button" data-report="monthly" onclick="setReportPeriod('monthly')">Monthly</button>
-      <button type="button" data-report="yearly" onclick="setReportPeriod('yearly')">Yearly</button>
+/* Subscription card — visual design only */
+.subscription-card{
+  display:flex;flex-direction:column;gap:16px;width:100%;margin:0 0 14px;
+  padding:17px;border:1px solid #f0dca4;border-radius:20px;
+  background:linear-gradient(135deg,#fffaf0 0%,#fff0c4 100%);
+  color:#3e3217;box-shadow:0 5px 16px rgba(135,101,28,.08);
+}
+.subscription-card-top{display:flex;align-items:center;gap:12px}
+.subscription-card-icon{
+  width:48px;height:48px;flex:0 0 48px;display:flex;align-items:center;
+  justify-content:center;border-radius:15px;background:#f4d982;color:#73540c;font-size:25px;
+}
+.subscription-card-copy{flex:1;min-width:0}
+.subscription-card-kicker{
+  display:block;margin-bottom:4px;color:#98752c;font-size:10px;
+  font-weight:800;letter-spacing:1.1px;
+}
+.subscription-card-copy strong{display:block;font-size:16px;line-height:1.35}
+.subscription-card-copy small{
+  display:block;margin-top:4px;color:#796b4c;font-size:12px;line-height:1.5;
+}
+.subscription-card-arrow{color:#98752c;font-size:27px}
+.subscription-card-bottom{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding-top:13px;border-top:1px solid #ead9a8;
+}
+.subscription-card-bottom small{
+  display:block;margin-bottom:4px;color:#98752c;font-size:10px;
+  font-weight:750;letter-spacing:.6px;
+}
+.subscription-card-bottom strong{font-size:13px}
+.subscription-card-tag{
+  padding:8px 10px;border:1px solid #e8d49c;border-radius:11px;
+  background:rgba(255,255,255,.65);color:#745615;font-size:11px;
+  font-weight:700;white-space:nowrap;
+}
+
+  </style>
+ </head>
+ <body>
+  <header>
+   <div class="top">
+    <div>
+     <h1>
+      💜 Takar Machine
+     </h1>
+     <p id="welcome">
+      Your money, under control.
+     </p>
     </div>
-    <label for="reportDate">Choose date</label>
-    <input type="date" id="reportDate">
-    <div id="customRange" hidden>
-      <label>Custom date range</label>
-      <div class="date-range">
-        <input type="date" id="reportStart" aria-label="Start date">
-        <input type="date" id="reportEnd" aria-label="End date">
+    <button class="lang" id="language">
+     বাংলা
+    </button>
+   </div>
+   <div class="label" id="balanceLabel" style="color:#f5e9f8">
+    TOTAL BALANCE · SAR
+   </div>
+   <div class="balance" id="balance">
+    0.00
+   </div>
+   <small id="currencyHint" style="color:#f5e9f8">
+    Main currency: SAR
+   </small>
+  </header>
+  <main>
+   <section id="home">
+    <div class="card period-card">
+     <div class="label">
+      Hisaber shomoy
+     </div>
+     <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="period-btn active" data-period="today" type="button">
+       Ajker hisab
+      </button>
+      <button class="period-btn" data-period="month" type="button">
+       Ei mash
+      </button>
+      <button class="period-btn" data-period="all" type="button">
+       Shob hisab
+      </button>
+     </div>
+    </div>
+    <div class="cards">
+     <section hidden="" id="otherPage">
+      <div class="card">
+       <h2 id="pageTitle">
+        Transactions
+       </h2>
+       <p id="pageDescription">
+        Your recorded money activity will appear here.
+       </p>
+       <div id="allTransactions">
+       </div>
+       <button class="primary" id="homeButton" onclick="showPage('home')">
+        Back to home
+       </button>
       </div>
-      <button class="secondary" type="button" onclick="setReportPeriod('custom')">Apply custom range</button>
+     </section>
+     <section hidden="" id="budgetPage">
+      <div class="card">
+       <h2>
+        Monthly Budget
+       </h2>
+       <label for="budgetCategory">
+        Expense category
+       </label>
+       <select id="budgetCategory">
+       </select>
+       <label for="budgetLimit">
+        Monthly limit (SAR)
+       </label>
+       <input id="budgetLimit" min="0.01" placeholder="Enter budget" step="0.01" type="number"/>
+       <button class="primary" id="saveBudget">
+        Save budget
+       </button>
+      </div>
+      <div class="card">
+       <h2>
+        Your budgets
+       </h2>
+       <div id="budgetList">
+       </div>
+      </div>
+      <button class="secondary" onclick="showPage('profile')">
+       Back to profile
+      </button>
+     </section>
+     <section hidden="" id="walletPage">
+      <div class="wallet-header">
+       <button class="wallet-back" onclick="showPage('profile')">
+        ←
+       </button>
+       <h2>
+        আমার ওয়ালেট
+       </h2>
+       <button aria-label="Wallet information" class="wallet-icon" onclick="alert('Wallets are saved on this device in this version.')">
+        ⓘ
+       </button>
+       <button aria-label="Wallet settings" class="wallet-icon" onclick="editWallets()">
+        ⚙
+       </button>
+      </div>
+      <div class="wallet-total">
+       <div>
+        <span>
+         মোট ব্যালেন্স :
+        </span>
+        <strong id="walletTotal">
+         SAR 0.00
+        </strong>
+       </div>
+       <span class="wallet-count" id="walletCount">
+        0 Wallets
+       </span>
+      </div>
+      <div class="wallet-actions">
+       <button onclick="addWalletMoney()">
+        <span class="wallet-action-icon add">
+         ＋
+        </span>
+        টাকা যোগ করুন
+       </button>
+       <button onclick="transferWalletMoney()">
+        <span class="wallet-action-icon transfer">
+         ⇄
+        </span>
+        ট্রান্সফার
+       </button>
+       <button onclick="createWallet()">
+        <span class="wallet-action-icon create">
+         ▱
+        </span>
+        নতুন ওয়ালেট
+       </button>
+      </div>
+      <div class="wallet-section-title">
+       <span>
+       </span>
+       <strong>
+        সব ওয়ালেট
+       </strong>
+       <span>
+       </span>
+      </div>
+      <div id="walletList">
+      </div>
+     </section>
+     <section hidden="" id="profilePage">
+      <h2 style="margin:10px 5px 20px">
+       প্রোফাইল
+      </h2>
+      <div class="card" style="display:flex;align-items:center;gap:15px">
+       <div style="width:80px;height:80px;border-radius:50%;background:#9224aa;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold">
+        AA
+       </div>
+       <div>
+        <h2 style="margin:0 0 5px">
+         Azad ali
+        </h2>
+        <div style="color:#77717e">
+         My Account
+        </div>
+        <small>
+         Personal money manager
+        </small>
+       </div>
+      </div>
+      <div class="subscription-card">
+        <div class="subscription-card-top">
+          <div class="subscription-card-icon" aria-hidden="true">✦</div>
+          <div class="subscription-card-copy">
+            <span class="subscription-card-kicker">TAKAR MACHINE</span>
+            <strong>সাবস্ক্রিপশন প্ল্যান</strong>
+            <small>আপনার সদস্যতার তথ্য ও প্ল্যানের বিবরণ</small>
+          </div>
+          <span class="subscription-card-arrow" aria-hidden="true">›</span>
+        </div>
+        <div class="subscription-card-bottom">
+          <div>
+            <small>MEMBERSHIP</small>
+            <strong>প্ল্যানের তথ্য</strong>
+          </div>
+          <span class="subscription-card-tag">বিস্তারিত দেখুন</span>
+        </div>
+      </div>
+      <button class="card profile-menu" onclick="openProfileMenu('wallet')">
+       💳
+       <strong>
+        আমার ওয়ালেট
+       </strong>
+       <br/>
+       <small>
+        View your wallet and balance
+       </small>
+      </button>
+      <button class="card profile-menu" onclick="openProfileMenu('pin')">
+       🔐
+       <strong>
+        PIN Security
+       </strong>
+       <br/>
+       <small>
+        Protect your account
+       </small>
+      </button>
+      <button class="card profile-menu" onclick="openProfileMenu('budget')">
+       🟠
+       <strong>
+        বাজেট পরিকল্পনা
+       </strong>
+       <br/>
+       <small>
+        মাসিক বাজেট তৈরি ও ট্র্যাক করুন
+       </small>
+      </button>
+      <button class="card profile-menu" onclick="openProfileMenu('savings')">
+       🎯
+       <strong>
+        সঞ্চয় পরিকল্পনা
+       </strong>
+       <br/>
+       <small>
+        সঞ্চয়ের লক্ষ্য তৈরি ও ট্র্যাক করুন
+       </small>
+      </button>
+     </section>
+     <section hidden="" id="savingsPage">
+      <div class="card">
+       <h2>
+        সঞ্চয় পরিকল্পনা
+       </h2>
+       <p>
+        Savings planning will be built in a later step.
+       </p>
+       <button class="primary" onclick="showPage('home')">
+        Back to home
+       </button>
+      </div>
+     </section>
+     <section hidden="" id="settingsPage">
+      <div class="card">
+       <h2>
+        Settings
+       </h2>
+       <p>
+        Language:
+        <strong id="settingsLanguage">
+         English
+        </strong>
+       </p>
+       <button class="secondary" onclick="toggleLanguage()">
+        Change language
+       </button>
+       <p style="margin-top:16px">
+        Your data in this version is saved in this browser on this device.
+       </p>
+       <button class="secondary" onclick="exportData()">
+        Export backup (JSON)
+       </button>
+      </div>
+     </section>
+     <section hidden="" id="hisabPage">
+      <div class="card">
+       <h2>
+        হিসাবের খাতা · Hisaber Boi
+       </h2>
+       <p>
+        Review income and expenses by day, month, year, or a custom date range.
+       </p>
+       <div class="report-tabs">
+        <button class="active" data-report="daily" onclick="setReportPeriod('daily')" type="button">
+         Daily
+        </button>
+        <button data-report="monthly" onclick="setReportPeriod('monthly')" type="button">
+         Monthly
+        </button>
+        <button data-report="yearly" onclick="setReportPeriod('yearly')" type="button">
+         Yearly
+        </button>
+       </div>
+       <label for="reportDate">
+        Choose date
+       </label>
+       <input id="reportDate" type="date"/>
+       <div hidden="" id="customRange">
+        <label>
+         Custom date range
+        </label>
+        <div class="date-range">
+         <input aria-label="Start date" id="reportStart" type="date"/>
+         <input aria-label="End date" id="reportEnd" type="date"/>
+        </div>
+        <button class="secondary" onclick="setReportPeriod('custom')" type="button">
+         Apply custom range
+        </button>
+       </div>
+       <button class="secondary" onclick="showCustomRange()" type="button">
+        Custom date range
+       </button>
+      </div>
+      <div class="report-summary">
+       <div class="card">
+        <div class="label">
+         Income
+        </div>
+        <div class="metric green" id="reportIncome">
+         0.00
+        </div>
+       </div>
+       <div class="card">
+        <div class="label">
+         Expenses
+        </div>
+        <div class="metric red" id="reportExpenses">
+         0.00
+        </div>
+       </div>
+       <div class="card">
+        <div class="label">
+         Net amount
+        </div>
+        <div class="metric" id="reportNet">
+         0.00
+        </div>
+       </div>
+       <div class="card">
+        <div class="label">
+         Transactions
+        </div>
+        <div class="metric" id="reportCount">
+         0
+        </div>
+       </div>
+      </div>
+      <div class="card">
+       <h2 id="reportHeading">
+        Today's Hisab
+       </h2>
+       <div id="reportTransactions">
+       </div>
+      </div>
+      <button class="secondary" onclick="showPage('profile')" type="button">
+       Back to profile
+      </button>
+     </section>
+     <footer id="footerText">
+      Takar Machine · Your personal money journal
+     </footer>
     </div>
-    <button class="secondary" type="button" onclick="showCustomRange()">Custom date range</button>
-  </div>
-  <div class="report-summary">
-    <div class="card"><div class="label">Income</div><div class="metric green" id="reportIncome">0.00</div></div>
-    <div class="card"><div class="label">Expenses</div><div class="metric red" id="reportExpenses">0.00</div></div>
-    <div class="card"><div class="label">Net amount</div><div class="metric" id="reportNet">0.00</div></div>
-    <div class="card"><div class="label">Transactions</div><div class="metric" id="reportCount">0</div></div>
-  </div>
-  <div class="card"><h2 id="reportHeading">Today's Hisab</h2><div id="reportTransactions"></div></div>
-  <button class="secondary" type="button" onclick="showPage('profile')">Back to profile</button>
-</section>
-<footer id="footerText">Takar Machine · Your personal money journal</footer></main>
-<nav><button data-page="profile"><span>👤</span><b data-en="Profile" data-bn="প্রোফাইল">Profile</b></button><button class="active" data-page="home"><span>⌂</span><b data-en="Home" data-bn="হোম">Home</b></button><button data-page="transactions"><span>▤</span><b data-en="Money" data-bn="আয়-ব্যয়">Money</b></button><button data-page="hisab"><span>📒</span><b data-en="Hisab" data-bn="হিসাব">Hisab</b></button><button data-page="savings"><span>◎</span><b data-en="Savings" data-bn="সঞ্চয়">Savings</b></button><button data-page="settings"><span>⚙</span><b data-en="Settings" data-bn="সেটিংস">Settings</b></button></nav>
-<script>
-const $=id=>document.getElementById(id);
+   </section>
+  </main>
+  <nav>
+   <button data-page="profile">
+    <span>
+     👤
+    </span>
+    <b data-bn="প্রোফাইল" data-en="Profile">
+     Profile
+    </b>
+   </button>
+   <button class="active" data-page="home">
+    <span>
+     ⌂
+    </span>
+    <b data-bn="হোম" data-en="Home">
+     Home
+    </b>
+   </button>
+   <button data-page="transactions">
+    <span>
+     ▤
+    </span>
+    <b data-bn="আয়-ব্যয়" data-en="Money">
+     Money
+    </b>
+   </button>
+   <button data-page="hisab">
+    <span>
+     📒
+    </span>
+    <b data-bn="হিসাব" data-en="Hisab">
+     Hisab
+    </b>
+   </button>
+   <button data-page="savings">
+    <span>
+     ◎
+    </span>
+    <b data-bn="সঞ্চয়" data-en="Savings">
+     Savings
+    </b>
+   </button>
+   <button data-page="settings">
+    <span>
+     ⚙
+    </span>
+    <b data-bn="সেটিংস" data-en="Settings">
+     Settings
+    </b>
+   </button>
+  </nav>
+  <script>
+   const $=id=>document.getElementById(id);
 const budgetKey='takarBudgets',walletKey='tm-wallets',transferKey='tm-transfers';
 const translations={
 en:{welcome:'Your money, under control.',balance:'TOTAL BALANCE',income:'Total income',expenses:'Total expenses',quick:'Quick entry',addIncome:'＋ Income',addExpense:'− Expense',recent:'Recent transactions',name:'Description',amount:'Amount',category:'Category',save:'Save transaction',money:'Money',saved:'Transaction saved.',invalid:'Enter a valid amount.',empty:'No transactions yet. Add your first one!',back:'Back to home',footer:'Takar Machine · Your personal money journal'},
@@ -511,19 +903,4 @@ $('reportHeading').textContent=reportPeriod==='daily'?"Today's Hisab":reportPeri
 const box=$('reportTransactions');box.replaceChildren();
 rows.sort((a,b)=>b.date.localeCompare(a.date)).forEach(t=>{
 const row=document.createElement('div');row.className='transaction';
-const left=document.createElement('div'),name=document.createElement('div'),detail=document.createElement('small'),amount=document.createElement('strong');
-name.className='name';name.textContent=t.name;detail.textContent=`${t.category} · ${t.date}`;
-left.append(name,detail);amount.className=t.type==='income'?'green':'red';
-amount.textContent=(t.type==='income'?'+':'−')+money(t.amount);
-row.append(left,amount);box.append(row);
-});
-if(!rows.length){const e=document.createElement('div');e.className='empty';e.textContent='No transactions recorded for this period.';box.append(e);}
-}
-
-setupThemes();
-setupReportControls();
-render();
-loadBudgets();
-</script>
-</body>
-</html>
+const left=document.createElement('div'),name=document.createElement('div'),detail=document.createElement('small'),amount=document.c
