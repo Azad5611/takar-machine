@@ -66,6 +66,61 @@
    .wallet-menu{border:0;background:transparent;font-size:22px}
    .secondary{width:100%;padding:11px;border:1px solid #ddd2e2;border-radius:10px;background:#fff;color:var(--purple);font-weight:650}
    .profile-menu{width:100%;text-align:left;border:1px solid #eee8f0;display:block}
+   
+.profile-identity{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:20px 16px;
+  border-radius:22px;
+  position:relative;
+  min-width:0;
+}
+.profile-avatar{
+  width:76px;
+  height:76px;
+  flex:0 0 76px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:linear-gradient(135deg,#f6a18c,#ffb29b);
+  color:#fff;
+  font-size:27px;
+  font-weight:750;
+}
+.profile-identity-info{
+  flex:1;
+  min-width:0;
+  padding-right:24px;
+}
+.profile-identity-info h2{
+  margin:0 0 4px;
+  font-size:19px;
+  color:#201c24;
+}
+.profile-email{
+  color:#77717e;
+  font-size:14px;
+  overflow-wrap:anywhere;
+  margin-bottom:3px;
+}
+.profile-identity-info small{
+  font-size:12px;
+}
+.profile-edit{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:36px;
+  height:36px;
+  border:0;
+  border-radius:50%;
+  background:#fff3ef;
+  color:#ed967e;
+  font-size:24px;
+}
+   
    .form-row{margin-bottom:8px}
    .form-row label{font-size:14px}
    .report-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
@@ -198,14 +253,17 @@
    </section>
    <section hidden id="profilePage">
     <h2 style="margin:10px 5px 20px">প্রোফাইল</h2>
-    <div class="card" style="display:flex;align-items:center;gap:15px">
-     <div style="width:80px;height:80px;border-radius:50%;background:#9224aa;color:white;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold">AA</div>
-     <div>
-      <h2 style="margin:0 0 5px">Azad ali</h2>
-      <div style="color:#77717e">My Account</div>
-      <small>Personal money manager</small>
+    
+    <div class="card profile-identity">
+     <div class="profile-avatar">AA</div>
+     <div class="profile-identity-info">
+      <h2>Azad ali</h2>
+      <div class="profile-email">azad5611@gmail.com</div>
+      <small>Member since June 2026</small>
      </div>
+     <button class="profile-edit" type="button" onclick="editProfile()" aria-label="Edit profile">✎</button>
     </div>
+
     <div class="subscription-card">
      <div class="subscription-card-top">
       <div class="subscription-card-icon" aria-hidden="true">✦</div>
@@ -517,6 +575,48 @@ document.querySelectorAll('.period-btn').forEach(button=>{
  });
 });
 
+function editProfile(){
+ const currentName=localStorage.getItem('tm-profile-name')||'Azad ali';
+ const currentEmail=localStorage.getItem('tm-profile-email')||'azad5611@gmail.com';
+
+ const name=prompt('Enter your name:',currentName);
+ if(name===null)return;
+
+ const email=prompt('Enter your email:',currentEmail);
+ if(email===null)return;
+
+ if(!name.trim()){
+  alert('Name cannot be empty.');
+  return;
+ }
+
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())){
+  alert('Please enter a valid email address.');
+  return;
+ }
+
+ localStorage.setItem('tm-profile-name',name.trim());
+ localStorage.setItem('tm-profile-email',email.trim());
+
+ renderProfile();
+ alert('Profile updated successfully.');
+}
+
+function renderProfile(){
+ const name=localStorage.getItem('tm-profile-name')||'Azad ali';
+ const email=localStorage.getItem('tm-profile-email')||'azad5611@gmail.com';
+ const nameElement=document.querySelector('.profile-identity-info h2');
+ const emailElement=document.querySelector('.profile-email');
+ const avatar=document.querySelector('.profile-avatar');
+
+ if(nameElement)nameElement.textContent=name;
+ if(emailElement)emailElement.textContent=email;
+ if(avatar){
+  avatar.textContent=name.trim().split(/\s+/).slice(0,2)
+   .map(part=>part[0]).join('').toUpperCase();
+ }
+}
+ 
 function openProfileMenu(which){
  if(which==='wallet'){showPage('wallet');return;}
  if(which==='budget'){showPage('budget');return;}
@@ -767,6 +867,7 @@ function init(){
   document.querySelectorAll('nav b').forEach(b=>b.textContent=b.dataset.bn||b.textContent);
  }
  render();
+ renderProfile();
  showPage('home');
 }
 
