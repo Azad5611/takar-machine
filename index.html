@@ -145,6 +145,196 @@
    .subscription-card-bottom small{display:block;margin-bottom:4px;color:#98752c;font-size:10px;font-weight:750;letter-spacing:.6px}
    .subscription-card-bottom strong{font-size:13px}
    .subscription-card-tag{padding:8px 10px;border:1px solid #e8d49c;border-radius:11px;background:rgba(255,255,255,.65);color:#745615;font-size:11px;font-weight:700;white-space:nowrap}
+ .income-expense-page {
+  padding: 12px 0 140px;
+  color: var(--text);
+}
+
+.ie-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.ie-header h1 {
+  font-size: 25px;
+  margin: 0 0 6px;
+}
+
+.ie-header p {
+  margin: 0;
+  color: #888;
+  font-size: 13px;
+}
+
+.ie-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.ie-actions button {
+  width: 39px;
+  height: 39px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--purple);
+  font-size: 22px;
+}
+
+.ie-periods,
+.ie-filters {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  margin: 16px 0;
+}
+
+.ie-periods button,
+.ie-filters button {
+  flex: 1;
+  padding: 12px 5px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.ie-periods button.selected,
+.ie-filters button.selected {
+  background: #ffebe5;
+  color: #e99a8c;
+  font-weight: 700;
+}
+
+.ie-month-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.ie-month-picker label {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.ie-month-picker input {
+  width: auto;
+  max-width: 160px;
+  padding: 8px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+}
+
+.ie-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 18px 8px;
+  margin: 18px 0;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  background: var(--card);
+  text-align: center;
+}
+
+.ie-summary > div {
+  min-width: 0;
+}
+
+.ie-summary p {
+  margin: 8px 0 5px;
+  font-size: 14px;
+}
+
+.ie-summary strong {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.ie-icon {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 22px;
+}
+
+.ie-icon.green { color: #66b878; }
+.ie-icon.red { color: #e96c6c; }
+.ie-icon.orange { color: #f0a08e; }
+
+.ie-search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text);
+}
+
+.ie-empty {
+  padding: 55px 12px;
+  text-align: center;
+  color: #aaa;
+}
+
+.ie-empty-icon {
+  font-size: 58px;
+  opacity: .45;
+  margin-bottom: 28px;
+}
+
+.ie-empty h3 {
+  color: var(--text);
+  font-size: 17px;
+}
+
+.ie-empty p {
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.ie-floating {
+  position: fixed;
+  right: 18px;
+  bottom: 105px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 10;
+}
+
+.ie-floating button {
+  width: 60px;
+  height: 60px;
+  border: 0;
+  border-radius: 50%;
+  color: white;
+  font-size: 35px;
+  box-shadow: 0 3px 10px #0002;
+}
+
+.ie-add-expense { background: #ed5b57; }
+.ie-add-income { background: #62b76e; }
+
+@media (max-width: 380px) {
+  .ie-header h1 { font-size: 22px; }
+  .ie-actions button { width: 33px; height: 33px; }
+  .ie-summary { padding: 14px 4px; }
+                          }
   </style>
  </head>
  <body>
@@ -209,13 +399,85 @@
      <div id="transactions"></div>
     </div>
    </section>
-   <section hidden id="otherPage">
-    <div class="card">
-     <h2 id="pageTitle">Transactions</h2>
-     <p id="pageDescription">Your recorded money activity will appear here.</p>
-     <div id="allTransactions"></div>
-     <button class="primary" id="homeButton" onclick="showPage('home')">Back to home</button>
+   <section hidden id="otherPage" class="income-expense-page">
+
+  <div class="ie-header">
+    <div>
+      <h1>আয়-ব্যয়</h1>
+      <p>▦ <span id="ieDateLabel">মাসিক হিসাব</span></p>
     </div>
+
+    <div class="ie-actions">
+      <button onclick="document.getElementById('ieSearch').focus()">⌕</button>
+      <button onclick="window.print()">⇩</button>
+      <button onclick="document.getElementById('ieMonth').showPicker()">▣</button>
+      <button onclick="showPage('hisab')">⚙</button>
+    </div>
+  </div>
+
+  <div class="ie-periods">
+    <button onclick="setIEPeriod('daily')">দৈনিক</button>
+    <button class="selected" onclick="setIEPeriod('monthly')">মাসিক</button>
+    <button onclick="setIEPeriod('yearly')">বার্ষিক</button>
+    <button onclick="setIEPeriod('custom')">পরিসর</button>
+  </div>
+
+  <div class="ie-month-picker">
+    <label for="ieMonth">মাস নির্বাচন</label>
+    <input id="ieMonth" type="month" onchange="renderIEPage()">
+  </div>
+
+  <div class="ie-summary">
+    <div>
+      <span class="ie-icon green">↓</span>
+      <p>আয়</p>
+      <strong id="ieIncome">৳০</strong>
+    </div>
+
+    <div>
+      <span class="ie-icon orange">▱</span>
+      <p>অবশিষ্ট</p>
+      <strong id="ieBalance">৳০</strong>
+    </div>
+
+    <div>
+      <span class="ie-icon red">↑</span>
+      <p>ব্যয়</p>
+      <strong id="ieExpense">৳০</strong>
+    </div>
+  </div>
+
+  <div class="ie-filters">
+    <button class="selected" onclick="setIEFilter('all',this)">সব</button>
+    <button onclick="setIEFilter('income',this)">আয়</button>
+    <button onclick="setIEFilter('expense',this)">ব্যয়</button>
+    <button onclick="setIEFilter('category',this)">ক্যাটাগরি</button>
+  </div>
+
+  <input
+    id="ieSearch"
+    class="ie-search"
+    placeholder="লেনদেন খুঁজুন..."
+    oninput="renderIEPage()"
+  >
+
+  <div id="ieTransactions"></div>
+
+  <div id="ieEmpty" class="ie-empty" hidden>
+    <div class="ie-empty-icon">▦⌕</div>
+    <h3>কোনো লেনদেন পাওয়া যায়নি</h3>
+    <p>নির্বাচিত ফিল্টারে কোনো লেনদেন পাওয়া যায়নি।</p>
+    <p>তারিখ পরিবর্তন করে আবার চেষ্টা করুন।</p>
+  </div>
+
+  <div class="ie-floating">
+    <button class="ie-add-expense"
+      onclick="showPage('home');showForm('expense')">−</button>
+
+    <button class="ie-add-income"
+      onclick="showPage('home');showForm('income')">＋</button>
+  </div>
+
    </section>
    <section hidden id="budgetPage">
     <div class="card">
@@ -648,6 +910,101 @@ function renderAllTransactions(){
  el.innerHTML=list.length?list.map(transactionHTML).join(''):'<div class="empty">No transactions yet.</div>';
 }
 
+let ieFilter = 'all';
+let iePeriod = 'monthly';
+
+function setIEPeriod(period) {
+  iePeriod = period;
+
+  document.querySelectorAll('.ie-periods button')
+    .forEach((button, index) => {
+      button.classList.toggle(
+        'selected',
+        ['daily', 'monthly', 'yearly', 'custom'][index] === period
+      );
+    });
+
+  renderIEPage();
+}
+
+function setIEFilter(filter, button) {
+  ieFilter = filter;
+
+  document.querySelectorAll('.ie-filters button')
+    .forEach(item => item.classList.remove('selected'));
+
+  button.classList.add('selected');
+  renderIEPage();
+}
+
+function renderIEPage() {
+  const monthInput = document.getElementById('ieMonth');
+  const searchInput = document.getElementById('ieSearch');
+  const listElement = document.getElementById('ieTransactions');
+  const emptyElement = document.getElementById('ieEmpty');
+
+  if (!monthInput || !listElement || !emptyElement) return;
+
+  if (!monthInput.value) {
+    const now = new Date();
+    monthInput.value =
+      now.getFullYear() + '-' +
+      String(now.getMonth() + 1).padStart(2, '0');
+  }
+
+  const selectedMonth = monthInput.value;
+  const search = (searchInput.value || '').toLowerCase();
+
+  const filtered = transactions.filter(t => {
+    const date = t.date || '';
+    const month = date.slice(0, 7);
+
+    let matchesDate = true;
+
+    if (iePeriod === 'monthly') {
+      matchesDate = month === selectedMonth;
+    } else if (iePeriod === 'yearly') {
+      matchesDate = date.startsWith(selectedMonth.slice(0, 4));
+    } else if (iePeriod === 'daily') {
+      matchesDate = date === new Date().toISOString().slice(0, 10);
+    }
+
+    const matchesType =
+      ieFilter === 'all' ||
+      ieFilter === 'category' ||
+      t.type === ieFilter;
+
+    const matchesSearch =
+      (t.name || '').toLowerCase().includes(search) ||
+      (t.category || '').toLowerCase().includes(search);
+
+    return matchesDate && matchesType && matchesSearch;
+  });
+
+  const income = filtered
+    .filter(t => t.type === 'income')
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
+
+  const expense = filtered
+    .filter(t => t.type === 'expense')
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
+
+  document.getElementById('ieIncome').textContent = money(income);
+  document.getElementById('ieExpense').textContent = money(expense);
+  document.getElementById('ieBalance').textContent = money(income - expense);
+
+  document.getElementById('ieDateLabel').textContent = selectedMonth;
+
+  listElement.innerHTML = filtered.length
+    ? filtered
+        .slice()
+        .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+        .map(transactionHTML)
+        .join('')
+    : '';
+
+  emptyElement.hidden = filtered.length > 0;
+}
 function showPage(page){
  activePage=page;
  const pages={
@@ -662,10 +1019,9 @@ function showPage(page){
  Object.values(pages).forEach(id=>$(id).hidden=true);
  $(pages[page]||'home').hidden=false;
  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
- if(page==='transactions'){
-  $('pageTitle').textContent='All transactions';
-  $('pageDescription').textContent='Your complete income and expense history.';
-  renderAllTransactions();
+ 
+ if (page === 'transactions') {
+  renderIEPage();
  }
  if(page==='wallet')renderWallets();
  if(page==='budget')renderBudgets();
