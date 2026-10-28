@@ -335,22 +335,55 @@
   .ie-actions button { width: 33px; height: 33px; }
   .ie-summary { padding: 14px 4px; }
                           }
+   #homeBalanceSummary {
+  margin-top: 18px;
+  padding: 24px 20px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #9224aa, #6e1689);
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(146, 36, 170, 0.18);
+}
+
+#homeBalanceSummary .label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+#homeBalanceSummary .balance {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  overflow-wrap: anywhere;
+}
+
+#homeBalanceSummary small {
+  font-size: 12px;
+  opacity: 0.9;
+}
   </style>
  </head>
  <body>
   <header id="homeHeader">
-   <div class="top">
+  <div class="top">
     <div>
-     <h1>💜 Takar Machine</h1>
-     <p id="welcome">Your money, under control.</p>
+      <h1>💜 Takar Machine</h1>
+      <p id="welcome">Your money, under control.</p>
     </div>
     <button class="lang" id="language">বাংলা</button>
-   </div>
-   <div id="homeBalanceSummary">
-  <div class="label" id="balanceLabel" style="color:#f5e9f8">TOTAL BALANCE · SAR</div>
-  <div class="balance" id="balance">0.00</div>
-  <small id="currencyHint" style="color:#f5e9f8">Main currency: SAR</small>
-</div>
+  </div>
+
+  <div id="homeBalanceSummary">
+    <div class="label" id="balanceLabel" style="color:#f5e9f8">
+      TOTAL BALANCE · SAR
+    </div>
+    <div class="balance" id="balance">0.00</div>
+    <small id="currencyHint" style="color:#f5e9f8">
+      Main currency: SAR
+    </small>
+  </div>
   </header>
   <main>
    <section id="home">
