@@ -65,7 +65,58 @@
    .wallet-card-balance{font-weight:bold;white-space:nowrap}
    .wallet-menu{border:0;background:transparent;font-size:22px}
    .secondary{width:100%;padding:11px;border:1px solid #ddd2e2;border-radius:10px;background:#fff;color:var(--purple);font-weight:650}
-   .profile-menu{width:100%;text-align:left;border:1px solid #eee8f0;display:block}
+   .profile-menu{width:100%;text-align:left;border:1px solid #eee8f0;display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none;cursor:pointer;transition:transform .15s,border-color .15s;min-width:0}
+   .profile-menu:active{transform:scale(.99)}
+   .profile-page-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 4px 17px}
+   .profile-page-heading h2{font-size:25px;margin:4px 0 3px;letter-spacing:-.4px}
+   .profile-page-heading p,.profile-section-heading p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+   .profile-eyebrow{font-size:9px;font-weight:800;letter-spacing:1.2px;color:var(--purple)}
+   .profile-heading-settings{width:42px;height:42px;border:1px solid #eaddec;border-radius:14px;background:var(--card);color:var(--purple);font-size:20px}
+   .profile-identity{background:linear-gradient(135deg,var(--card) 55%,#f7eafa);border-color:#eaddec;box-shadow:0 7px 22px #51225d0c}
+   .profile-avatar-wrap{position:relative;flex:0 0 76px;width:76px;height:76px}
+   .profile-avatar{width:76px;height:76px;flex:0 0 76px;overflow:hidden;border:3px solid #fff;outline:2px solid #e6c8ed;box-shadow:0 4px 12px #9224aa20;cursor:pointer;background:linear-gradient(135deg,#9224aa,#d28ade)}
+   .profile-avatar-initials{pointer-events:none}
+   .profile-avatar-camera{position:absolute;right:-2px;bottom:-2px;width:27px;height:27px;display:grid;place-items:center;border:2px solid var(--card);border-radius:50%;background:var(--purple);color:#fff;font-size:12px;padding:0}
+   .profile-identity-info{padding-right:24px}
+   .profile-member-chip{display:inline-flex;align-items:center;gap:5px;margin-bottom:6px;padding:4px 7px;border-radius:7px;background:#eaf7ef;color:#187848;font-size:9px;font-weight:750}
+   .profile-member-chip span,.subscription-status-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#20a35a;margin-right:4px}
+   .profile-identity-info h2{font-size:18px;line-height:1.3;overflow-wrap:anywhere}
+   .profile-email{font-size:12px;margin-bottom:5px}
+   .profile-member-since{font-size:10px}
+   .profile-edit{top:12px;right:12px;width:33px;height:33px;background:#f5e8f8;color:var(--purple);font-size:20px}
+   .subscription-card{appearance:none;text-align:left;cursor:pointer}
+   .subscription-card strong{display:block}
+   .subscription-card-bottom strong{display:flex;align-items:center;color:#187848}
+   .subscription-status-dot{width:7px;height:7px;flex:0 0 7px}
+   .profile-section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:23px 4px 11px}
+   .profile-section-heading h3{font-size:15px;margin:0 0 3px}
+   .profile-menu-list{display:grid;gap:0}
+   .profile-menu-list .profile-menu,.profile-community{margin-bottom:9px;padding:13px 12px;border-radius:16px;box-shadow:0 2px 9px #33204406}
+   .profile-menu-icon{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:14px;font-size:21px;font-weight:750}
+   .profile-menu-icon.wallet{background:#e8f3ff;color:#277bc4}
+   .profile-menu-icon.budget{background:#fff2df;color:#c77b13}
+   .profile-menu-icon.savings{background:#e5f8ed;color:#16845b}
+   .profile-menu-icon.security{background:#f2e9ff;color:#8052bf}
+   .profile-menu-icon.community{background:#e8f1ff;color:#2167d5;font-family:Arial,sans-serif;font-size:24px}
+   .profile-menu-copy{display:block;flex:1;min-width:0}
+   .profile-menu-copy strong{display:block;font-size:13px;line-height:1.45}
+   .profile-menu-copy small{display:block;margin-top:4px;font-size:10px;line-height:1.5;color:var(--muted)}
+   .profile-menu-arrow{flex:0 0 auto;color:#a59aa9;font-size:24px;padding-left:2px}
+   .profile-community-heading{margin-top:20px}
+   .profile-preferences-heading{margin-top:22px}
+   .profile-text-action{border:0;background:transparent;color:var(--purple);font-size:11px;font-weight:750;white-space:nowrap;padding:6px 0}
+   .profile-preferences{padding:3px 13px;margin-bottom:12px}
+   .profile-preference-row{width:100%;display:flex;align-items:center;gap:11px;text-align:left;padding:13px 0;border:0;border-bottom:1px solid #eee8f0;background:transparent;color:var(--text)}
+   .profile-preference-row:last-child{border-bottom:0}
+   .profile-preference-icon{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border-radius:11px;background:var(--bg);font-size:17px}
+   .profile-preference-row>span:nth-child(2){flex:1;min-width:0}
+   .profile-preference-row strong{display:block;font-size:12px}
+   .profile-preference-row small{display:block;margin-top:3px;font-size:10px;line-height:1.4}
+   .profile-preference-action,.profile-preference-arrow{color:var(--purple);font-size:10px;white-space:nowrap}
+   .profile-preference-arrow{font-size:22px;color:#a59aa9}
+   .profile-footer-note{text-align:center;font-size:10px;color:var(--muted);padding:8px 0 4px}
+   .profile-footer-note strong{color:#d95360}
+   @media(max-width:360px){.profile-identity{gap:10px;padding:15px 12px}.profile-avatar-wrap,.profile-avatar{width:64px;height:64px;flex-basis:64px}.profile-identity-info h2{font-size:16px}.profile-menu-copy small{font-size:9px}}
    
 .profile-identity{
   display:flex;
@@ -252,142 +303,114 @@
     <div id="walletList"></div>
    </section>
 
-<section hidden id="profilePage">
-  <h2 style="margin:10px 5px 20px">প্রোফাইল</h2>
-
-  <div class="card profile-identity">
-    <div class="profile-avatar"
-         onclick="chooseProfilePhoto()"
-         role="button"
-         tabindex="0"
-         aria-label="Change profile photo"
-         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();chooseProfilePhoto();}">
-      AA
-      <span class="profile-avatar-camera">📷</span>
+<section hidden id="profilePage" class="profile-page">
+  <div class="profile-page-heading">
+    <div>
+      <span class="profile-eyebrow">TAKAR MACHINE ACCOUNT</span>
+      <h2>প্রোফাইল</h2>
+      <p>আপনার অ্যাকাউন্ট ও ব্যক্তিগত পছন্দসমূহ</p>
     </div>
-
-    <div class="profile-identity-info">
-      <h2>Azad ali</h2>
-      <div class="profile-email">azada5611@gmail.com</div>
-      <small>Member since June 2026</small>
-    </div>
-
-    <button class="profile-edit" type="button"
-            onclick="editProfile()" aria-label="Edit profile">✎</button>
-
-    <input id="tmProfilePhotoInput" type="file"
-           accept="image/*" hidden
-           onchange="handleProfilePhoto(event)">
+    <button class="profile-heading-settings" type="button" onclick="showPage('settings')" aria-label="Open settings">⚙</button>
   </div>
 
-  <div class="subscription-card">
-    <div class="subscription-card-top">
-      <div class="subscription-card-icon" aria-hidden="true">✦</div>
-      <div class="subscription-card-copy">
-        <span class="subscription-card-kicker">TAKAR MACHINE</span>
+  <div class="card profile-identity">
+    <div class="profile-avatar-wrap">
+      <div class="profile-avatar" onclick="chooseProfilePhoto()" role="button" tabindex="0"
+           aria-label="Change profile photo"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();chooseProfilePhoto();}">
+        <span class="profile-avatar-initials">AA</span>
+      </div>
+      <button class="profile-avatar-camera" type="button" onclick="chooseProfilePhoto()" aria-label="Change profile photo">📷</button>
+    </div>
+    <div class="profile-identity-info">
+      <span class="profile-member-chip"><span></span> সদস্য অ্যাকাউন্ট</span>
+      <h2>Azad ali</h2>
+      <div class="profile-email">azada5611@gmail.com</div>
+      <small class="profile-member-since">সদস্য হয়েছেন: জুন ২০২৬</small>
+    </div>
+    <button class="profile-edit" type="button" onclick="editProfile()" aria-label="Edit profile">✎</button>
+    <input id="tmProfilePhotoInput" type="file" accept="image/*" hidden onchange="handleProfilePhoto(event)">
+  </div>
+   <button class="subscription-card" type="button" onclick="showPage('settings')" aria-label="View subscription details">
+    <span class="subscription-card-top">
+      <span class="subscription-card-icon" aria-hidden="true">✦</span>
+      <span class="subscription-card-copy">
+        <span class="subscription-card-kicker">TAKAR MACHINE PREMIUM</span>
         <strong>সাবস্ক্রিপশন প্ল্যান</strong>
         <small>আপনি প্রিমিয়াম ইউজার</small>
         <small>মেয়াদ: 30 November 2026</small>
-      </div>
+      </span>
       <span class="subscription-card-arrow" aria-hidden="true">›</span>
-    </div>
-    <div class="subscription-card-bottom">
-      <div>
-        <small>MEMBERSHIP</small>
-        <strong>সক্রিয়</strong>
-      </div>
-      <span class="subscription-card-tag">বিস্তারিত দেখুন</span>
-    </div>
-  </div>
-
-  <button class="card profile-menu" type="button"
-          onclick="openProfileMenu('wallet')">
-    💳 <strong>আমার ওয়ালেট</strong>
-    <br><small>Manage your wallets</small>
-    <span style="float:right">›</span>
+    </span>
+    <span class="subscription-card-bottom">
+      <span><small>MEMBERSHIP STATUS</small><strong><span class="subscription-status-dot"></span> সক্রিয়</strong></span>
+      <span class="subscription-card-tag">বিস্তারিত দেখুন&nbsp; ›</span>
+    </span>
   </button>
 
-  <a class="card profile-menu"
-     href="https://www.facebook.com/takarmachine"
-     target="_blank"
-     rel="noopener noreferrer"
-     style="display:block;text-decoration:none;color:inherit">
-    👥 <strong>আমাদের ফেসবুক কমিউনিটিতে যোগ দিন</strong>
-    <br>
-    <small>আমার হিসাব সম্পর্কিত গুরুত্বপূর্ণ আপডেট পেতে আমাদের গ্রুপ সাপোর্টে থাকুন</small>
-    <span style="float:right">›</span>
+  <div class="profile-section-heading">
+    <div><h3>আপনার অর্থ ব্যবস্থাপনা</h3><p>দৈনন্দিন হিসাবের প্রয়োজনীয় শর্টকাট</p></div>
+  </div>
+  <div class="profile-menu-list">
+    <button class="card profile-menu" type="button" onclick="openProfileMenu('wallet')">
+      <span class="profile-menu-icon wallet">▣</span><span class="profile-menu-copy"><strong>আমার ওয়ালেট</strong><small>ওয়ালেট, ব্যালেন্স ও লেনদেন পরিচালনা করুন</small></span><span class="profile-menu-arrow">›</span>
+    </button>
+    <button class="card profile-menu" type="button" onclick="openProfileMenu('budget')">
+      <span class="profile-menu-icon budget">◷</span><span class="profile-menu-copy"><strong>বাজেট পরিকল্পনা</strong><small>মাসিক বাজেট তৈরি ও খরচ ট্র্যাক করুন</small></span><span class="profile-menu-arrow">›</span>
+    </button>
+    <button class="card profile-menu" type="button" onclick="openProfileMenu('savings')">
+      <span class="profile-menu-icon savings">◎</span><span class="profile-menu-copy"><strong>সঞ্চয় পরিকল্পনা</strong><small>লক্ষ্য তৈরি করুন ও সঞ্চয়ের অগ্রগতি দেখুন</small></span><span class="profile-menu-arrow">›</span>
+    </button>
+    <button class="card profile-menu" type="button" onclick="openProfileMenu('pin')">
+      <span class="profile-menu-icon security">♙</span><span class="profile-menu-copy"><strong>PIN সিকিউরিটি</strong><small>আপনার অ্যাপের PIN সেট বা পরিবর্তন করুন</small></span><span class="profile-menu-arrow">›</span>
+    </button>
+  </div>
+
+  <div class="profile-section-heading profile-community-heading">
+    <div><h3>যোগাযোগ ও সহায়তা</h3><p>সাহায্য পেতে আমাদের Facebook পেজে যোগাযোগ করুন</p></div>
+  </div>
+  <a class="card profile-menu profile-community" href="https://www.facebook.com/takarmachine" target="_blank" rel="noopener noreferrer">
+    <span class="profile-menu-icon community">f</span><span class="profile-menu-copy"><strong>আমাদের Facebook পেজে মেসেজ করুন</strong><small>আপনার প্রশ্ন বা সহায়তার জন্য সরাসরি মেসেজ পাঠান</small></span><span class="profile-menu-arrow">↗</span>
   </a>
 
-  <button class="card profile-menu" type="button"
-          onclick="openProfileMenu('pin')">
-    🔐 <strong>PIN সিকিউরিটি</strong>
-    <br><small>PIN Security settings</small>
-    <span style="float:right">›</span>
-  </button>
-
-  <button class="card profile-menu" type="button"
-          onclick="openProfileMenu('budget')">
-    🟠 <strong>বাজেট পরিকল্পনা</strong>
-    <br><small>মাসিক বাজেট তৈরি ও ট্র্যাক করুন</small>
-    <span style="float:right">›</span>
-  </button>
-
-  <button class="card profile-menu" type="button"
-          onclick="openProfileMenu('savings')">
-    🎯 <strong>সঞ্চয় পরিকল্পনা</strong>
-    <br><small>সঞ্চয়ের লক্ষ্য তৈরি ও ট্র্যাক করুন</small>
-    <span style="float:right">›</span>
-  </button>
- 
-  <!-- Profile Preferences -->
-  <h3 style="margin:24px 5px 12px">পছন্দসমূহ</h3>
-
-  <div class="card" style="margin-bottom:14px">
-
-    <div style="padding:14px 0;border-bottom:1px solid #eee">
-      <strong>🌐 ভাষা</strong>
-      <br>
-      <small>অ্যাপের ভাষা পরিবর্তন করুন</small>
-      <button class="secondary" type="button"
-              onclick="toggleLanguage()">ভাষা পরিবর্তন</button>
-    </div>
-
-    <div style="padding:14px 0;border-bottom:1px solid #eee">
-      <strong>🌗 থিম</strong>
-      <br>
-      <small>অ্যাপের Light/Dark থিম</small>
-    </div>
-
-    <div style="padding:14px 0;border-bottom:1px solid #eee">
-      <strong>🎨 থিম কালার</strong>
-      <span style="float:right">Peach ›</span>
-    </div>
-
-    <div style="padding:14px 0;border-bottom:1px solid #eee">
-      <strong>🔠 ফন্ট সাইজ</strong>
-      <span style="float:right">T ›</span>
-    </div>
-
-    <div style="padding:14px 0;border-bottom:1px solid #eee">
-      <strong>💱 মুদ্রা নির্ধারণ</strong>
-      <span style="float:right">›</span>
-    </div>
-
-    <div style="padding:14px 0">
-      <strong>💰 কারেন্সি দেখাবো</strong>
-      <span style="float:right">›</span>
-    </div>
-
+  <div class="profile-section-heading profile-preferences-heading">
+    <div><h3>পছন্দসমূহ</h3><p>অ্যাপটি আপনার মতো করে সাজান</p></div>
+    <button type="button" class="profile-text-action" onclick="showPage('settings')">সব সেটিংস ›</button>
   </div>
- 
+  <div class="card profile-preferences">
+    <button class="profile-preference-row" type="button" onclick="toggleLanguage()">
+      <span class="profile-preference-icon">🌐</span><span><strong>ভাষা</strong><small>অ্যাপের ভাষা পরিবর্তন করুন</small></span><span class="profile-preference-action">পরিবর্তন ›</span>
+    </button>
+    <button class="profile-preference-row" type="button" onclick="showPage('settings')">
+      <span class="profile-preference-icon">🎨</span><span><strong>থিম ও রং</strong><small>Light/Dark মোড এবং থিম কালার</small></span><span class="profile-preference-arrow">›</span>
+    </button>
+    <button class="profile-preference-row" type="button" onclick="showPage('settings')">
+      <span class="profile-preference-icon">💱</span><span><strong>মুদ্রা ও প্রদর্শন</strong><small>কারেন্সি এবং অ্যাপের প্রদর্শন সেটিংস</small></span><span class="profile-preference-arrow">›</span>
+    </button>
+  </div>
+  <p class="profile-footer-note">আপনার হিসাব, আপনার নিয়ন্ত্রণ। <strong>♥</strong> Takar Machine</p>
 </section>
 
    <section hidden id="savingsPage">
     <div class="card">
      <h2>সঞ্চয় পরিকল্পনা</h2>
-     <p>Savings planning will be built in a later step.</p>
-     <button class="primary" onclick="showPage('home')">Back to home</button>
+     <p>আপনার সঞ্চয়ের লক্ষ্য তৈরি করুন, জমার পরিমাণ যোগ করুন এবং অগ্রগতি দেখুন।</p>
+     <form id="savingsForm">
+      <label for="savingsName">লক্ষ্যের নাম</label>
+      <input id="savingsName" type="text" maxlength="70" placeholder="যেমন: জরুরি ফান্ড" required>
+      <label for="savingsTarget">লক্ষ্য পরিমাণ (SAR)</label>
+      <input id="savingsTarget" type="number" min="0.01" step="0.01" placeholder="লক্ষ্য পরিমাণ লিখুন" required>
+      <label for="savingsDeadline">লক্ষ্য পূরণের তারিখ (ঐচ্ছিক)</label>
+      <input id="savingsDeadline" type="date">
+      <button class="primary" type="submit">＋ সঞ্চয়ের লক্ষ্য তৈরি করুন</button>
+     </form>
     </div>
+    <div class="card">
+     <h2>আমার সঞ্চয়ের লক্ষ্য</h2>
+     <div id="savingsSummary" class="label">এখনও কোনো সঞ্চয়ের লক্ষ্য তৈরি করা হয়নি।</div>
+     <div id="savingsList"></div>
+    </div>
+    <button class="secondary" onclick="showPage('profile')" type="button">← প্রোফাইলে ফিরে যান</button>
    </section>
    
 <section hidden id="settingsPage">
@@ -535,8 +558,8 @@
   </nav>
   <script>
    const $=id=>document.getElementById(id);
-const budgetKey='takarBudgets',walletKey='tm-wallets',transferKey='tm-transfers';
-const translations={
+const budgetKey='takarBudgets',walletKey='tm-wallets',transferKey='tm-transfers',savingsKey='tm-savings-goals';
+ const translations={
 en:{welcome:'Your money, under control.',balance:'TOTAL BALANCE',income:'Total income',expenses:'Total expenses',quick:'Quick entry',addIncome:'＋ Income',addExpense:'− Expense',recent:'Recent transactions',name:'Description',amount:'Amount',category:'Category',save:'Save transaction',money:'Money',saved:'Transaction saved.',invalid:'Enter a valid amount.',empty:'No transactions yet. Add your first one!',back:'Back to home',footer:'Takar Machine · Your personal money journal'},
 bn:{welcome:'আপনার টাকার হিসাব, আপনার নিয়ন্ত্রণে।',balance:'মোট ব্যালেন্স',income:'মোট আয়',expenses:'মোট ব্যয়',quick:'দ্রুত যোগ করুন',addIncome:'＋ আয়',addExpense:'− ব্যয়',recent:'সাম্প্রতিক লেনদেন',name:'বিবরণ',amount:'পরিমাণ',category:'ক্যাটাগরি',save:'লেনদেন সংরক্ষণ',money:'আয়-ব্যয়',saved:'লেনদেন সংরক্ষিত হয়েছে।',invalid:'সঠিক পরিমাণ লিখুন।',empty:'এখনও কোনো লেনদেন নেই। প্রথমটি যোগ করুন!',back:'হোমে ফিরুন',footer:'টাকার মেশিন · আপনার ব্যক্তিগত হিসাব'}
 };
@@ -548,6 +571,7 @@ let transactions=JSON.parse(localStorage.getItem('tm-transactions')||'[]');
 let budgets=JSON.parse(localStorage.getItem(budgetKey)||'{}');
 let wallets=JSON.parse(localStorage.getItem(walletKey)||'[]');
 let transfers=JSON.parse(localStorage.getItem(transferKey)||'[]');
+let savingsGoals=JSON.parse(localStorage.getItem(savingsKey)||'[]');
 let activePage='home';
 
 const categories={
@@ -560,6 +584,7 @@ function saveData(){
  localStorage.setItem(budgetKey,JSON.stringify(budgets));
  localStorage.setItem(walletKey,JSON.stringify(wallets));
  localStorage.setItem(transferKey,JSON.stringify(transfers));
+ localStorage.setItem(savingsKey,JSON.stringify(savingsGoals));
  localStorage.setItem('tm-language',language);
 }
 
@@ -750,6 +775,7 @@ function showPage(page){
  }
  if(page==='wallet')renderWallets();
  if(page==='budget')renderBudgets();
+ if(page==='savings')renderSavings();
  if(page==='hisab')renderReport();
  window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -988,17 +1014,16 @@ function renderProfile(){
 
  if(avatar){
   const photo=localStorage.getItem('tm-profile-photo');
-
+  const initials=avatar.querySelector('.profile-avatar-initials');
   if(photo){
-   avatar.textContent='';
    avatar.style.backgroundImage='url("'+photo+'")';
    avatar.style.backgroundSize='cover';
    avatar.style.backgroundPosition='center';
    avatar.style.backgroundRepeat='no-repeat';
+   if(initials)initials.textContent='';
   }else{
    avatar.style.backgroundImage='';
-   avatar.textContent=name.trim().split(/\s+/).slice(0,2)
-    .map(part=>part[0]).join('').toUpperCase();
+   if(initials)initials.textContent=name.trim().split(/\s+/).slice(0,2).map(part=>part[0]).join('').toUpperCase();
   }
  }
 }
@@ -1119,7 +1144,7 @@ function walletOptions(id){
    wallet.name=name.trim();
    saveData();renderWallets();fillWalletSelect();
   }
- }else if(action==='2'){
+}else if(action==='2'){
   if(transactions.some(t=>t.walletId===id)||transfers.some(t=>t.from===id||t.to===id)){
    alert('This wallet has transaction history and cannot be deleted.');
    return;
@@ -1207,6 +1232,71 @@ function deleteBudget(category){
  saveData();renderBudgets();
 }
 
+function renderSavings(){
+ const listEl=$('savingsList');
+ const summaryEl=$('savingsSummary');
+ if(!listEl||!summaryEl)return;
+ const totalTarget=savingsGoals.reduce((sum,g)=>sum+Number(g.target||0),0);
+ const totalSaved=savingsGoals.reduce((sum,g)=>sum+Number(g.saved||0),0);
+ summaryEl.textContent=savingsGoals.length
+  ? `মোট লক্ষ্য: ${money(totalTarget)} · মোট জমা: ${money(totalSaved)}`
+  : 'এখনও কোনো সঞ্চয়ের লক্ষ্য তৈরি করা হয়নি।';
+ if(!savingsGoals.length){
+  listEl.innerHTML='<div class="empty">প্রথম সঞ্চয়ের লক্ষ্যটি তৈরি করুন।</div>';
+  return;
+ }
+ listEl.innerHTML=savingsGoals.map(goal=>{
+  const target=Number(goal.target||0),saved=Number(goal.saved||0);
+  const pct=target>0?Math.min(100,Math.round(saved/target*100)):0;
+  const completed=target>0&&saved>=target;
+  return `<div style="padding:15px 0;border-bottom:1px solid #eee">
+   <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+    <div style="min-width:0"><strong>${escapeHTML(goal.name)}</strong><div><small>${goal.deadline?'লক্ষ্য তারিখ: '+escapeHTML(goal.deadline):'কোনো নির্দিষ্ট তারিখ নেই'}</small></div></div>
+    <strong class="${completed?'green':''}">${pct}%</strong>
+   </div>
+   <div style="display:flex;justify-content:space-between;gap:8px;margin-top:10px;font-size:13px"><span>জমা: ${money(saved)}</span><span>লক্ষ্য: ${money(target)}</span></div>
+   <div style="height:8px;background:#eee;border-radius:8px;margin-top:8px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${completed?'#16845b':'var(--purple)'}"></div></div>
+   ${completed?'<p class="green" style="margin:9px 0 0">🎉 লক্ষ্য পূরণ হয়েছে!</p>':''}
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+    <button type="button" class="secondary" onclick="addSavingsAmount('${escapeHTML(goal.id)}')">＋ জমা যোগ করুন</button>
+    <button type="button" class="secondary" onclick="deleteSavingsGoal('${escapeHTML(goal.id)}')">লক্ষ্য মুছুন</button>
+   </div>
+  </div>`;
+ }).join('');
+}
+
+$('savingsForm').addEventListener('submit',function(event){
+ event.preventDefault();
+ const name=$('savingsName').value.trim();
+ const target=Number($('savingsTarget').value);
+ const deadline=$('savingsDeadline').value;
+ if(!name||!Number.isFinite(target)||target<=0){alert('লক্ষ্যের নাম ও সঠিক পরিমাণ লিখুন।');return;}
+ savingsGoals.push({id:'sg'+Date.now(),name,target,saved:0,deadline,createdAt:new Date().toISOString()});
+ saveData();
+ this.reset();
+ renderSavings();
+ alert('সঞ্চয়ের লক্ষ্য তৈরি হয়েছে।');
+});
+
+function addSavingsAmount(id){
+ const goal=savingsGoals.find(item=>item.id===id);
+ if(!goal)return;
+ const raw=prompt(`“${goal.name}” লক্ষ্যে কত টাকা জমা যোগ করবেন? (SAR)`);
+ if(raw===null||raw.trim()==='')return;
+ const amount=Number(raw);
+ if(!Number.isFinite(amount)||amount<=0){alert('সঠিক জমার পরিমাণ লিখুন।');return;}
+ goal.saved=Number(goal.saved||0)+amount;
+ saveData();renderSavings();
+}
+
+function deleteSavingsGoal(id){
+ const goal=savingsGoals.find(item=>item.id===id);
+ if(!goal)return;
+ if(!confirm(`“${goal.name}” সঞ্চয়ের লক্ষ্যটি মুছে ফেলবেন?`))return;
+ savingsGoals=savingsGoals.filter(item=>item.id!==id);
+ saveData();renderSavings();
+}
+
 function setReportPeriod(period){
  reportPeriod=period;
  document.querySelectorAll('[data-report]').forEach(b=>b.classList.toggle('active',b.dataset.report===period));
@@ -1272,7 +1362,7 @@ function toggleLanguage(){
 $('language').addEventListener('click',toggleLanguage);
 
 function exportData(){
- const data={transactions,budgets,wallets,transfers,exportedAt:new Date().toISOString()};
+ const data={transactions,budgets,wallets,transfers,savingsGoals,exportedAt:new Date().toISOString()};
  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
  const url=URL.createObjectURL(blob);
  const a=document.createElement('a');
