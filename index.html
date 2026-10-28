@@ -338,7 +338,7 @@
   </style>
  </head>
  <body>
-  <header>
+  <header id="homeHeader">
    <div class="top">
     <div>
      <h1>💜 Takar Machine</h1>
@@ -1009,6 +1009,11 @@ function renderIEPage() {
 }
 function showPage(page){
  activePage=page;
+
+ const homeHeader = document.getElementById('homeHeader');
+ if (homeHeader) {
+   homeHeader.hidden = page !== 'home';
+ }
  const homeBalanceSummary = document.getElementById('homeBalanceSummary');
 if (homeBalanceSummary) {
   homeBalanceSummary.hidden = page !== 'home';
