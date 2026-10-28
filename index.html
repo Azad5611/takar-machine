@@ -1400,9 +1400,9 @@ function showPage(page){
   budget:'budgetPage',
   wallet:'walletPage',
   savings:'savingsPage',
-  hisab:'hisabPage'
-  diary: 'diaryPage',
- };
+  hisab:'hisabPage',
+  diary:'diaryPage'
+};
 
  Object.values(pages).forEach(id=>$(id).hidden=true);
  $(pages[page]||'home').hidden=false;
