@@ -635,14 +635,33 @@
 .diary-note button {
   margin: 8px 8px 0 0;
 }
-   
+   /* Falling money coin animation */
+.money-coin {
+  position: fixed;
+  top: -45px;
+  z-index: 999;
+  pointer-events: none;
+  font-size: 25px;
+  animation: coinFall 3s linear forwards;
+}
+
+@keyframes coinFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(540deg);
+    opacity: 0.9;
+  }
+}
   </style>
  </head>
  <body>
   <header id="homeHeader">
   <div class="top">
     <div>
-      <h1>💜 Takar Machine</h1>
+      <h1>🪙 Takar Machine</h1>
       <p id="welcome">Your money, under control.</p>
     </div>
     <button class="lang" id="language">বাংলা</button>
@@ -2053,7 +2072,39 @@ function clearDiaryEditor() {
   document.getElementById('diaryTitle').value = '';
   document.getElementById('diaryContent').value = '';
 }
-   
+   // Takar Machine: limited falling coin pile
+(function startMoneyRain() {
+  const maxCoins = 12;
+  let pile = 0;
+
+  function dropCoin() {
+    if (document.hidden || pile >= maxCoins) return;
+
+    const coin = document.createElement('span');
+    coin.className = 'money-coin';
+    coin.textContent = '🪙';
+    coin.style.left = (8 + Math.random() * 84) + 'vw';
+    coin.style.animationDuration = '3s';
+
+    document.body.appendChild(coin);
+    pile++;
+
+    setTimeout(() => {
+      coin.style.animation = 'none';
+      coin.style.position = 'fixed';
+      coin.style.top = 'auto';
+      coin.style.bottom = '8px';
+      coin.style.left = (8 + (pile % 8) * 10) + 'vw';
+      coin.style.opacity = '1';
+    }, 3000);
+  }
+
+  dropCoin();
+  const timer = setInterval(() => {
+    if (pile >= maxCoins) clearInterval(timer);
+    else dropCoin();
+  }, 1200);
+})();
   </script>
  </body>
 </html>
