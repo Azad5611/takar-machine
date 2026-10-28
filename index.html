@@ -579,6 +579,63 @@
   cursor: pointer;
 }
    
+.diary-editor label {
+  display: block;
+  margin: 14px 0 7px;
+  font-weight: 650;
+}
+
+.diary-editor input,
+.diary-editor textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  border: 1px solid #e5d9eb;
+  border-radius: 12px;
+  background: #fff;
+  color: #292431;
+  font: inherit;
+}
+
+.diary-editor textarea {
+  min-height: 180px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.diary-editor button {
+  margin-top: 12px;
+}
+
+.diary-note {
+  padding: 15px 0;
+  border-bottom: 1px solid #eee7f1;
+}
+
+.diary-note:last-child {
+  border-bottom: none;
+}
+
+.diary-note h3 {
+  margin: 0 0 8px;
+  overflow-wrap: anywhere;
+}
+
+.diary-note p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+  margin: 0 0 10px;
+}
+
+.diary-note small {
+  color: var(--muted);
+}
+
+.diary-note button {
+  margin: 8px 8px 0 0;
+}
+   
   </style>
  </head>
  <body>
@@ -954,18 +1011,61 @@
     </div>
     <button class="secondary" onclick="showPage('profile')" type="button">Back to profile</button>
    </section>
+   
+<section id="diaryPage" hidden>
+  <div class="wallet-header">
+    <button class="wallet-back" type="button" onclick="showPage('home')">←</button>
+    <h2>📝 Notepad</h2>
+  </div>
+
+  <div class="card diary-editor">
+    <label for="diaryTitle">Note title</label>
+    <input id="diaryTitle" maxlength="120" placeholder="Enter note title">
+
+    <label for="diaryContent">Your notes</label>
+    <textarea id="diaryContent" rows="10" maxlength="20000"
+      placeholder="Write your notes, market list, duas or daily diary here..."></textarea>
+
+    <button class="primary" type="button" onclick="saveDiaryNote()">＋ Save note</button>
+    <button class="secondary" type="button" onclick="clearDiaryEditor()">Clear editor</button>
+  </div>
+
+  <div class="card">
+    <h2>Saved notes</h2>
+    <div id="diaryNotes"></div>
+  </div>
+</section>
+   
    <footer id="footerText">Takar Machine · Your personal money journal</footer>
   </main>
-  <nav>
-   <button data-page="profile"><span>👤</span><b data-bn="প্রোফাইল" data-en="Profile">Profile</b></button>
-   <button class="active" data-page="home"><span>⌂</span><b data-bn="হোম" data-en="Home">Home</b></button>
-   <button data-page="transactions">
-  <span>▤</span>
-  <b data-bn="আয়-ব্যয়" data-en="আয়-ব্যয়">আয়-ব্যয়</b>
-   </button>
-   <button data-page="hisab"><span>📒</span><b data-bn="হিসাব" data-en="Hisab">Hisab</b></button>
-   <button data-page="savings"><span>◎</span><b data-bn="সঞ্চয়" data-en="Savings">Savings</b></button>
-  </nav>
+  
+<nav>
+  <button data-page="profile">
+    <span>👤</span>
+    <b data-bn="প্রোফাইল" data-en="Profile">Profile</b>
+  </button>
+
+  <button class="active" data-page="home">
+    <span>⌂</span>
+    <b data-bn="হোম" data-en="Home">Home</b>
+  </button>
+
+  <button data-page="transactions">
+    <span>▤</span>
+    <b data-bn="আয়-ব্যয়" data-en="Income & Expense">Income & Expense</b>
+  </button>
+
+  <button data-page="hisab">
+    <span>📒</span>
+    <b data-bn="হিসাব" data-en="Hisab">Hisab</b>
+  </button>
+
+  <button data-page="diary">
+    <span>📝</span>
+    <b data-bn="নোটপ্যাড" data-en="Notepad">Notepad</b>
+  </button>
+</nav>
+
   <script>
    const $=id=>document.getElementById(id);
 const budgetKey='takarBudgets',walletKey='tm-wallets',transferKey='tm-transfers';
@@ -1282,6 +1382,7 @@ function showPage(page){
   wallet:'walletPage',
   savings:'savingsPage',
   hisab:'hisabPage'
+  diary: 'diaryPage',
  };
 
  Object.values(pages).forEach(id=>$(id).hidden=true);
@@ -1295,6 +1396,7 @@ function showPage(page){
  if (page === 'wallet') renderWallets();
  if (page === 'budget') renderBudgets();
  if (page === 'hisab') renderReport();
+ if (page === 'diary') renderDiaryNotes();
 
  window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1864,6 +1966,94 @@ function init(){
 }
 
 init();
+   
+function getDiaryNotes() {
+  try {
+    return JSON.parse(localStorage.getItem('tm-diary-notes') || '[]');
+  } catch {
+    return [];
+  }
+}
+
+function saveDiaryNote() {
+  const titleEl = document.getElementById('diaryTitle');
+  const contentEl = document.getElementById('diaryContent');
+
+  const title = titleEl.value.trim();
+  const content = contentEl.value.trim();
+
+  if (!title && !content) {
+    alert('Please enter a title or note.');
+    return;
+  }
+
+  const notes = getDiaryNotes();
+  notes.unshift({
+    id: Date.now().toString(),
+    title: title || 'Untitled note',
+    content,
+    date: new Date().toLocaleString()
+  });
+
+  localStorage.setItem('tm-diary-notes', JSON.stringify(notes));
+  titleEl.value = '';
+  contentEl.value = '';
+  renderDiaryNotes();
+}
+
+function renderDiaryNotes() {
+  const el = document.getElementById('diaryNotes');
+  if (!el) return;
+
+  const notes = getDiaryNotes();
+
+  if (!notes.length) {
+    el.innerHTML = '<div class="empty">No saved notes yet.</div>';
+    return;
+  }
+
+  el.innerHTML = notes.map(note => `
+    <div class="diary-note">
+      <h3>${escapeHTML(note.title)}</h3>
+      <p>${escapeHTML(note.content)}</p>
+      <small>${escapeHTML(note.date)}</small>
+      <div>
+        <button class="secondary" type="button"
+          onclick="editDiaryNote('${escapeHTML(note.id)}')">Edit</button>
+        <button class="secondary" type="button"
+          onclick="deleteDiaryNote('${escapeHTML(note.id)}')">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function editDiaryNote(id) {
+  const note = getDiaryNotes().find(n => n.id === id);
+  if (!note) return;
+
+  document.getElementById('diaryTitle').value = note.title;
+  document.getElementById('diaryContent').value = note.content;
+
+  const notes = getDiaryNotes().filter(n => n.id !== id);
+  localStorage.setItem('tm-diary-notes', JSON.stringify(notes));
+  renderDiaryNotes();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function deleteDiaryNote(id) {
+  if (!confirm('Delete this note?')) return;
+
+  const notes = getDiaryNotes().filter(n => n.id !== id);
+  localStorage.setItem('tm-diary-notes', JSON.stringify(notes));
+  renderDiaryNotes();
+}
+
+function clearDiaryEditor() {
+  document.getElementById('diaryTitle').value = '';
+  document.getElementById('diaryContent').value = '';
+}
+   
   </script>
  </body>
 </html>
