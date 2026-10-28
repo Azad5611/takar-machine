@@ -251,57 +251,95 @@
     <div class="wallet-section-title"><span></span><strong>সব ওয়ালেট</strong><span></span></div>
     <div id="walletList"></div>
    </section>
-   <section hidden id="profilePage">
-    <h2 style="margin:10px 5px 20px">প্রোফাইল</h2>
-    
-    
-<div class="card profile-identity">
-  <div class="profile-avatar"
-       onclick="chooseProfilePhoto()"
-       role="button"
-       tabindex="0"
-       aria-label="Change profile photo"
-       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();chooseProfilePhoto();}">
-    AA
-    <span class="profile-avatar-camera">📷</span>
+
+<section hidden id="profilePage">
+  <h2 style="margin:10px 5px 20px">প্রোফাইল</h2>
+
+  <div class="card profile-identity">
+    <div class="profile-avatar"
+         onclick="chooseProfilePhoto()"
+         role="button"
+         tabindex="0"
+         aria-label="Change profile photo"
+         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();chooseProfilePhoto();}">
+      AA
+      <span class="profile-avatar-camera">📷</span>
+    </div>
+
+    <div class="profile-identity-info">
+      <h2>Azad ali</h2>
+      <div class="profile-email">azada5611@gmail.com</div>
+      <small>Member since June 2026</small>
+    </div>
+
+    <button class="profile-edit" type="button"
+            onclick="editProfile()" aria-label="Edit profile">✎</button>
+
+    <input id="tmProfilePhotoInput" type="file"
+           accept="image/*" hidden
+           onchange="handleProfilePhoto(event)">
   </div>
 
-  <div class="profile-identity-info">
-    <h2>Azad ali</h2>
-    <div class="profile-email">azad5611@gmail.com</div>
-    <small>Member since June 2026</small>
-  </div>
-
-  <button class="profile-edit" type="button"
-          onclick="editProfile()" aria-label="Edit profile">✎</button>
-
-  <input id="tmProfilePhotoInput"
-         type="file"
-         accept="image/*"
-         hidden
-         onchange="handleProfilePhoto(event)">
-</div>
-    <div class="subscription-card">
-     <div class="subscription-card-top">
+  <div class="subscription-card">
+    <div class="subscription-card-top">
       <div class="subscription-card-icon" aria-hidden="true">✦</div>
       <div class="subscription-card-copy">
-       <span class="subscription-card-kicker">TAKAR MACHINE</span>
-       <strong>সাবস্ক্রিপশন প্ল্যান</strong>
-       <small>আপনার সদস্যতার তথ্য ও প্ল্যানের বিবরণ</small>
+        <span class="subscription-card-kicker">TAKAR MACHINE</span>
+        <strong>সাবস্ক্রিপশন প্ল্যান</strong>
+        <small>আপনি প্রিমিয়াম ইউজার</small>
+        <small>মেয়াদ: 30 November 2026</small>
       </div>
       <span class="subscription-card-arrow" aria-hidden="true">›</span>
-     </div>
-     <div class="subscription-card-bottom">
-      <div><small>MEMBERSHIP</small><strong>প্ল্যানের তথ্য</strong></div>
-      <span class="subscription-card-tag">বিস্তারিত দেখুন</span>
-     </div>
     </div>
-    <button class="card profile-menu" onclick="openProfileMenu('wallet')">💳 <strong>আমার ওয়ালেট</strong><br/><small>View your wallet and balance</small></button>
-    <button class="card profile-menu" onclick="openProfileMenu('community')">👥 <strong>আমাদের ফেসবুক কমিউনিটিতে যোগ দিন</strong><br/><small>হিসাব সম্পর্কিত গুরুত্বপূর্ণ আপডেট পেতে আমাদের গ্রুপ সাপোর্টে থাকুন</small></button>
-    <button class="card profile-menu" onclick="openProfileMenu('pin')">🔐 <strong>PIN Security</strong><br/><small>Protect your account</small></button>
-    <button class="card profile-menu" onclick="openProfileMenu('budget')">🟠 <strong>বাজেট পরিকল্পনা</strong><br/><small>মাসিক বাজেট তৈরি ও ট্র্যাক করুন</small></button>
-    <button class="card profile-menu" onclick="openProfileMenu('savings')">🎯 <strong>সঞ্চয় পরিকল্পনা</strong><br/><small>সঞ্চয়ের লক্ষ্য তৈরি ও ট্র্যাক করুন</small></button>
-   </section>
+    <div class="subscription-card-bottom">
+      <div>
+        <small>MEMBERSHIP</small>
+        <strong>সক্রিয়</strong>
+      </div>
+      <span class="subscription-card-tag">বিস্তারিত দেখুন</span>
+    </div>
+  </div>
+
+  <button class="card profile-menu" type="button"
+          onclick="openProfileMenu('wallet')">
+    💳 <strong>আমার ওয়ালেট</strong>
+    <br><small>Manage your wallets</small>
+    <span style="float:right">›</span>
+  </button>
+
+  <a class="card profile-menu"
+     href="https://www.facebook.com/takarmachine"
+     target="_blank"
+     rel="noopener noreferrer"
+     style="display:block;text-decoration:none;color:inherit">
+    👥 <strong>আমাদের ফেসবুক কমিউনিটিতে যোগ দিন</strong>
+    <br>
+    <small>আমার হিসাব সম্পর্কিত গুরুত্বপূর্ণ আপডেট পেতে আমাদের গ্রুপ সাপোর্টে থাকুন</small>
+    <span style="float:right">›</span>
+  </a>
+
+  <button class="card profile-menu" type="button"
+          onclick="openProfileMenu('pin')">
+    🔐 <strong>PIN সিকিউরিটি</strong>
+    <br><small>PIN Security settings</small>
+    <span style="float:right">›</span>
+  </button>
+
+  <button class="card profile-menu" type="button"
+          onclick="openProfileMenu('budget')">
+    🟠 <strong>বাজেট পরিকল্পনা</strong>
+    <br><small>মাসিক বাজেট তৈরি ও ট্র্যাক করুন</small>
+    <span style="float:right">›</span>
+  </button>
+
+  <button class="card profile-menu" type="button"
+          onclick="openProfileMenu('savings')">
+    🎯 <strong>সঞ্চয় পরিকল্পনা</strong>
+    <br><small>সঞ্চয়ের লক্ষ্য তৈরি ও ট্র্যাক করুন</small>
+    <span style="float:right">›</span>
+  </button>
+</section>
+
    <section hidden id="savingsPage">
     <div class="card">
      <h2>সঞ্চয় পরিকল্পনা</h2>
