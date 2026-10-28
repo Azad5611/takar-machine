@@ -1007,17 +1007,20 @@ function renderIEPage() {
 
   emptyElement.hidden = filtered.length > 0;
 }
+   
 function showPage(page){
  activePage=page;
 
  const homeHeader = document.getElementById('homeHeader');
  if (homeHeader) {
-   homeHeader.hidden = page !== 'home';
+  homeHeader.hidden = page !== 'home';
  }
+
  const homeBalanceSummary = document.getElementById('homeBalanceSummary');
-if (homeBalanceSummary) {
+ if (homeBalanceSummary) {
   homeBalanceSummary.hidden = page !== 'home';
-}
+ }
+
  const pages={
   home:'home',
   transactions:'otherPage',
@@ -1027,19 +1030,21 @@ if (homeBalanceSummary) {
   savings:'savingsPage',
   hisab:'hisabPage'
  };
+
  Object.values(pages).forEach(id=>$(id).hidden=true);
  $(pages[page]||'home').hidden=false;
- document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
- 
- if (page === 'transactions') {
-  renderIEPage();
- }
- if(page==='wallet')renderWallets();
- if(page==='budget')renderBudgets();
- if(page==='hisab')renderReport();
+
+ document.querySelectorAll('nav button').forEach(b=>
+  b.classList.toggle('active',b.dataset.page===page)
+ );
+
+ if (page === 'transactions') renderIEPage();
+ if (page === 'wallet') renderWallets();
+ if (page === 'budget') renderBudgets();
+ if (page === 'hisab') renderReport();
+
  window.scrollTo({top:0,behavior:'smooth'});
 }
-
 document.querySelectorAll('nav button').forEach(button=>{
  button.addEventListener('click',()=>showPage(button.dataset.page));
 });
