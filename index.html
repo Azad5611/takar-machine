@@ -491,6 +491,79 @@
   box-shadow: 0 3px 8px rgba(146, 36, 170, 0.18);
 }
    
+.transaction {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #f0ebf2;
+}
+
+.transaction:last-child {
+  border-bottom: none;
+}
+
+.transaction-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #f3eef8;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.transaction-icon.green {
+  color: #16845b;
+  background: #e8f6ee;
+}
+
+.transaction-icon.red {
+  color: #d95360;
+  background: #fff0f1;
+}
+
+.transaction-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.transaction-info .name {
+  font-size: 14px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.transaction-info small {
+  display: block;
+  margin-top: 5px;
+  color: #817987;
+  font-size: 12px;
+}
+
+.transaction-amount {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.transaction-amount strong {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.transaction-amount button {
+  display: block;
+  margin: 5px 0 0 auto;
+  padding: 3px 0;
+  border: 0;
+  background: transparent;
+  color: #d95360;
+  font-size: 12px;
+  cursor: pointer;
+}
+   
   </style>
  </head>
  <body>
@@ -984,17 +1057,21 @@ function render(){
  renderReport();
 }
 
+
 function transactionHTML(t){
- const sign=t.type==='income'?'+':'−';
- const color=t.type==='income'?'green':'red';
+ const sign = t.type === 'income' ? '+' : '−';
+ const color = t.type === 'income' ? 'green' : 'red';
+ const icon = t.type === 'income' ? '↙' : '↗';
+
  return `<div class="transaction">
-  <div style="min-width:0">
+  <div class="transaction-icon ${color}">${icon}</div>
+  <div class="transaction-info">
    <div class="name">${escapeHTML(t.name)}</div>
-   <small>${escapeHTML(t.category||'Other')} · ${escapeHTML(t.date||'')}</small>
+   <small>${escapeHTML(t.category || 'Other')} · ${escapeHTML(t.date || '')}</small>
   </div>
-  <div style="text-align:right">
+  <div class="transaction-amount">
    <strong class="${color}">${sign}${money(t.amount)}</strong>
-   <div><button type="button" onclick="deleteTransaction('${escapeHTML(t.id)}')" style="border:0;background:none;color:#d95360;font-size:12px">Delete</button></div>
+   <button type="button" onclick="deleteTransaction('${escapeHTML(t.id)}')">Delete</button>
   </div>
  </div>`;
 }
