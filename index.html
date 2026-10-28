@@ -346,9 +346,11 @@
     </div>
     <button class="lang" id="language">বাংলা</button>
    </div>
-   <div class="label" id="balanceLabel" style="color:#f5e9f8">TOTAL BALANCE · SAR</div>
-   <div class="balance" id="balance">0.00</div>
-   <small id="currencyHint" style="color:#f5e9f8">Main currency: SAR</small>
+   <div id="homeBalanceSummary">
+  <div class="label" id="balanceLabel" style="color:#f5e9f8">TOTAL BALANCE · SAR</div>
+  <div class="balance" id="balance">0.00</div>
+  <small id="currencyHint" style="color:#f5e9f8">Main currency: SAR</small>
+</div>
   </header>
   <main>
    <section id="home">
@@ -1007,6 +1009,10 @@ function renderIEPage() {
 }
 function showPage(page){
  activePage=page;
+ const homeBalanceSummary = document.getElementById('homeBalanceSummary');
+if (homeBalanceSummary) {
+  homeBalanceSummary.hidden = page !== 'home';
+}
  const pages={
   home:'home',
   transactions:'otherPage',
