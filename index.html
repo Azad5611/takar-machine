@@ -254,30 +254,33 @@
    <section hidden id="profilePage">
     <h2 style="margin:10px 5px 20px">প্রোফাইল</h2>
     
-    <div class="card profile-identity">
-     <div class="profile-avatar">AA</div>
-     <div class="profile-identity-info">
-      <h2>Azad ali</h2>
-      <div class="profile-email">azad5611@gmail.com</div>
-      <small>Member since June 2026</small>
-     </div>
-     <button class="profile-edit" type="button" onclick="editProfile()" aria-label="Edit profile">✎</button>
-     <input
- id="tmProfilePhotoInput"
- type="file"
- accept="image/*"
- hidden
- onchange="handleProfilePhoto(event)"
->
-<button
- type="button"
- onclick="chooseProfilePhoto()"
- class="profile-photo-change"
->
- Change Photo
-</button>
-    </div>
+    
+<div class="card profile-identity">
+  <div class="profile-avatar"
+       onclick="chooseProfilePhoto()"
+       role="button"
+       tabindex="0"
+       aria-label="Change profile photo"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();chooseProfilePhoto();}">
+    AA
+    <span class="profile-avatar-camera">📷</span>
+  </div>
 
+  <div class="profile-identity-info">
+    <h2>Azad ali</h2>
+    <div class="profile-email">azad5611@gmail.com</div>
+    <small>Member since June 2026</small>
+  </div>
+
+  <button class="profile-edit" type="button"
+          onclick="editProfile()" aria-label="Edit profile">✎</button>
+
+  <input id="tmProfilePhotoInput"
+         type="file"
+         accept="image/*"
+         hidden
+         onchange="handleProfilePhoto(event)">
+</div>
     <div class="subscription-card">
      <div class="subscription-card-top">
       <div class="subscription-card-icon" aria-hidden="true">✦</div>
