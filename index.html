@@ -37,10 +37,25 @@
    nav span{display:block;font-size:20px;margin-bottom:3px}
    input,select{width:100%;padding:12px;margin:6px 0 12px;border:1px solid #d9d2dd;border-radius:10px;background:white}
    .primary{width:100%;background:var(--purple);color:white;border:0;border-radius:12px;padding:13px;font-weight:700}
-   .empty{color:var(--muted);padding:15px 0;text-align:center}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--muted);
+  background: #faf7fc;
+  border: 1px dashed #dfd2e6;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
    footer{text-align:center;color:var(--muted);font-size:12px;padding:18px 0}
    [hidden]{display:none!important}
-   .period-card{margin-bottom:14px}
+   .period-card{margin-bottom:14px} like
    .period-card>div:last-child{flex-wrap:wrap}
    .period-btn{flex:1;min-width:75px;padding:10px 12px;border:1px solid #9224aa;border-radius:10px;background:#fff;color:#9224aa;font-size:13px;font-weight:600;cursor:pointer}
    .period-btn.active{background:#9224aa;color:#fff}
