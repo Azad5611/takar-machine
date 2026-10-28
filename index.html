@@ -635,33 +635,49 @@
 .diary-note button {
   margin: 8px 8px 0 0;
 }
-   /* Falling money coin animation */
-.money-coin {
-  position: fixed;
-  top: -45px;
-  z-index: 999;
-  pointer-events: none;
-  font-size: 25px;
-  animation: coinFall 3s linear forwards;
+   
+/* Coins falling into a pile beside the title */
+.coin-pile {
+  display: inline-block;
+  position: relative;
+  width: 58px;
+  height: 42px;
+  vertical-align: middle;
+  overflow: visible;
 }
 
-@keyframes coinFall {
-  0% {
-    transform: translateY(0) rotate(0deg);
+.money-coin {
+  position: fixed;
+  top: -35px;
+  z-index: 999;
+  pointer-events: none;
+  font-size: 23px;
+  line-height: 1;
+}
+
+.pile-coin {
+  position: absolute;
+  font-size: 22px;
+  line-height: 1;
+  transform: translateX(-50%);
+}
+
+@keyframes coinFallToPile {
+  from {
     opacity: 1;
   }
-  100% {
-    transform: translateY(100vh) rotate(540deg);
-    opacity: 0.9;
+  to {
+    opacity: 1;
   }
 }
+
   </style>
  </head>
  <body>
   <header id="homeHeader">
   <div class="top">
     <div>
-      <h1>🪙 Takar Machine</h1>
+      <h1><span id="coinPile" class="coin-pile"></span> Takar Machine</h1>
       <p id="welcome">Your money, under control.</p>
     </div>
     <button class="lang" id="language">বাংলা</button>
@@ -2072,38 +2088,81 @@ function clearDiaryEditor() {
   document.getElementById('diaryTitle').value = '';
   document.getElementById('diaryContent').value = '';
 }
-   // Takar Machine: limited falling coin pile
 (function startMoneyRain() {
-  const maxCoins = 12;
-  let pile = 0;
+  const pile = document.getElementById('coinPile');
+  if (!pile) return;
+
+  const positions = [
+    [14, 20], [29, 20], [44, 20], [59, 20],
+    [22, 7], [37, 7], [52, 7],
+    [30, -6], [45, -6],
+    [37, -18], [22, -18], [52, -18]
+  ];
+
+  let count = 0;
 
   function dropCoin() {
-    if (document.hidden || pile >= maxCoins) return;
+    if (document.hidden || count >= positions.length) return;
+
+    const rect = pile.getBoundingClientRect();
+    const [x, y] = positions[count];
 
     const coin = document.createElement('span');
     coin.className = 'money-coin';
     coin.textContent = '🪙';
-    coin.style.left = (8 + Math.random() * 84) + 'vw';
-    coin.style.animationDuration = '3s';
+
+    const startX = rect.left + rect.width / 2;
+    const startY = Math.max(0, rect.top - 100);
+
+    coin.style.left = startX + 'px';
+    coin.style.top = startY + 'px';
 
     document.body.appendChild(coin);
-    pile++;
 
-    setTimeout(() => {
-      coin.style.animation = 'none';
-      coin.style.position = 'fixed';
-      coin.style.top = 'auto';
-      coin.style.bottom = '8px';
-      coin.style.left = (8 + (pile % 8) * 10) + 'vw';
-      coin.style.opacity = '1';
-    }, 3000);
+    const endX = rect.left + x;
+    const endY = rect.top + y;
+
+    const animation = coin.animate([
+      {
+        left: startX + 'px',
+        top: startY + 'px',
+        transform: 'translate(-50%, 0) rotate(0deg) scale(1)'
+      },
+      {
+        left: endX + 'px',
+        top: endY + 'px',
+        transform: 'translate(-50%, 0) rotate(300deg) scale(.85)'
+      }
+    ], {
+      duration: 1100,
+      easing: 'cubic-bezier(.35,.05,.7,.4)',
+      fill: 'forwards'
+    });
+
+    animation.onfinish = () => {
+      coin.remove();
+
+      const settledCoin = document.createElement('span');
+      settledCoin.className = 'pile-coin';
+      settledCoin.textContent = '🪙';
+      settledCoin.style.left = x + 'px';
+      settledCoin.style.top = y + 'px';
+
+      pile.appendChild(settledCoin);
+    };
+
+    count++;
   }
 
   dropCoin();
+
   const timer = setInterval(() => {
-    if (pile >= maxCoins) clearInterval(timer);
-    else dropCoin();
-  }, 1200);
+    if (count >= positions.length) {
+      clearInterval(timer);
+    } else {
+      dropCoin();
+    }
+  }, 900);
 })();
   </script>
  </body>
