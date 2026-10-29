@@ -705,6 +705,122 @@
   }
 }
    
+/* Improved home income-expense summary */
+.period-card {
+  padding: 18px 16px;
+  border-radius: 20px;
+}
+
+.period-card #periodLabel {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.period-card > div[style*="display:flex"] {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px !important;
+}
+
+.period-btn {
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 5px;
+  border: 1px solid var(--purple);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--purple);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.period-btn.active {
+  background: var(--purple);
+  color: #fff;
+  box-shadow: 0 3px 8px #9224aa30;
+}
+
+.cards {
+  gap: 12px;
+}
+
+.cards > .card {
+  min-width: 0;
+  padding: 20px 16px;
+  border-radius: 20px;
+}
+
+.cards .label {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.cards .metric {
+  margin-top: 10px;
+  font-size: clamp(19px, 5vw, 27px);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+  line-height: 1.3;
+}
+
+@media (max-width: 360px) {
+  .period-card {
+    padding: 14px 10px;
+  }
+
+  .period-btn {
+    font-size: 11px;
+    padding: 9px 3px;
+  }
+
+  .cards {
+    gap: 8px;
+  }
+
+  .cards > .card {
+    padding: 16px 10px;
+  }
+   }
+ 
+.home-wallet-summary {
+  margin-top: 14px;
+  border-radius: 18px;
+  cursor: pointer;
+  border: 1px solid #eadcf0;
+  background: linear-gradient(135deg, #fff, #f8effb);
+}
+
+.home-wallet-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.home-wallet-arrow {
+  font-size: 25px;
+  color: var(--purple);
+}
+
+.home-wallet-total {
+  margin-top: 12px;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--purple);
+  overflow-wrap: anywhere;
+}
+
+.home-wallet-count {
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--muted);
+   }
+   
   </style>
  </head>
  <body>
@@ -744,6 +860,7 @@
       <button class="period-btn" data-period="all" type="button">Shob hisab</button>
      </div>
     </div>
+    
     <div class="cards">
      <div class="card">
       <div class="label" id="incomeLabel">Total income</div>
@@ -754,30 +871,39 @@
       <div class="metric red" id="expenses">-0.00</div>
      </div>
     </div>
-    <div class="card">
-     <h2 id="quickTitle">Quick entry</h2>
-     <div class="actions">
-      <button class="action" id="addIncome" type="button" onclick="showForm('income')">＋ Income</button>
-      <button class="action expense" id="addExpense" type="button" onclick="showForm('expense')">− Expense</button>
-     </div>
-    </div>
-    <div class="card" id="formCard" hidden>
-     <h2 id="formTitle">Add transaction</h2>
-     <form id="entryForm">
-      <label id="nameLabel" for="entryName">Description</label>
-      <input id="entryName" maxlength="120" placeholder="What was this for?" required>
-      <label id="amountLabel" for="entryAmount">Amount (SAR)</label>
-      <input id="entryAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required>
-      <label id="categoryLabel" for="entryCategory">Category</label>
-      <select id="entryCategory" required></select>
-      <label for="entryWallet">Wallet</label>
-      <select id="entryWallet" required></select>
-      <label for="entryDate">Date</label>
-      <input id="entryDate" type="date" required>
-      <button class="primary" id="saveButton" type="submit">Save transaction</button>
-      <button class="secondary" type="button" style="margin-top:8px" onclick="$('formCard').hidden=true">Cancel</button>
-     </form>
-    </div>
+
+<div class="cards">
+  <div class="card">
+    <div class="label" id="incomeLabel">Total income</div>
+    <div class="metric green" id="income">+0.00</div>
+  </div>
+  <div class="card">
+    <div class="label" id="expenseLabel">Total expenses</div>
+    <div class="metric red" id="expenses">-0.00</div>
+  </div>
+</div>
+
+<div class="card home-wallet-summary"
+     onclick="showPage('wallet')"
+     role="button"
+     tabindex="0"
+     onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showPage('wallet')}">
+  <div class="home-wallet-heading">
+    <span>👛 Wallet Balance</span>
+    <span class="home-wallet-arrow">›</span>
+  </div>
+  <div class="home-wallet-total" id="homeWalletTotal">SAR 0.00</div>
+  <div class="home-wallet-count" id="homeWalletCount">0 Wallets</div>
+</div>
+
+<div class="card">
+  <h2 id="quickTitle">Quick entry</h2>
+  <div class="actions">
+    <button class="action" id="addIncome" type="button" onclick="showForm('income')">＋ Income</button>
+    <button class="action expense" id="addExpense" type="button" onclick="showForm('expense')">− Expense</button>
+  </div>
+</div>
+    
     <div class="card">
      <h2 id="recentTitle">Recent transactions</h2>
      <div id="transactions"></div>
@@ -1243,8 +1369,9 @@ function render(){
  fillCategories();
  fillWalletSelect();
  renderAllTransactions();
- renderWallets();
- renderBudgets();
+renderWallets();
+renderHomeWalletSummary();
+renderBudgets();
  renderReport();
 }
 
@@ -1813,6 +1940,23 @@ function renderWallets(){
   </div>`).join('');
 }
 
+function renderHomeWalletSummary() {
+  calculateWalletBalances();
+
+  const total = wallets.reduce(
+    (sum, wallet) => sum + Number(wallet.balance || 0), 0
+  );
+
+  const totalEl = document.getElementById('homeWalletTotal');
+  const countEl = document.getElementById('homeWalletCount');
+
+  if (totalEl) totalEl.textContent = money(total);
+  if (countEl) {
+    countEl.textContent = wallets.length +
+      (language === 'bn' ? 'টি ওয়ালেট' : ' Wallets');
+  }
+}
+   
 function createWallet(){
  const name=prompt('Wallet name:');
  if(!name||!name.trim())return;
