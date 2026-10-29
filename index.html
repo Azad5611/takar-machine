@@ -671,17 +671,58 @@
   }
 }
 
+.header-shortcuts {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.header-shortcut {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #ffffff20;
+  color: white;
+  font-size: 19px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 380px) {
+  .header-shortcuts {
+    gap: 5px;
+  }
+
+  .header-shortcut {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+}
+   
   </style>
  </head>
  <body>
-  <header id="homeHeader">
+  
+<header id="homeHeader">
   <div class="top">
     <div>
       <h1><span id="coinPile" class="coin-pile"></span> Takar Machine</h1>
       <p id="welcome">Your money, under control.</p>
     </div>
-    <button class="lang" id="language">বাংলা</button>
+
+    <div class="header-shortcuts">
+      <button type="button" class="header-shortcut" onclick="exportData()" aria-label="Backup data" title="Backup data">☁️</button>
+      <button type="button" class="header-shortcut" onclick="alert('Notifications coming soon!')" aria-label="Notifications" title="Notifications">🔔</button>
+      <button class="lang" id="language" type="button">বাংলা</button>
+    </div>
   </div>
+
 
   <div id="homeBalanceSummary">
     <div class="label" id="balanceLabel" style="color:#f5e9f8">
