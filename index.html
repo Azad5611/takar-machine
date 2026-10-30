@@ -1870,16 +1870,6 @@ function editProfile(){
         autocomplete="email" placeholder="Enter your email" required>
       </div>
      </div>
-
-function editProfile(){
- const currentName=localStorage.getItem('tm-profile-name')||'Azad ali';
- const currentEmail=localStorage.getItem('tm-profile-email')||'azad5611@gmail.com';
- let selectedPhoto=localStorage.getItem('tm-profile-photo')||'';
-
- if(!document.getElementById('profileEditModal')){
-  const style=document.createElement('style');
-  style.id='profileEditStyles';
-  style.textContent=`
    .tm-edit-overlay{
     position:fixed;inset:0;z-index:9999;
     background:rgba(24,18,30,.55);
