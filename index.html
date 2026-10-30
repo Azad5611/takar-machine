@@ -7,7 +7,7 @@
   <meta content="#9224aa" name="theme-color"/>
   <title>Takar Machine</title>
   <style>
-   :root{--purple:#9224aa;--theme-color:#9224aa;--green:#16845b;--red:#d95360;--bg:#f8f6fa;--card:#fff;--text:#292431;--muted:#77717e}
+   :root{--purple:#6541C8;--theme-color:#6541C8;--green:#16845b;--red:#d95360;--bg:#f6f4fb;--card:#fff;--text:#29243a;--muted:#77717e;--gold:#D9A441}
    *{box-sizing:border-box}
    body{margin:0;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
    header{background:var(--purple);color:white;padding:24px 18px 28px;border-radius:0 0 24px 24px}
@@ -821,21 +821,55 @@
   color: var(--muted);
    }
    
-  </style>
+  
+/* Modern income/expense entry form */
+.tm-entry-card{border:1px solid #e8def7;border-radius:22px;padding:18px;background:linear-gradient(180deg,#fff 0%,#fcfaff 100%)}
+.tm-entry-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.tm-entry-heading h2{font-size:23px;margin:5px 0 0}
+.tm-entry-kicker{font-size:10px;font-weight:800;letter-spacing:1.4px;color:var(--purple)}
+.tm-entry-close{width:36px;height:36px;border:0;border-radius:50%;background:#f1ebfa;color:var(--purple);font-size:24px}
+.tm-entry-card label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}
+.tm-entry-card input,.tm-entry-card select{width:100%;margin:0;padding:13px;border:1px solid #e2d9ed;border-radius:12px;background:#fff}
+.tm-amount-wrap{display:flex;align-items:center;gap:9px;padding-left:12px;border:1px solid #e2d9ed;border-radius:12px;background:#fff}
+.tm-amount-wrap span{font-size:12px;font-weight:800;color:var(--purple)}
+.tm-amount-wrap input{border:0;font-size:22px;font-weight:800;outline:none}
+.tm-form-actions{display:grid;grid-template-columns:1fr 1.5fr;gap:10px;margin-top:20px}
+.tm-form-actions .primary,.tm-form-actions .secondary{margin:0}
+/* Takar Machine refreshed premium violet design */
+.profile-setting-action{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid #eee;background:transparent;color:inherit;font:inherit;padding:14px 0;cursor:pointer}
+.profile-setting-action strong{font-weight:650}
+.profile-setting-action:last-child{border-bottom:0}
+header#homeHeader{background:linear-gradient(135deg,#39216f 0%,#6541c8 58%,#8c6be8 100%);box-shadow:0 12px 28px rgba(72,43,137,.18)}
+.card{border-color:#e9e3f5;box-shadow:0 5px 18px rgba(55,37,95,.055)}
+.period-btn{border:1px solid #e5ddf4;border-radius:12px;background:#f6f2ff;color:#59458c;font-weight:700;flex:1;min-width:0}
+.period-btn.active{background:linear-gradient(135deg,#6541c8,#8a6be2);color:#fff;border-color:transparent;box-shadow:0 5px 12px #6541c82b}
+.subscription-card{background:linear-gradient(125deg,#fff7d8 0%,#f2d27b 35%,#d6a33b 68%,#fff0b2 100%);border:1px solid #d6a33b;box-shadow:0 12px 28px rgba(175,126,24,.22);color:#4b3307}
+.subscription-card small,.subscription-card strong,.subscription-card-kicker{color:#4b3307}
+.home-greeting-mark{margin:0;min-height:42px;font-size:1px;line-height:1}
+#homeHeader .top{align-items:flex-start}
+#homeHeader #welcome{font-size:20px;font-weight:800;line-height:1.3;margin:0 0 16px;color:#fff}
+#homeHeader .header-shortcuts{margin-left:auto}
+#coinPile{display:inline-block}#ieCustomDates[hidden]{display:none!important}
+.money-coin,.pile-coin{filter:drop-shadow(0 2px 2px #24133b55)}
+.ie-periods button{border-radius:12px;font-weight:700}
+.ie-periods button.selected{background:linear-gradient(135deg,#6541c8,#8b6ce0);color:#fff}
+.profile-menu{transition:transform .15s ease,box-shadow .15s ease}
+.profile-menu:active{transform:scale(.99)}
+@media(max-width:380px){#homeHeader #welcome{font-size:18px}.ie-periods{gap:5px}.ie-periods button{padding:9px 4px;font-size:12px}}
+</style>
  </head>
  <body>
   
 <header id="homeHeader">
   <div class="top">
     <div>
-      <h1><span id="coinPile" class="coin-pile"></span> Takar Machine</h1>
-      <p id="welcome">Your money, under control.</p>
+      <h1 class="home-greeting-mark"><span id="coinPile" class="coin-pile"></span></h1>
+      <p id="welcome">Good morning! Ready to manage your money?</p>
     </div>
 
     <div class="header-shortcuts">
       <button type="button" class="header-shortcut" onclick="exportData()" aria-label="Backup data" title="Backup data">☁️</button>
       <button type="button" class="header-shortcut" onclick="alert('Notifications coming soon!')" aria-label="Notifications" title="Notifications">🔔</button>
-      <button class="lang" id="language" type="button">বাংলা</button>
     </div>
   </div>
 
@@ -853,11 +887,11 @@
   <main>
    <section id="home">
     <div class="card period-card">
-     <div class="label" id="periodLabel">Hisaber shomoy</div>
+     <div class="label" id="periodLabel">Choose period</div>
      <div style="display:flex;gap:8px;margin-top:10px">
-      <button class="period-btn active" data-period="today" type="button">Ajker hisab</button>
-      <button class="period-btn" data-period="month" type="button">Ei mash</button>
-      <button class="period-btn" data-period="all" type="button">Shob hisab</button>
+      <button class="period-btn active" data-period="today" type="button" id="homeDayTab">Friday</button>
+      <button class="period-btn" data-period="month" type="button" id="homeMonthTab">October</button>
+      <button class="period-btn" data-period="all" type="button" id="homeYearTab">2026</button>
      </div>
     </div>
     
@@ -871,17 +905,6 @@
       <div class="metric red" id="expenses">-0.00</div>
      </div>
     </div>
-
-<div class="cards">
-  <div class="card">
-    <div class="label" id="incomeLabel">Total income</div>
-    <div class="metric green" id="income">+0.00</div>
-  </div>
-  <div class="card">
-    <div class="label" id="expenseLabel">Total expenses</div>
-    <div class="metric red" id="expenses">-0.00</div>
-  </div>
-</div>
 
 <div class="card home-wallet-summary"
      onclick="showPage('wallet')"
@@ -904,6 +927,22 @@
   </div>
 </div>
     
+    <div class="card tm-entry-card" id="formCard" hidden>
+      <div class="tm-entry-heading"><div><span class="tm-entry-kicker" id="formKicker">TRANSACTION</span><h2 id="formTitle">Add expense</h2></div><button type="button" class="tm-entry-close" onclick="$('formCard').hidden=true" aria-label="Close">×</button></div>
+      <form id="entryForm">
+        <label id="nameLabel" for="entryName">Description</label>
+        <input id="entryName" maxlength="120" placeholder="Description" required>
+        <label id="categoryLabel" for="entryCategory">Category</label>
+        <select id="entryCategory" required></select>
+        <label id="amountLabel" for="entryAmount">Amount</label>
+        <div class="tm-amount-wrap"><span>SAR</span><input id="entryAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required></div>
+        <label id="entryWalletLabel" for="entryWallet">Wallet</label>
+        <select id="entryWallet" required></select>
+        <label id="entryDateLabel" for="entryDate">Date</label>
+        <input id="entryDate" type="date" required>
+        <div class="tm-form-actions"><button type="button" class="secondary" id="cancelEntry" onclick="$('formCard').hidden=true">Cancel</button><button type="submit" class="primary" id="saveButton">Save transaction</button></div>
+      </form>
+    </div>
     <div class="card">
      <h2 id="recentTitle">Recent transactions</h2>
      <div id="transactions"></div>
@@ -926,15 +965,19 @@
   </div>
 
   <div class="ie-periods">
-    <button onclick="setIEPeriod('daily')">দৈনিক</button>
-    <button class="selected" onclick="setIEPeriod('monthly')">মাসিক</button>
-    <button onclick="setIEPeriod('yearly')">বার্ষিক</button>
-    <button onclick="setIEPeriod('custom')">পরিসর</button>
+    <button onclick="setIEPeriod('daily')" id="ieDayTab">শুক্রবার</button>
+    <button class="selected" onclick="setIEPeriod('monthly')" id="ieMonthTab">অক্টোবর</button>
+    <button onclick="setIEPeriod('yearly')" id="ieYearTab">2026</button>
+    <button onclick="setIEPeriod('custom')" id="ieCustomTab">কাস্টম</button>
   </div>
 
   <div class="ie-month-picker">
-    <label for="ieMonth">মাস নির্বাচন</label>
+    <label for="ieMonth" id="ieDatePickerLabel">মাস নির্বাচন</label>
     <input id="ieMonth" type="month" onchange="renderIEPage()">
+    <div id="ieCustomDates" hidden style="display:flex;gap:8px;margin-top:8px">
+      <input id="ieStartDate" type="date" aria-label="Start date">
+                                            <input id="ieEndDate" type="date" aria-label="End date">
+    </div>
   </div>
 
   <div class="ie-summary">
@@ -970,6 +1013,9 @@
     placeholder="লেনদেন খুঁজুন..."
     oninput="renderIEPage()"
   >
+  <select id="ieCategoryFilter" hidden aria-label="Filter by category" onchange="renderIEPage()" style="width:100%;margin:8px 0;padding:12px;border:1px solid #e5ddf4;border-radius:12px;background:white">
+    <option value="">All categories</option>
+  </select>
 
   <div id="ieTransactions"></div>
 
@@ -1072,6 +1118,10 @@
     </div>
   </div>
 
+  <button class="card profile-menu" type="button" onclick="showPage('dhar')">
+    🤝 <strong>ধার</strong><br><small>ধারের হিসাব রাখুন</small><span style="float:right">›</span>
+  </button>
+
   <button class="card profile-menu" type="button"
           onclick="openProfileMenu('wallet')">
     💳 <strong>আমার ওয়ালেট</strong>
@@ -1084,9 +1134,9 @@
      target="_blank"
      rel="noopener noreferrer"
      style="display:block;text-decoration:none;color:inherit">
-    💬 <strong>আমাদের Facebook পেজে মেসেজ করুন</strong>
+    💬 <strong>সমস্যা হলে আমাদের মেসেজ করুন</strong>
     <br>
-    <small>আপনার প্রশ্ন বা সহায়তার জন্য সরাসরি আমাদের মেসেজ পাঠান</small>
+    <small>প্রশ্ন বা সমস্যার জন্য সরাসরি যোগাযোগ করুন</small>
     <span style="float:right">›</span>
   </a>
 
@@ -1117,7 +1167,7 @@
     <div style="padding:14px 0;border-bottom:1px solid #eee">
       <strong>🌐 ভাষা</strong>
       <p style="margin:6px 0;color:#888">বর্তমান ভাষা: <strong id="settingsLanguage">English</strong></p>
-      <button class="secondary" type="button" onclick="toggleLanguage()">ভাষা পরিবর্তন করুন</button>
+      <button class="secondary" id="languageToggle" type="button" onclick="toggleLanguage()">ভাষা পরিবর্তন করুন</button>
     </div>
     <div style="padding:14px 0;border-bottom:1px solid #eee">
       <strong>🎨 থিম</strong>
@@ -1146,20 +1196,20 @@
 
   <h3 style="margin:24px 5px 12px">অ্যাকাউন্ট</h3>
   <div class="card" style="margin-bottom:14px">
-    <div style="padding:14px 0;border-bottom:1px solid #eee">📋 <strong>পাসওয়ার্ড পরিবর্তন</strong><span style="float:right">›</span></div>
-    <div style="padding:14px 0;border-bottom:1px solid #eee">🔒 <strong>প্রাইভেসি পলিসি</strong><span style="float:right">›</span></div>
-    <div style="padding:14px 0">📑 <strong>টার্মস অ্যান্ড কন্ডিশন</strong><span style="float:right">›</span></div>
+    <button class="profile-setting-action" type="button" onclick="showAccountNotice('password')">📋 <strong>পাসওয়ার্ড পরিবর্তন</strong><span style="float:right">›</span></button>
+    <button class="profile-setting-action" type="button" onclick="showAccountNotice('privacy')">🔒 <strong>প্রাইভেসি পলিসি</strong><span style="float:right">›</span></button>
+    <button class="profile-setting-action" type="button" onclick="showAccountNotice('terms')">📑 <strong>টার্মস অ্যান্ড কন্ডিশন</strong><span style="float:right">›</span></button>
   </div>
 
   <h3 style="margin:24px 5px 12px">ডেটা ব্যবস্থাপনা</h3>
   <div class="card" style="margin-bottom:14px">
-    <div style="padding:14px 0;border-bottom:1px solid #eee">🗑️ <strong>লেনদেন ডিলিট (মাসিক, বার্ষিক, কাস্টম)</strong><span style="float:right">›</span></div>
+    <button class="profile-setting-action" type="button" onclick="deleteTransactionsByPeriod()">🗑️ <strong>লেনদেন ডিলিট (মাসিক, বার্ষিক, কাস্টম)</strong><span style="float:right">›</span></button>
     <div style="padding:14px 0;border-bottom:1px solid #eee">
       <strong>⬇️ রিপোর্ট ডাউনলোড</strong>
       <p style="margin:6px 0;color:#888">আপনার ডেটার ব্যাকআপ সংরক্ষণ করুন</p>
       <button class="secondary" type="button" onclick="exportData()">Export backup (JSON)</button>
     </div>
-    <div style="padding:14px 0;color:#d95360">
+    <div role="button" tabindex="0" onclick="deleteLocalAccount()" onkeydown="if(event.key==='Enter')deleteLocalAccount()" style="padding:14px 0;color:#d95360;cursor:pointer">
       🗑️ <strong>অ্যাকাউন্ট মুছে ফেলুন</strong>
       <p style="margin:6px 0;color:#888">এই অপশনটি পরে নিরাপদভাবে কার্যকর করা হবে।</p>
     </div>
@@ -1173,10 +1223,17 @@
 
    <section hidden id="savingsPage">
     <div class="card">
-     <h2>সঞ্চয় পরিকল্পনা</h2>
-     <p>Savings planning will be built in a later step.</p>
-     <button class="primary" onclick="showPage('home')">Back to home</button>
+     <h2 id="savingsHeading">সঞ্চয় পরিকল্পনা</h2>
+     <label for="savingsGoalName" id="savingsNameLabel">লক্ষ্যের নাম</label>
+     <input id="savingsGoalName" maxlength="80" placeholder="যেমন: জরুরি সঞ্চয়">
+     <label for="savingsGoalTarget" id="savingsTargetLabel">সঞ্চয়ের লক্ষ্য (SAR)</label>
+     <input id="savingsGoalTarget" type="number" min="0.01" step="0.01" placeholder="লক্ষ্যের পরিমাণ">
+     <label for="savingsGoalCurrent" id="savingsCurrentLabel">এখন পর্যন্ত জমা (SAR)</label>
+     <input id="savingsGoalCurrent" type="number" min="0" step="0.01" value="0">
+     <button class="primary" type="button" onclick="saveSavingsGoal()" id="saveSavingsButton">লক্ষ্য সংরক্ষণ</button>
     </div>
+    <div class="card"><h2 id="savingsListHeading">আপনার সঞ্চয়ের লক্ষ্য</h2><div id="savingsGoalsList"></div></div>
+    <button class="secondary" onclick="showPage('profile')">প্রোফাইলে ফিরুন</button>
    </section>
    
 
@@ -1185,9 +1242,10 @@
      <h2>হিসাবের খাতা · Hisaber Boi</h2>
      <p>Review income and expenses by day, month, year, or a custom date range.</p>
      <div class="report-tabs">
-      <button class="active" data-report="daily" onclick="setReportPeriod('daily')" type="button">Daily</button>
-      <button data-report="monthly" onclick="setReportPeriod('monthly')" type="button">Monthly</button>
-      <button data-report="yearly" onclick="setReportPeriod('yearly')" type="button">Yearly</button>
+      <button class="active" data-report="daily" onclick="setReportPeriod('daily')" type="button" id="reportDayTab">Friday</button>
+      <button data-report="monthly" onclick="setReportPeriod('monthly')" type="button" id="reportMonthTab">October</button>
+      <button data-report="yearly" onclick="setReportPeriod('yearly')" type="button" id="reportYearTab">2026</button>
+      <button data-report="custom" onclick="setReportPeriod('custom')" type="button" id="reportCustomTab">Custom</button>
      </div>
      <label for="reportDate">Choose date</label>
      <input id="reportDate" type="date"/>
@@ -1233,11 +1291,23 @@
   </div>
 
   <div class="card">
-    <h2>Saved notes</h2>
+           <h2>Saved notes</h2>
     <div id="diaryNotes"></div>
   </div>
 </section>
    
+   <section hidden id="dharPage">
+    <div class="wallet-header"><button class="wallet-back" onclick="showPage('profile')">←</button><h2 id="dharHeading">ধার</h2></div>
+    <div class="card">
+      <h2 id="dharFormHeading">ধারের হিসাব যোগ করুন</h2>
+      <label id="dharPersonLabel" for="dharPerson">ব্যক্তির নাম</label><input id="dharPerson" maxlength="100" placeholder="নাম লিখুন">
+      <label id="dharAmountLabel" for="dharAmount">টাকার পরিমাণ</label><input id="dharAmount" type="number" min="0.01" step="0.01" placeholder="0.00">
+      <label id="dharDateLabel" for="dharDate">তারিখ</label><input id="dharDate" type="date">
+      <label id="dharNoteLabel" for="dharNote">বিবরণ (ঐচ্ছিক)</label><input id="dharNote" maxlength="200" placeholder="বিবরণ">
+      <button class="primary" type="button" onclick="saveDhar()">ধার সংরক্ষণ করুন</button>
+    </div>
+    <div class="card"><h2 id="dharListHeading">ধারের তালিকা</h2><div id="dharList"></div></div>
+   </section>
    <footer id="footerText">Takar Machine · Your personal money journal</footer>
   </main>
   
@@ -1272,8 +1342,8 @@
    const $=id=>document.getElementById(id);
 const budgetKey='takarBudgets',walletKey='tm-wallets',transferKey='tm-transfers';
 const translations={
-en:{welcome:'Your money, under control.',balance:'TOTAL BALANCE',income:'Total income',expenses:'Total expenses',quick:'Quick entry',addIncome:'＋ Income',addExpense:'− Expense',recent:'Recent transactions',name:'Description',amount:'Amount',category:'Category',save:'Save transaction',money:'Money',saved:'Transaction saved.',invalid:'Enter a valid amount.',empty:'No transactions yet. Add your first one!',back:'Back to home',footer:'Takar Machine · Your personal money journal'},
-bn:{welcome:'আপনার টাকার হিসাব, আপনার নিয়ন্ত্রণে।',balance:'মোট ব্যালেন্স',income:'মোট আয়',expenses:'মোট ব্যয়',quick:'দ্রুত যোগ করুন',addIncome:'＋ আয়',addExpense:'− ব্যয়',recent:'সাম্প্রতিক লেনদেন',name:'বিবরণ',amount:'পরিমাণ',category:'ক্যাটাগরি',save:'লেনদেন সংরক্ষণ',money:'আয়-ব্যয়',saved:'লেনদেন সংরক্ষিত হয়েছে।',invalid:'সঠিক পরিমাণ লিখুন।',empty:'এখনও কোনো লেনদেন নেই। প্রথমটি যোগ করুন!',back:'হোমে ফিরুন',footer:'টাকার মেশিন · আপনার ব্যক্তিগত হিসাব'}
+en:{welcome:'Good morning! Ready to manage your money?',balance:'TOTAL BALANCE',income:'Total income',expenses:'Total expenses',quick:'Quick entry',addIncome:'＋ Income',addExpense:'− Expense',recent:'Recent transactions',name:'Description',amount:'Amount',category:'Category',save:'Save transaction',money:'Money',saved:'Transaction saved.',invalid:'Enter a valid amount.',empty:'No transactions yet. Add your first one!',back:'Back to home',footer:'Takar Machine · Your personal money journal'},
+bn:{welcome:'শুভ সকাল! আজকের হিসাব শুরু করুন।',balance:'মোট ব্যালেন্স',income:'মোট আয়',expenses:'মোট ব্যয়',quick:'দ্রুত যোগ করুন',addIncome:'＋ আয়',addExpense:'− ব্যয়',recent:'সাম্প্রতিক লেনদেন',name:'বিবরণ',amount:'পরিমাণ',category:'ক্যাটাগরি',save:'লেনদেন সংরক্ষণ',money:'আয়-ব্যয়',saved:'লেনদেন সংরক্ষিত হয়েছে।',invalid:'সঠিক পরিমাণ লিখুন।',empty:'এখনও কোনো লেনদেন নেই। প্রথমটি যোগ করুন!',back:'হোমে ফিরুন',footer:'টাকার মেশিন · আপনার ব্যক্তিগত হিসাব'}
 };
 let language=localStorage.getItem('tm-language')||'en';
 let currentType='expense';
@@ -1286,8 +1356,8 @@ let transfers=JSON.parse(localStorage.getItem(transferKey)||'[]');
 let activePage='home';
 
 const categories={
-income:['Salary','Business','Freelance','Gift','Other income'],
-expense:['Food','Transport','Shopping','Bills','Health','Family','Other expense']
+income:['Salary','Gift','Before month cash','Freelance','Collect from roommates'],
+expense:['Eating bill','Mobile recharge','Send to home','Drinks','Savings','Transport','Food','Shopping','Health','Hair cutting']
 };
 
 function saveData(){
@@ -1306,6 +1376,28 @@ function today(){
  const d=new Date();
  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
+
+function localizedDateParts(dateValue=today()){
+ const d=new Date(dateValue+'T12:00:00');
+ const locale=language==='bn'?'bn-BD':'en-US';
+ return {
+  day:d.toLocaleDateString(locale,{weekday:'long'}),
+  month:d.toLocaleDateString(locale,{month:'long'}),
+  year:String(d.getFullYear())
+ };
+}
+function updatePeriodLabels(){
+ const p=localizedDateParts();
+ const hour=new Date().getHours();
+ const greeting=language==='bn'?(hour<12?'শুভ সকাল! আজকের হিসাব শুরু করুন।':hour<17?'শুভ দুপুর! আজকের হিসাব দেখুন।':'শুভ সন্ধ্যা! হিসাব গুছিয়ে নিন।'):(hour<12?'Good morning! Ready to manage your money?':hour<17?'Good afternoon! Check your money today.':'Good evening! Let’s review your money.');
+ const welcome=$('welcome');if(welcome)welcome.textContent=greeting;
+ [['homeDayTab',p.day],['homeMonthTab',p.month],['homeYearTab',p.year],
+  ['ieDayTab',p.day],['ieMonthTab',p.month],['ieYearTab',p.year],['reportDayTab',p.day],['reportMonthTab',p.month],['reportYearTab',p.year]
+ ].forEach(([id,value])=>{const el=$(id);if(el)el.textContent=value;});
+ const custom=$('ieCustomTab'); if(custom)custom.textContent=language==='bn'?'কাস্টম':'Custom'; const rc=$('reportCustomTab');if(rc)rc.textContent=language==='bn'?'কাস্টম':'Custom';
+ const label=$('ieDatePickerLabel'); if(label)label.textContent=language==='bn'?'মাস নির্বাচন':'Select month';
+}
+
 
 function escapeHTML(value){
  return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1349,6 +1441,7 @@ function filteredTransactions(period=currentPeriod){
 }
 
 function render(){
+ updatePeriodLabels();
  calculateWalletBalances();
  const list=filteredTransactions();
  const income=list.filter(t=>t.type==='income').reduce((s,t)=>s+Number(t.amount),0);
@@ -1385,11 +1478,11 @@ function transactionHTML(t){
   <div class="transaction-icon ${color}">${icon}</div>
   <div class="transaction-info">
    <div class="name">${escapeHTML(t.name)}</div>
-   <small>${escapeHTML(t.category || 'Other')} · ${escapeHTML(t.date || '')}</small>
+   <small>${escapeHTML(categoryLabel(t.category || 'Other'))} · ${escapeHTML(t.date || '')}</small>
   </div>
   <div class="transaction-amount">
    <strong class="${color}">${sign}${money(t.amount)}</strong>
-   <button type="button" onclick="deleteTransaction('${escapeHTML(t.id)}')">Delete</button>
+   <button type="button" onclick="deleteTransaction('${escapeHTML(t.id)}')">${language==='bn'?'মুছুন':'Delete'}</button>
   </div>
  </div>`;
 }
@@ -1398,12 +1491,12 @@ function fillCategories(){
  const select=$('entryCategory');
  if(!select)return;
  const old=select.value;
- select.innerHTML=categories[currentType].map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
+ select.innerHTML=categories[currentType].map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(categoryLabel(c))}</option>`).join('');
  if(categories[currentType].includes(old))select.value=old;
  const budgetSelect=$('budgetCategory');
  if(budgetSelect){
   const all=[...categories.expense];
-  budgetSelect.innerHTML=all.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
+  budgetSelect.innerHTML=all.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(categoryLabel(c))}</option>`).join('');
  }
 }
 
@@ -1419,7 +1512,10 @@ function fillWalletSelect(){
 function showForm(type){
  currentType=type;
  $('formCard').hidden=false;
- $('formTitle').textContent=type==='income'?'Add income':'Add expense';
+ $('formTitle').textContent=language==='bn'?(type==='income'?'আয় যোগ করুন':'ব্যয় যোগ করুন'):(type==='income'?'Add income':'Add expense');
+ $('formKicker').textContent=language==='bn'?'নতুন লেনদেন':'NEW TRANSACTION';
+ $('saveButton').textContent=language==='bn'?(type==='income'?'আয় সংরক্ষণ করুন':'ব্যয় সংরক্ষণ করুন'):(type==='income'?'Add income':'Add expense');
+ $('nameLabel').textContent=language==='bn'?'বিবরণ':'Description'; $('amountLabel').textContent=language==='bn'?'পরিমাণ':'Amount'; $('categoryLabel').textContent=language==='bn'?'ক্যাটাগরি':'Category'; $('entryWalletLabel').textContent=language==='bn'?'ওয়ালেট':'Wallet'; $('entryDateLabel').textContent=language==='bn'?'তারিখ':'Date'; $('cancelEntry').textContent=language==='bn'?'বাতিল':'Cancel';
  $('entryName').value='';
  $('entryAmount').value='';
  $('entryDate').value=today();
@@ -1476,10 +1572,8 @@ function setIEPeriod(period) {
 
   document.querySelectorAll('.ie-periods button')
     .forEach((button, index) => {
-      button.classList.toggle(
-        'selected',
-        ['daily', 'monthly', 'yearly', 'custom'][index] === period
-      );
+      button.classList.toggle('selected',
+        ['daily','monthly','yearly','custom'][index] === period);
     });
 
   renderIEPage();
@@ -1487,11 +1581,19 @@ function setIEPeriod(period) {
 
 function setIEFilter(filter, button) {
   ieFilter = filter;
-
-  document.querySelectorAll('.ie-filters button')
-    .forEach(item => item.classList.remove('selected'));
-
+  document.querySelectorAll('.ie-filters button').forEach(item => item.classList.remove('selected'));
   button.classList.add('selected');
+  const categorySelect=document.getElementById('ieCategoryFilter');
+  if(categorySelect){
+    categorySelect.hidden=filter!=='category';
+    if(filter==='category'){
+      const old=categorySelect.value;
+      const all=[...categories.income,...categories.expense];
+      categorySelect.innerHTML='<option value="">'+(language==='bn'?'সব ক্যাটাগরি':'All categories')+'</option>'+
+        [...new Set(all)].map(c=>'<option value="'+escapeHTML(c)+'">'+escapeHTML(categoryLabel(c))+'</option>').join('');
+      categorySelect.value=old;
+    }
+  }
   renderIEPage();
 }
 
@@ -1511,7 +1613,11 @@ function renderIEPage() {
   }
 
   const selectedMonth = monthInput.value;
+  const customDates = document.getElementById('ieCustomDates');
+  if(customDates) customDates.hidden = iePeriod !== 'custom';
   const search = (searchInput.value || '').toLowerCase();
+  const customStart = document.getElementById('ieStartDate')?.value || selectedMonth+'-01';
+  const customEnd = document.getElementById('ieEndDate')?.value || today();
 
   const filtered = transactions.filter(t => {
     const date = t.date || '';
@@ -1522,14 +1628,17 @@ function renderIEPage() {
     if (iePeriod === 'monthly') {
       matchesDate = month === selectedMonth;
     } else if (iePeriod === 'yearly') {
-      matchesDate = date.startsWith(selectedMonth.slice(0, 4));
+         matchesDate = date.startsWith(selectedMonth.slice(0, 4));
     } else if (iePeriod === 'daily') {
-      matchesDate = date === new Date().toISOString().slice(0, 10);
+      matchesDate = date === today();
+    } else if (iePeriod === 'custom') {
+      matchesDate = date >= customStart && date <= customEnd;
     }
 
+    const categoryValue=document.getElementById('ieCategoryFilter')?.value||'';
     const matchesType =
       ieFilter === 'all' ||
-      ieFilter === 'category' ||
+      (ieFilter === 'category' && (!categoryValue || t.category===categoryValue)) ||
       t.type === ieFilter;
 
     const matchesSearch =
@@ -1551,7 +1660,13 @@ function renderIEPage() {
   document.getElementById('ieExpense').textContent = money(expense);
   document.getElementById('ieBalance').textContent = money(income - expense);
 
-  document.getElementById('ieDateLabel').textContent = selectedMonth;
+  const dateLabel=document.getElementById('ieDateLabel');
+  if(dateLabel){
+    if(iePeriod==='daily')dateLabel.textContent=localizedDateParts(today()).day;
+    else if(iePeriod==='yearly')dateLabel.textContent=selectedMonth.slice(0,4);
+    else if(iePeriod==='custom')dateLabel.textContent=customStart+' – '+customEnd;
+    else dateLabel.textContent=localizedDateParts(selectedMonth+'-01').month;
+  }
 
   listElement.innerHTML = filtered.length
     ? filtered
@@ -1564,8 +1679,14 @@ function renderIEPage() {
   emptyElement.hidden = filtered.length > 0;
 }
    
+['ieStartDate','ieEndDate'].forEach(id=>{
+ const el=document.getElementById(id);
+ if(el)el.addEventListener('change',renderIEPage);
+});
+
 function showPage(page){
  activePage=page;
+ if(page!=='home' && $('formCard')) $('formCard').hidden=true;
 
  const homeHeader = document.getElementById('homeHeader');
  if (homeHeader) {
@@ -1585,7 +1706,8 @@ function showPage(page){
   wallet:'walletPage',
    savings:'savingsPage',
   hisab:'hisabPage',
-  diary:'diaryPage'
+  diary:'diaryPage',
+  dhar:'dharPage'
 };
 
  Object.values(pages).forEach(id=>$(id).hidden=true);
@@ -1600,6 +1722,8 @@ function showPage(page){
  if (page === 'budget') renderBudgets();
  if (page === 'hisab') renderReport();
  if (page === 'diary') renderDiaryNotes();
+ if (page === 'dhar') renderDhar();
+ if (page === 'savings') renderSavingsGoals();
 
  window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1919,12 +2043,49 @@ function openProfileMenu(which){
  if(which==='budget'){showPage('budget');return;}
  if(which==='savings'){showPage('savings');return;}
  if(which==='pin'){
-  const pin=prompt('Set a PIN (4 digits). Leave empty to cancel:');
+  const pin=prompt('Set a PIN (6 digits). Leave empty to cancel:');
   if(pin===null||pin==='')return;
-  if(!/^\d{4}$/.test(pin)){alert('Please enter exactly 4 digits.');return;}
+  if(!/^\d{6}$/.test(pin)){alert('Please enter exactly 6 digits.');return;}
   localStorage.setItem('tm-pin',pin);
   alert('PIN saved on this device.');
  }
+}
+
+function getSavingsGoals(){
+ try{return JSON.parse(localStorage.getItem('tm-savings-goals')||'[]')}catch{return []}
+}
+function saveSavingsGoal(){
+ const name=$('savingsGoalName').value.trim();
+ const target=Number($('savingsGoalTarget').value);
+ const current=Number($('savingsGoalCurrent').value||0);
+ if(!name||!Number.isFinite(target)||target<=0||!Number.isFinite(current)||current<0||current>target){
+  alert(language==='bn'?'লক্ষ্যের নাম ও সঠিক পরিমাণ লিখুন। জমার পরিমাণ লক্ষ্য অতিক্রম করতে পারবে না।':'Enter a goal name and valid amounts. Saved amount cannot exceed the target.');
+     return;
+ }
+ const goals=getSavingsGoals();
+ goals.unshift({id:Date.now().toString(),name,target,current,createdAt:today()});
+ localStorage.setItem('tm-savings-goals',JSON.stringify(goals));
+ $('savingsGoalName').value='';$('savingsGoalTarget').value='';$('savingsGoalCurrent').value='0';
+ renderSavingsGoals();
+}
+function renderSavingsGoals(){
+ const el=$('savingsGoalsList');if(!el)return;
+ const goals=getSavingsGoals();
+ if(!goals.length){el.innerHTML='<div class="empty">'+(language==='bn'?'এখনও কোনো সঞ্চয়ের লক্ষ্য নেই।':'No savings goals yet.')+'</div>';return;}
+ el.innerHTML=goals.map(g=>{
+  const pct=Math.min(100,Math.round(Number(g.current)/Number(g.target)*100));
+  return `<div class="savings-goal-item" style="padding:14px 0;border-bottom:1px solid #eee">
+   <div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><strong>${escapeHTML(g.name)}</strong><strong>${pct}%</strong></div>
+   <div style="height:8px;background:#eee;border-radius:8px;overflow:hidden;margin:9px 0"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#6541c8,#d6a33b)"></div></div>
+   <small>${money(g.current)} / ${money(g.target)}</small>
+   <button class="secondary" type="button" style="margin-top:8px" onclick="deleteSavingsGoal('${escapeHTML(g.id)}')">${language==='bn'?'লক্ষ্য মুছুন':'Delete goal'}</button>
+  </div>`;
+ }).join('');
+}
+function deleteSavingsGoal(id){
+ if(!confirm(language==='bn'?'এই সঞ্চয়ের লক্ষ্যটি মুছবেন?':'Delete this savings goal?'))return;
+ localStorage.setItem('tm-savings-goals',JSON.stringify(getSavingsGoals().filter(g=>g.id!==id)));
+ renderSavingsGoals();
 }
 
 function renderWallets(){
@@ -1952,8 +2113,7 @@ function renderHomeWalletSummary() {
 
   if (totalEl) totalEl.textContent = money(total);
   if (countEl) {
-    countEl.textContent = wallets.length +
-      (language === 'bn' ? 'টি ওয়ালেট' : ' Wallets');
+    countEl.textContent = wallets.length + (language === 'bn' ? 'টি ওয়ালেট' : ' Wallets');
   }
 }
    
@@ -2075,6 +2235,7 @@ function deleteBudget(category){
 
 function setReportPeriod(period){
  reportPeriod=period;
+ if($('customRange'))$('customRange').hidden=period!=='custom';
  document.querySelectorAll('[data-report]').forEach(b=>b.classList.toggle('active',b.dataset.report===period));
  renderReport();
 }
@@ -2104,7 +2265,9 @@ function renderReport(){
  $('reportExpenses').textContent=money(expense);
  $('reportNet').textContent=money(income-expense);
  $('reportCount').textContent=String(list.length);
- $('reportHeading').textContent=reportPeriod==='daily'?'Daily Hisab':reportPeriod==='monthly'?'Monthly Hisab':reportPeriod==='yearly'?'Yearly Hisab':'Custom Date Hisab';
+ $('reportHeading').textContent=language==='bn'
+  ?(reportPeriod==='daily'?'দৈনিক হিসাব':reportPeriod==='monthly'?'মাসিক হিসাব':reportPeriod==='yearly'?'বাৎসরিক হিসাব':'কাস্টম তারিখের হিসাব')
+  :(reportPeriod==='daily'?'Daily Summary':reportPeriod==='monthly'?'Monthly Summary':reportPeriod==='yearly'?'Yearly Summary':'Custom Date Summary');
  $('reportTransactions').innerHTML=list.length?list.map(transactionHTML).join(''):'<div class="empty">No transactions for this period.</div>';
 }
 
@@ -2112,30 +2275,139 @@ $('reportDate').addEventListener('change',renderReport);
 $('reportStart').addEventListener('change',()=>{if(reportPeriod==='custom')renderReport()});
 $('reportEnd').addEventListener('change',()=>{if(reportPeriod==='custom')renderReport()});
 
+const categoryNames={
+ 'Salary':'বেতন','Gift':'উপহার','Before month cash':'আগের মাসের নগদ','Freelance':'ফ্রিল্যান্স','Collect from roommates':'রুমমেটদের কাছ থেকে সংগ্রহ',
+ 'Eating bill':'খাবারের বিল','Mobile recharge':'মোবাইল রিচার্জ','Send to home':'বাড়িতে পাঠানো','Drinks':'পানীয়','Savings':'সঞ্চয়','Transport':'যাতায়াত','Food':'খাবার','Shopping':'কেনাকাটা','Health':'স্বাস্থ্য','Hair cutting':'চুল কাটা'
+};
+function categoryLabel(value){
+ return language==='bn'?(categoryNames[value]||value):value;
+}
+function applyLanguage(){
+ const t=translations[language];
+ const set=(id,value)=>{const el=$(id);if(el)el.textContent=value;};
+ document.documentElement.lang=language==='bn'?'bn':'en';
+ set('welcome',t.welcome);set('balanceLabel',language==='bn'?'মোট ব্যালেন্স':'TOTAL BALANCE');
+ set('incomeLabel',t.income);set('expenseLabel',t.expenses);set('quickTitle',t.quick);
+ set('addIncome',t.addIncome);set('addExpense',t.addExpense);set('recentTitle',t.recent);
+ set('nameLabel',t.name);set('amountLabel',t.amount);set('categoryLabel',t.category);set('saveButton',t.save);
+ set('entryWalletLabel',language==='bn'?'ওয়ালেট':'Wallet');set('entryDateLabel',language==='bn'?'তারিখ':'Date');set('cancelEntry',language==='bn'?'বাতিল':'Cancel');set('formKicker',language==='bn'?'নতুন লেনদেন':'NEW TRANSACTION');
+ set('settingsLanguage',language==='bn'?'বাংলা':'English');
+ set('languageToggle',language==='bn'?'Switch to English':'বাংলায় পরিবর্তন করুন');
+ set('periodLabel',language==='bn'?'হিসাবের সময়':'Choose period');
+ set('ieDatePickerLabel',language==='bn'?'মাস নির্বাচন':'Select month');
+ set('ieCustomTab',language==='bn'?'কাস্টম':'Custom');
+ document.querySelectorAll('nav b').forEach(b=>b.textContent=b.dataset[language]||b.textContent);
+ const staticMap={
+  'আয়-ব্যয়':['Income & Expenses'],'মাসিক হিসাব':['Monthly summary'],'মাস নির্বাচন':['Select month'],
+  'আয়':['Income'],'অবশিষ্ট':['Remaining'],'ব্যয়':['Expenses'],'সব':['All'],'ক্যাটাগরি':['Category'],
+  'লেনদেন খুঁজুন...':['Search transactions...'],'কোনো লেনদেন পাওয়া যায়নি':['No transactions found'],
+  'নির্বাচিত ফিল্টারে কোনো লেনদেন পাওয়া যায়নি।':['No transactions match the selected filters.'],
+  'তারিখ পরিবর্তন করে আবার চেষ্টা করুন।':['Try another date.'],'প্রোফাইল':['Profile'],
+  'আমার ওয়ালেট':['My Wallet'],'PIN সিকিউরিটি':['PIN Security'],'বাজেট পরিকল্পনা':['Budget Planning'],
+  'সঞ্চয় পরিকল্পনা':['Savings Planning'],'পছন্দসমূহ':['Preferences'],'ভাষা':['Language'],'থিম':['Theme'],
+  'থিম কালার':['Theme color'],'ফন্ট সাইজ':['Font size'],'মুদ্রা নির্ধারণ':['Currency'],
+  'সাবস্ক্রিপশন প্ল্যান':['Subscription Plan'],'আপনি প্রিমিয়াম ইউজার':['You are a Premium user'],
+  'সক্রিয়':['Active'],'বিস্তারিত দেখুন':['View details'],'সমস্যা হলে আমাদের মেসেজ করুন':['Message us for help'],
+  'প্রশ্ন বা সমস্যার জন্য সরাসরি যোগাযোগ করুন':['Contact us directly with questions or issues'],
+  'হিসাবের খাতা · Hisaber Boi':['Account Book'],'আজকের হিসাব':['Today’s summary'],
+  'লেনদেন সংরক্ষণ':['Save transaction'],'সঞ্চয় পরিকল্পনা':['Savings planning'],
+  'Manage your wallets':['আপনার ওয়ালেট পরিচালনা করুন'],'PIN Security settings':['PIN নিরাপত্তা সেটিংস'],
+  'Light / Dark':['লাইট / ডার্ক'],'Export backup (JSON)':['ব্যাকআপ এক্সপোর্ট করুন (JSON)'],
+  'Member since June 2026':['সদস্য হয়েছেন জুন ২০২৬'],'MEMBERSHIP':['সদস্যতা'],
+  'Available balance':['বর্তমান ব্যালেন্স'],'Monthly Budget':['মাসিক বাজেট'],'Expense category':['ব্যয়ের ক্যাটাগরি'],
+  'Monthly limit (SAR)':['মাসিক সীমা (SAR)'],'Enter budget':['বাজেট লিখুন'],'Save budget':['বাজেট সংরক্ষণ'],
+  'Your budgets':['আপনার বাজেট'],'Back to profile':['প্রোফাইলে ফিরুন'],'Back to home':['হোমে ফিরুন'],
+  'Savings planning will be built in a later step.':['সঞ্চয় পরিকল্পনার সুবিধা পরবর্তী ধাপে তৈরি হবে।'],
+  'Review income and expenses by day, month, year, or a custom date range.':['দিন, মাস, বছর বা নিজের পছন্দের তারিখ অনুযায়ী আয়-ব্যয় দেখুন।'],
+  'Choose date':['তারিখ নির্বাচন'],'Custom date range':['নিজস্ব তারিখের পরিসর'],'Apply custom range':['পরিসর প্রয়োগ করুন'],
+  'Income':['আয়'],'Expenses':['ব্যয়'],'Net amount':['নিট পরিমাণ'],'Transactions':['লেনদেন'],
+  'No transactions for this period.':['এই সময়ে কোনো লেনদেন নেই।'],'No transactions yet.':['এখনও কোনো লেনদেন নেই।'],
+  'Password change':['পাসওয়ার্ড পরিবর্তন'],'Theme':['থিম'],'Theme color':['থিমের রং'],'Font size':['ফন্টের আকার'],
+  'Currency':['মুদ্রা'],'Account':['অ্যাকাউন্ট'],'Data Management':['ডেটা ব্যবস্থাপনা'],
+  'Your data':['আপনার ডেটা'],'Message us for help':['সমস্যায় আমাদের মেসেজ করুন'],
+  'Contact us directly with questions or issues':['প্রশ্ন বা সমস্যার জন্য সরাসরি যোগাযোগ করুন']
+    };
+ document.querySelectorAll('#otherPage h1,#otherPage p,#otherPage label,#otherPage button,#otherPage h3,#profilePage h2,#profilePage h3,#profilePage strong,#profilePage small,#hisabPage h2,#hisabPage p,#hisabPage label,#hisabPage button,#budgetPage h2,#budgetPage label,#walletPage h2,#walletPage span,#walletPage strong,#savingsPage h2,#savingsPage p,#diaryPage h2,#diaryPage label,#diaryPage button').forEach(el=>{
+  if(el.children.length) return;
+  const original=el.dataset.originalText || el.textContent.trim();
+  if(!el.dataset.originalText)el.dataset.originalText=original;
+  const translated=staticMap[original];
+  const enToBn={
+   'Manage your wallets':'আপনার ওয়ালেট পরিচালনা করুন','PIN Security settings':'PIN নিরাপত্তা সেটিংস',
+   'Light / Dark':'লাইট / ডার্ক','Export backup (JSON)':'ব্যাকআপ এক্সপোর্ট করুন (JSON)',
+   'Member since June 2026':'সদস্য হয়েছেন জুন ২০২৬','MEMBERSHIP':'সদস্যতা',
+   'Available balance':'বর্তমান ব্যালেন্স','Monthly Budget':'মাসিক বাজেট','Expense category':'ব্যয়ের ক্যাটাগরি',
+   'Monthly limit (SAR)':'মাসিক সীমা (SAR)','Enter budget':'বাজেট লিখুন','Save budget':'বাজেট সংরক্ষণ',
+   'Your budgets':'আপনার বাজেট','Back to profile':'প্রোফাইলে ফিরুন','Back to home':'হোমে ফিরুন',
+   'Choose date':'তারিখ নির্বাচন','Custom date range':'নিজস্ব তারিখের পরিসর','Apply custom range':'পরিসর প্রয়োগ করুন',
+   'Income':'আয়','Expenses':'ব্যয়','Net amount':'নিট পরিমাণ','Transactions':'লেনদেন',
+   'No transactions for this period.':'এই সময়ে কোনো লেনদেন নেই।','No transactions yet.':'এখনও কোনো লেনদেন নেই।',
+   'Theme':'থিম','Theme color':'থিমের রং','Font size':'ফন্টের আকার','Currency':'মুদ্রা',
+   'Your data':'আপনার ডেটা'
+  };
+  if(language==='bn'){el.textContent=enToBn[original]||original;}
+  else if(translated)el.textContent=translated[0];
+ });
+ set('settingsLanguage',language==='bn'?'বাংলা':'English');
+ set('languageToggle',language==='bn'?'Switch to English':'বাংলায় পরিবর্তন করুন');
+ if(language==='en'){
+  const labels=[['#otherPage .ie-summary div:nth-child(1) p','Income'],['#otherPage .ie-summary div:nth-child(2) p','Remaining'],['#otherPage .ie-summary div:nth-child(3) p','Expenses']];
+  labels.forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.textContent=text;});
+  const filters=document.querySelectorAll('.ie-filters button');['All','Income','Expense','Category'].forEach((v,i)=>{if(filters[i])filters[i].textContent=v;});
+  const pageTitle=document.querySelector('#otherPage .ie-header h1');if(pageTitle)pageTitle.textContent='Income & Expenses';
+}else{
+  const pageTitle=document.querySelector('#otherPage .ie-header h1');if(pageTitle)pageTitle.textContent='আয়-ব্যয়';
+  const labels=[['#otherPage .ie-summary div:nth-child(1) p','আয়'],['#otherPage .ie-summary div:nth-child(2) p','অবশিষ্ট'],['#otherPage .ie-summary div:nth-child(3) p','ব্যয়']];
+  labels.forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.textContent=text;});
+  const filters=document.querySelectorAll('.ie-filters button');['সব','আয়','ব্যয়','ক্যাটাগরি'].forEach((v,i)=>{if(filters[i])filters[i].textContent=v;});
+  const custom=$('ieCustomTab');if(custom)custom.textContent='কাস্টম';
+ }
+ fillCategories();updatePeriodLabels();
+ const catFilter=$('ieCategoryFilter');
+ if(catFilter){const old=catFilter.value;catFilter.innerHTML='<option value="">'+(language==='bn'?'সব ক্যাটাগরি':'All categories')+'</option>'+
+ [...new Set([...categories.income,...categories.expense])].map(c=>'<option value="'+escapeHTML(c)+'">'+escapeHTML(categoryLabel(c))+'</option>').join('');catFilter.value=old;}
+ const search=$('ieSearch');if(search)search.placeholder=language==='bn'?'লেনদেন খুঁজুন...':'Search transactions...';
+ renderIEPage();renderReport();renderBudgets();renderWallets();
+}
 function toggleLanguage(){
  language=language==='en'?'bn':'en';
  saveData();
- const t=translations[language];
- $('welcome').textContent=t.welcome;
- $('balanceLabel').textContent=t.balance;
- $('incomeLabel').textContent=t.income;
- $('expenseLabel').textContent=t.expenses;
- $('quickTitle').textContent=t.quick;
- $('addIncome').textContent=t.addIncome;
- $('addExpense').textContent=t.addExpense;
- $('recentTitle').textContent=t.recent;
- $('nameLabel').textContent=t.name;
- $('amountLabel').textContent=t.amount;
- $('categoryLabel').textContent=t.category;
- $('saveButton').textContent=t.save;
- $('footerText').textContent=t.footer;
- $('language').textContent=language==='en'?'বাংলা':'English';
- $('settingsLanguage').textContent=language==='en'?'English':'বাংলা';
- document.querySelectorAll('nav b').forEach(b=>b.textContent=b.dataset[language]||b.textContent);
+ applyLanguage();
  render();
 }
 
-$('language').addEventListener('click',toggleLanguage);
+function showAccountNotice(which){
+ const messages={
+  password:language==='bn'?'এই অফলাইন সংস্করণে লগইন সার্ভার সংযুক্ত নেই, তাই পাসওয়ার্ড পরিবর্তন করা যাবে না।':'Password changes require a connected account service, which is not configured in this offline version.',
+  privacy:language==='bn'?'এই সংস্করণে লেনদেন ও প্রোফাইলের তথ্য এই ডিভাইসের ব্রাউজারে সংরক্ষিত থাকে।':'This version stores transaction and profile data in this device’s browser.',
+  terms:language==='bn'?'এই সংস্করণটি ব্যক্তিগত হিসাব রাখার জন্য। গুরুত্বপূর্ণ তথ্যের ব্যাকআপ সংরক্ষণ করুন।':'This version is for personal bookkeeping. Keep a backup of important data.'
+ };
+ alert(messages[which]||'');
+}
+function deleteTransactionsByPeriod(){
+ const choice=prompt(language==='bn'?'লেনদেন মুছতে বেছে নিন:\n1 = বর্তমান মাস\n2 = বর্তমান বছর\n3 = কাস্টম তারিখ':'Choose deletion range:\n1 = Current month\n2 = Current year\n3 = Custom dates');
+ if(choice===null)return;
+ let start,end;const now=today();
+ if(choice==='1'){start=now.slice(0,7)+'-01';end=now.slice(0,7)+'-31';}
+ else if(choice==='2'){start=now.slice(0,4)+'-01-01';end=now.slice(0,4)+'-12-31';}
+ else if(choice==='3'){
+  start=prompt(language==='bn'?'শুরুর তারিখ (YYYY-MM-DD)':'Start date (YYYY-MM-DD)',now);if(!start)return;
+  end=prompt(language==='bn'?'শেষ তারিখ (YYYY-MM-DD)':'End date (YYYY-MM-DD)',now);if(!end)return;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(start)||!/^\d{4}-\d{2}-\d{2}$/.test(end)||start>end){alert(language==='bn'?'তারিখের পরিসর সঠিক নয়।':'Invalid date range.');return;}
+ }else return;
+ const count=transactions.filter(t=>t.date>=start&&t.date<=end).length;
+ if(!count){alert(language==='bn'?'এই সময়ে কোনো লেনদেন নেই।':'No transactions found for this period.');return;}
+ if(!confirm(language==='bn'?'এই সময়ের '+count+'টি লেনদেন স্থায়ীভাবে মুছে ফেলবেন?':'Permanently delete '+count+' transactions?'))return;
+ transactions=transactions.filter(t=>t.date<start||t.date>end);
+ saveData();render();renderIEPage();renderReport();
+}
+function deleteLocalAccount(){
+ const msg=language==='bn'?'এই ডিভাইসে সংরক্ষিত লেনদেন, বাজেট, ওয়ালেট, নোট ও প্রোফাইলের তথ্য মুছে যাবে। আগে ব্যাকআপ নিন।':'This removes locally stored transactions, budgets, wallets, notes and profile data. Export a backup first.';
+ if(!confirm(msg))return;
+ if(!confirm(language==='bn'?'নিশ্চিত? এই কাজ ফিরিয়ে আনা যাবে না।':'Are you sure? This cannot be undone.'))return;
+ ['tm-transactions',budgetKey,walletKey,transferKey,'tm-diary-notes','tm-profile-name','tm-profile-email','tm-profile-photo','tm-pin','tm-savings-goals'].forEach(key=>localStorage.removeItem(key));
+ location.reload();
+}
 
 function exportData(){
  const data={transactions,budgets,wallets,transfers,exportedAt:new Date().toISOString()};
@@ -2157,34 +2429,34 @@ function setupReportControls(){
  $('reportEnd').value=today();
 }
 
+const dharKey='tm-dhar-records';
+function getDharRecords(){try{return JSON.parse(localStorage.getItem(dharKey)||'[]')}catch{return []}}
+function saveDhar(){
+ const person=$('dharPerson').value.trim(), amount=Number($('dharAmount').value), date=$('dharDate').value||today(), note=$('dharNote').value.trim();
+ if(!person||!Number.isFinite(amount)||amount<=0){alert(language==='bn'?'নাম ও সঠিক টাকার পরিমাণ দিন।':'Enter a name and valid amount.');return}
+ const records=getDharRecords();records.unshift({id:Date.now().toString(),person,amount,date,note});
+ localStorage.setItem(dharKey,JSON.stringify(records));$('dharPerson').value='';$('dharAmount').value='';$('dharNote').value='';renderDhar();
+}
+function renderDhar(){
+ const el=$('dharList');if(!el)return;const records=getDharRecords();
+ el.innerHTML=records.length?records.map(r=>`<div class="transaction"><div class="transaction-info"><div class="name">${escapeHTML(r.person)}</div><small>${escapeHTML(r.date)}${r.note?' · '+escapeHTML(r.note):''}</small></div><div class="transaction-amount"><strong>${money(r.amount)}</strong><button type="button" onclick="deleteDhar('${escapeHTML(r.id)}')">${language==='bn'?'মুছুন':'Delete'}</button></div></div>`).join(''):`<div class="empty">${language==='bn'?'এখনও কোনো ধার যোগ করা হয়নি।':'No loan records yet.'}</div>`;
+ $('dharDate').value=$('dharDate').value||today();
+}
+function deleteDhar(id){if(!confirm(language==='bn'?'এই ধার মুছে ফেলবেন?':'Delete this record?'))return;localStorage.setItem(dharKey,JSON.stringify(getDharRecords().filter(r=>r.id!==id)));renderDhar()}
+
 function init(){
  ensureWallets();
  setupThemes();
  setupReportControls();
- if(language==='bn'){
-  $('language').textContent='English';
-  $('settingsLanguage').textContent='বাংলা';
-  const t=translations.bn;
-  $('welcome').textContent=t.welcome;
-  $('balanceLabel').textContent=t.balance;
-  $('incomeLabel').textContent=t.income;
-  $('expenseLabel').textContent=t.expenses;
-  $('quickTitle').textContent=t.quick;
-  $('addIncome').textContent=t.addIncome;
-  $('addExpense').textContent=t.addExpense;
-  $('recentTitle').textContent=t.recent;
-  $('nameLabel').textContent=t.name;
-  $('amountLabel').textContent=t.amount;
-  $('categoryLabel').textContent=t.category;
-  $('saveButton').textContent=t.save;
-  $('footerText').textContent=t.footer;
-  document.querySelectorAll('nav b').forEach(b=>b.textContent=b.dataset.bn||b.textContent);
- }
+ const ieMonth=document.getElementById('ieMonth');
+ if(ieMonth&&!ieMonth.value)ieMonth.value=today().slice(0,7);
+ const start=document.getElementById('ieStartDate');if(start&&!start.value)start.value=today();
+ const end=document.getElementById('ieEndDate');if(end&&!end.value)end.value=today();
+ applyLanguage();
  render();
  renderProfile();
  showPage('home');
 }
-
 init();
    
 function getDiaryNotes() {
@@ -2287,7 +2559,7 @@ function clearDiaryEditor() {
   let count = 0;
 
   function dropCoin() {
-    if (document.hidden || count >= positions.length) return;
+    if (document.hidden || activePage !== 'home' || count >= positions.length) return;
 
     const rect = pile.getBoundingClientRect();
     const [x, y] = positions[count];
@@ -2326,6 +2598,7 @@ function clearDiaryEditor() {
 
     animation.onfinish = () => {
       coin.remove();
+      if (activePage !== 'home') return;
 
       const settledCoin = document.createElement('span');
       settledCoin.className = 'pile-coin';
@@ -2342,7 +2615,7 @@ function clearDiaryEditor() {
   dropCoin();
 
   const timer = setInterval(() => {
-    if (count >= positions.length) {
+    if (count >= positions.length || activePage !== 'home') {
       clearInterval(timer);
     } else {
       dropCoin();
