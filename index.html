@@ -1983,21 +1983,19 @@ function editProfile(){
     box-shadow:0 6px 15px rgba(101,65,200,.22);
    }
    .tm-edit-cancel{
-    display:block;width:100%;padding:17px;
-    border:0;background:transparent;
-    color:inherit;font:inherit;cursor:pointer;
+    width:100%;
+    border:0;
+    border-radius:17px;
+    padding:15px;
+    background:transparent;
+    color:inherit;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
    }
-   .tm-edit-error{
-    color:#d95360;font-size:13px;
-   }
-   .tm-edit-hidden-input{display:none!important}
+
   `;
   document.head.appendChild(style);
-
-  const modal=document.createElement('div');
-  modal.id='profileEditModal';
-  modal.className='tm-edit-overlay';
-
   modal.innerHTML=`
    <section class="tm-edit-sheet" role="dialog"
     aria-modal="true" aria-labelledby="tmEditTitle">
