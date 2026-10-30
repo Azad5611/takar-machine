@@ -1238,39 +1238,46 @@ header#homeHeader{background:linear-gradient(135deg,#39216f 0%,#6541c8 58%,#8c6b
    
 
    <section hidden id="hisabPage">
+  <div class="wallet-header">
+    <button class="wallet-back" onclick="showPage('home')">←</button>
+    <h2>হিসাবের বই</h2>
+  </div>
+
+  <p class="label" style="margin:15px 5px">
+    প্রতি মাসের আয়, ব্যয় ও ব্যালেন্সের হিসাব
+  </p>
+
+  <div id="monthlyBooksList"></div>
+
+  <section id="monthlyBookDetails" hidden>
     <div class="card">
-     <h2>হিসাবের খাতা · Hisaber Boi</h2>
-     <p>Review income and expenses by day, month, year, or a custom date range.</p>
-     <div class="report-tabs">
-      <button class="active" data-report="daily" onclick="setReportPeriod('daily')" type="button" id="reportDayTab">Friday</button>
-      <button data-report="monthly" onclick="setReportPeriod('monthly')" type="button" id="reportMonthTab">October</button>
-      <button data-report="yearly" onclick="setReportPeriod('yearly')" type="button" id="reportYearTab">2026</button>
-      <button data-report="custom" onclick="setReportPeriod('custom')" type="button" id="reportCustomTab">Custom</button>
-     </div>
-     <label for="reportDate">Choose date</label>
-     <input id="reportDate" type="date"/>
-     <div hidden id="customRange">
-      <label>Custom date range</label>
-      <div class="date-range">
-       <input aria-label="Start date" id="reportStart" type="date"/>
-       <input aria-label="End date" id="reportEnd" type="date"/>
+      <button class="secondary"
+        type="button"
+        onclick="closeMonthlyBook()">← সব মাস</button>
+
+      <h2 id="monthlyBookTitle" style="margin-top:18px">October</h2>
+
+      <div class="report-summary">
+        <div>
+          <div class="label">মোট আয়</div>
+          <div class="metric green" id="bookIncome">0</div>
+        </div>
+
+        <div>
+          <div class="label">মোট ব্যয়</div>
+          <div class="metric red" id="bookExpense">0</div>
+        </div>
+
+        <div>
+          <div class="label">অবশিষ্ট</div>
+          <div class="metric" id="bookBalance">0</div>
+        </div>
       </div>
-      <button class="secondary" onclick="setReportPeriod('custom')" type="button">Apply custom range</button>
-     </div>
-     <button class="secondary" onclick="showCustomRange()" type="button">Custom date range</button>
+
+      <div id="monthlyBookTransactions"></div>
     </div>
-    <div class="report-summary">
-     <div class="card"><div class="label">Income</div><div class="metric green" id="reportIncome">0.00</div></div>
-     <div class="card"><div class="label">Expenses</div><div class="metric red" id="reportExpenses">0.00</div></div>
-     <div class="card"><div class="label">Net amount</div><div class="metric" id="reportNet">0.00</div></div>
-     <div class="card"><div class="label">Transactions</div><div class="metric" id="reportCount">0</div></div>
-    </div>
-    <div class="card">
-     <h2 id="reportHeading">Today's Hisab</h2>
-     <div id="reportTransactions"></div>
-    </div>
-    <button class="secondary" onclick="showPage('profile')" type="button">Back to profile</button>
-   </section>
+  </section>
+</section>
    
 <section id="diaryPage" hidden>
   <div class="wallet-header">
@@ -1720,7 +1727,11 @@ function showPage(page){
  if (page === 'transactions') renderIEPage();
  if (page === 'wallet') renderWallets();
  if (page === 'budget') renderBudgets();
- if (page === 'hisab') renderReport();
+ if (page === 'hisab') {
+  $('monthlyBooksList').hidden = false;
+  $('monthlyBookDetails').hidden = true;
+  renderMonthlyBooks();
+   }
  if (page === 'diary') renderDiaryNotes();
  if (page === 'dhar') renderDhar();
  if (page === 'savings') renderSavingsGoals();
@@ -2581,7 +2592,92 @@ function deleteBudget(category){
  if(budgets[month])delete budgets[month][category];
  saveData();renderBudgets();
 }
+const bookMonths = [
+  'January', 'February', 'March', 'April',
+  'May', 'June', 'July', 'August',
+  'September', 'October', 'November', 'December'
+];
 
+function renderMonthlyBooks() {
+  const container = $('monthlyBooksList');
+  if (!container) return;
+
+  const currentYear = new Date().getFullYear();
+
+  container.innerHTML = bookMonths.map((month, index) => {
+    const key = currentYear + '-' + String(index + 1).padStart(2, '0');
+
+    const list = transactions.filter(t =>
+      (t.date || '').slice(0, 7) === key
+    );
+
+    const income = list
+      .filter(t => t.type === 'income')
+      .reduce((sum, t) => sum + Number(t.amount), 0);
+
+    const expense = list
+      .filter(t => t.type === 'expense')
+      .reduce((sum, t) => sum + Number(t.amount), 0);
+
+    return `
+      <button type="button"
+        class="card"
+        style="width:100%;display:flex;align-items:center;
+        justify-content:space-between;text-align:left;
+        color:var(--text);font:inherit;gap:12px"
+        onclick="openMonthlyBook('${key}')">
+
+        <span>
+          <strong>${month} ${currentYear}</strong><br>
+          <small>${list.length}টি লেনদেন</small>
+        </span>
+
+        <span style="text-align:right">
+          <strong class="green">${money(income)}</strong><br>
+          <small>ব্যয় ${money(expense)}</small>
+        </span>
+
+        <span>›</span>
+      </button>
+    `;
+  }).join('');
+}
+
+function openMonthlyBook(key) {
+  const list = transactions
+    .filter(t => (t.date || '').slice(0, 7) === key)
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+  const income = list
+    .filter(t => t.type === 'income')
+    .reduce((sum, t) => sum + Number(t.amount), 0);
+
+  const expense = list
+    .filter(t => t.type === 'expense')
+    .reduce((sum, t) => sum + Number(t.amount), 0);
+
+  const [year, month] = key.split('-');
+
+  $('monthlyBookTitle').textContent =
+    bookMonths[Number(month) - 1] + ' ' + year;
+
+  $('bookIncome').textContent = money(income);
+  $('bookExpense').textContent = money(expense);
+  $('bookBalance').textContent = money(income - expense);
+
+  $('monthlyBookTransactions').innerHTML = list.length
+    ? list.map(transactionHTML).join('')
+    : '<div class="empty">এই মাসে কোনো লেনদেন নেই।</div>';
+
+  $('monthlyBooksList').hidden = true;
+  $('monthlyBookDetails').hidden = false;
+}
+
+function closeMonthlyBook() {
+  $('monthlyBookDetails').hidden = true;
+  $('monthlyBooksList').hidden = false;
+  renderMonthlyBooks();
+   }
 function setReportPeriod(period){
  reportPeriod=period;
  if($('customRange'))$('customRange').hidden=period!=='custom';
