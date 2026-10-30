@@ -1870,19 +1870,228 @@ function editProfile(){
         autocomplete="email" placeholder="Enter your email" required>
       </div>
      </div>
+
+function editProfile(){
+ const currentName=localStorage.getItem('tm-profile-name')||'Azad ali';
+ const currentEmail=localStorage.getItem('tm-profile-email')||'azad5611@gmail.com';
+ let selectedPhoto=localStorage.getItem('tm-profile-photo')||'';
+
+ if(!document.getElementById('profileEditModal')){
+  const style=document.createElement('style');
+  style.id='profileEditStyles';
+  style.textContent=`
+   .tm-edit-overlay{
+    position:fixed;inset:0;z-index:9999;
+    background:rgba(24,18,30,.55);
+    display:flex;align-items:flex-end;justify-content:center;
+    backdrop-filter:blur(4px);
+   }
+   .tm-edit-sheet{
+    background:var(--card,#fff);
+    color:var(--text,#292431);
+    width:100%;max-width:480px;
+    box-sizing:border-box;
+    padding:12px 22px 30px;
+    border-radius:26px 26px 0 0;
+    box-shadow:0 -12px 45px rgba(0,0,0,.15);
+    max-height:90dvh;
+    overflow-y:auto;
+   }
+   .tm-edit-handle{
+    width:42px;height:5px;border-radius:9px;
+    background:#d8d2dc;margin:0 auto 20px;
+   }
+   .tm-edit-heading{
+    display:flex;align-items:center;
+    justify-content:space-between;
+    gap:12px;margin-bottom:20px;
+   }
+   .tm-edit-heading h2{
+    margin:0 0 5px;font-size:23px;
+   }
+   .tm-edit-heading p{
+    margin:0;color:#89818f;font-size:13px;
+   }
+   .tm-edit-close{
+    width:40px;height:40px;flex-shrink:0;
+    border:0;border-radius:50%;
+    background:#f3eff5;color:#51475a;
+    font-size:23px;cursor:pointer;
+   }
+   .tm-edit-preview{
+    text-align:center;margin-bottom:24px;
+   }
+   .tm-edit-avatar{
+    width:100px;height:100px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#9224aa,#c46bd1);
+    color:white;display:flex;
+    align-items:center;justify-content:center;
+    font-size:28px;font-weight:750;
+    margin:0 auto 10px;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    position:relative;
+    box-shadow:0 4px 14px rgba(146,36,170,.18);
+   }
+   .tm-edit-camera{
+    position:absolute;
+    right:-2px;bottom:0;
+    width:35px;height:35px;
+    border-radius:50%;
+    border:3px solid var(--card,#fff);
+    background:#6541c8;color:white;
+    display:flex;align-items:center;
+    justify-content:center;
+    font-size:17px;cursor:pointer;
+   }
+   .tm-edit-photo-actions{
+    display:flex;justify-content:center;
+    flex-wrap:wrap;gap:8px;margin:12px 0 15px;
+   }
+   .tm-edit-photo-btn{
+    border:1px solid #e5ddf4;
+    background:#f6f2ff;color:#6541c8;
+    padding:9px 13px;border-radius:11px;
+    font-size:12px;font-weight:700;
+    cursor:pointer;
+   }
+   .tm-edit-preview strong{
+    display:block;font-size:16px;
+   }
+   .tm-edit-preview small{
+    color:#89818f;font-size:12px;
+   }
+   .tm-edit-field{margin-bottom:17px}
+   .tm-edit-field label{
+    display:block;font-size:13px;
+    font-weight:650;margin-bottom:8px;
+   }
+   .tm-edit-input-wrap{
+    display:flex;align-items:center;gap:11px;
+    border:1px solid #e7e0eb;
+    border-radius:14px;padding:0 14px;
+    background:var(--bg,#faf8fb);
+   }
+   .tm-edit-input-wrap:focus-within{
+    border-color:var(--purple,#6541c8);
+   }
+   .tm-edit-input-wrap span{font-size:18px}
+   .tm-edit-input{
+    width:100%;min-width:0;
+    box-sizing:border-box;
+    padding:17px 0;border:0;outline:0;
+    background:transparent;color:inherit;
+    font:inherit;font-size:14px;
+   }
+   .tm-edit-save{
+    width:100%;border:0;border-radius:17px;
+    padding:17px;background:#6541c8;color:#fff;
+    font-size:15px;font-weight:750;
+    cursor:pointer;
+    box-shadow:0 6px 15px rgba(101,65,200,.22);
+   }
+   .tm-edit-cancel{
+    display:block;width:100%;padding:17px;
+    border:0;background:transparent;
+    color:inherit;font:inherit;cursor:pointer;
+   }
+   .tm-edit-error{
+    color:#d95360;font-size:13px;
+   }
+   .tm-edit-hidden-input{display:none!important}
+  `;
+  document.head.appendChild(style);
+
+  const modal=document.createElement('div');
+  modal.id='profileEditModal';
+  modal.className='tm-edit-overlay';
+
+  modal.innerHTML=`
+   <section class="tm-edit-sheet" role="dialog"
+    aria-modal="true" aria-labelledby="tmEditTitle">
+
+    <div class="tm-edit-handle"></div>
+
+    <div class="tm-edit-heading">
+     <div>
+      <h2 id="tmEditTitle">Edit Profile</h2>
+      <p>Update your personal information</p>
+     </div>
+     <button type="button" class="tm-edit-close"
+      data-edit-close aria-label="Close">×</button>
+    </div>
+
+    <div class="tm-edit-preview">
+     <div class="tm-edit-avatar" id="tmEditAvatar">
+      <button type="button" class="tm-edit-camera"
+       id="tmEditCameraButton" aria-label="Take profile photo">📷</button>
+     </div>
+
+     <strong id="tmEditPreviewName"></strong>
+     <small>Personal account</small>
+
+     <div class="tm-edit-photo-actions">
+      <button type="button" class="tm-edit-photo-btn"
+       id="tmEditTakePhoto">📷 Take photo</button>
+
+      <button type="button" class="tm-edit-photo-btn"
+       id="tmEditChoosePhoto">🖼 Choose from gallery</button>
+
+      <button type="button" class="tm-edit-photo-btn"
+       id="tmEditRemovePhoto">Remove photo</button>
+     </div>
+
+     <input class="tm-edit-hidden-input"
+      id="tmEditCameraInput" type="file"
+      accept="image/*" capture="user">
+
+     <input class="tm-edit-hidden-input"
+      id="tmEditGalleryInput" type="file"
+      accept="image/*">
+    </div>
+
+    <form id="tmEditForm">
+     <div class="tm-edit-field">
+      <label for="tmEditName">Full name</label>
+      <div class="tm-edit-input-wrap">
+       <span>👤</span>
+       <input class="tm-edit-input" id="tmEditName"
+        name="name" type="text" maxlength="80"
+        autocomplete="name" placeholder="Enter your full name" required>
+      </div>
+     </div>
+
+     <div class="tm-edit-field">
+      <label for="tmEditEmail">Email address</label>
+      <div class="tm-edit-input-wrap">
+       <span>✉</span>
+       <input class="tm-edit-input" id="tmEditEmail"
+        name="email" type="email" maxlength="254"
+        autocomplete="email" placeholder="Enter your email" required>
+      </div>
+     </div>
+
      <p id="tmEditError" class="tm-edit-error"
       role="alert" hidden></p>
-     <button class="tm-edit-save" type="submit">Save changes</button>
+
+     <button class="tm-edit-save" type="submit">
+      Save changes
+     </button>
+
      <button class="tm-edit-cancel" type="button"
       data-edit-close>Cancel</button>
     </form>
    </section>`;
+
   document.body.appendChild(modal);
 
   const closeModal=()=>{
    modal.remove();
    document.removeEventListener('keydown',handleEscape);
   };
+
   const handleEscape=(event)=>{
    if(event.key==='Escape')closeModal();
   };
@@ -1890,9 +2099,11 @@ function editProfile(){
   modal.querySelectorAll('[data-edit-close]').forEach(button=>{
    button.addEventListener('click',closeModal);
   });
+
   modal.addEventListener('click',event=>{
    if(event.target===modal)closeModal();
   });
+
   document.addEventListener('keydown',handleEscape);
 
   const nameInput=modal.querySelector('#tmEditName');
@@ -1901,54 +2112,204 @@ function editProfile(){
   const previewAvatar=modal.querySelector('#tmEditAvatar');
   const error=modal.querySelector('#tmEditError');
 
-  const updatePreview=()=>{
+  const cameraInput=modal.querySelector('#tmEditCameraInput');
+  const galleryInput=modal.querySelector('#tmEditGalleryInput');
+
+  function updateAvatar(){
    const name=nameInput.value.trim();
    previewName.textContent=name||'Your name';
-   previewAvatar.textContent=name
-    ?name.split(/\s+/).slice(0,2)
-      .map(part=>part[0]).join('').toUpperCase()
-    :'TM';
-  };
 
-  nameInput.addEventListener('input',updatePreview);
+   previewAvatar.style.backgroundImage='none';
 
-  modal.querySelector('#tmEditForm').addEventListener('submit',event=>{
-   event.preventDefault();
+   if(selectedPhoto){
+    previewAvatar.style.backgroundImage=
+     'url("'+selectedPhoto+'")';
+    previewAvatar.style.backgroundSize='cover';
+    previewAvatar.style.backgroundPosition='center';
+    previewAvatar.style.backgroundRepeat='no-repeat';
 
-   const name=nameInput.value.trim();
-   const email=emailInput.value.trim();
+    previewAvatar.childNodes.forEach(node=>{
+     if(node.nodeType===3)node.textContent='';
+    });
+   }else{
+    previewAvatar.textContent=name
+     ?name.split(/\s+/).slice(0,2)
+       .map(part=>part[0]).join('').toUpperCase()
+     :'TM';
 
-   if(!name){
-    error.textContent='Please enter your name.';
-    error.hidden=false;
-    nameInput.focus();
+    previewAvatar.style.backgroundImage=
+     'linear-gradient(135deg,#9224aa,#c46bd1)';
+   }
+
+   const cameraButton=modal.querySelector('#tmEditCameraButton');
+   if(cameraButton)previewAvatar.appendChild(cameraButton);
+  }
+
+  nameInput.addEventListener('input',updateAvatar);
+
+  function processPhoto(file){
+   if(!file)return;
+
+   if(!file.type.startsWith('image/')){
+    alert('Please choose a valid image.');
     return;
    }
 
-   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    error.textContent='Please enter a valid email address.';
-    error.hidden=false;
-    emailInput.focus();
+   if(file.size>10*1024*1024){
+    alert('ছবির সাইজ ১০ MB-এর কম হতে হবে।');
     return;
    }
 
-   localStorage.setItem('tm-profile-name',name);
-   localStorage.setItem('tm-profile-email',email);
+   const reader=new FileReader();
 
-   renderProfile();
-   closeModal();
-   alert('Profile updated successfully.');
+   reader.onload=function(){
+    const image=new Image();
+
+    image.onload=function(){
+     const canvas=document.createElement('canvas');
+     const maxSize=400;
+     const scale=Math.min(
+      1,maxSize/Math.max(image.width,image.height)
+     );
+
+     canvas.width=Math.round(image.width*scale);
+     canvas.height=Math.round(image.height*scale);
+
+     const ctx=canvas.getContext('2d');
+     ctx.drawImage(image,0,0,canvas.width,canvas.height);
+
+     selectedPhoto=canvas.toDataURL('image/jpeg',0.75);
+     updateAvatar();
+    };
+
+    image.onerror=function(){
+     alert('ছবিটি খোলা যাচ্ছে না। অন্য ছবি বেছে নিন।');
+    };
+
+    image.src=reader.result;
+   };
+
+   reader.readAsDataURL(file);
+  }
+
+  cameraInput.addEventListener('change',event=>{
+   processPhoto(event.target.files[0]);
+   event.target.value='';
   });
+
+  galleryInput.addEventListener('change',event=>{
+   processPhoto(event.target.files[0]);
+   event.target.value='';
+  });
+
+  modal.querySelector('#tmEditCameraButton').addEventListener(
+   'click',()=>cameraInput.click()
+  );
+
+  modal.querySelector('#tmEditTakePhoto').addEventListener(
+   'click',()=>cameraInput.click()
+  );
+
+  modal.querySelector('#tmEditChoosePhoto').addEventListener(
+   'click',()=>galleryInput.click()
+  );
+
+  modal.querySelector('#tmEditRemovePhoto').addEventListener(
+   'click',()=>{
+    selectedPhoto='';
+    updateAvatar();
+   }
+  );
+
+  modal.querySelector('#tmEditForm').addEventListener(
+   'submit',event=>{
+    event.preventDefault();
+
+    const name=nameInput.value.trim();
+    const email=emailInput.value.trim();
+
+    if(!name){
+     error.textContent='Please enter your name.';
+     error.hidden=false;
+     nameInput.focus();
+     return;
+    }
+
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+     error.textContent='Please enter a valid email address.';
+     error.hidden=false;
+     emailInput.focus();
+     return;
+    }
+
+    try{
+     localStorage.setItem('tm-profile-name',name);
+     localStorage.setItem('tm-profile-email',email);
+
+     if(selectedPhoto){
+      localStorage.setItem('tm-profile-photo',selectedPhoto);
+     }else{
+      localStorage.removeItem('tm-profile-photo');
+     }
+
+     renderProfile();
+     closeModal();
+
+     alert('Profile updated successfully.');
+    }catch(saveError){
+     error.textContent=
+      'Could not save the profile. Please choose a smaller image.';
+     error.hidden=false;
+    }
+   }
+  );
  }
 
  const modal=document.getElementById('profileEditModal');
+
  modal.querySelector('#tmEditName').value=currentName;
  modal.querySelector('#tmEditEmail').value=currentEmail;
- modal.querySelector('#tmEditName').dispatchEvent(new Event('input'));
+
+ updateProfileEditPreview(modal);
  modal.querySelector('#tmEditName').focus();
-}
 
+ function updateProfileEditPreview(target){
+  const name=target.querySelector('#tmEditName').value.trim();
+  const previewName=target.querySelector('#tmEditPreviewName');
+  const avatar=target.querySelector('#tmEditAvatar');
 
+  previewName.textContent=name||'Your name';
+
+  const photo=localStorage.getItem('tm-profile-photo');
+
+  if(photo){
+   avatar.style.backgroundImage='url("'+photo+'")';
+   avatar.style.backgroundSize='cover';
+   avatar.style.backgroundPosition='center';
+   avatar.style.backgroundRepeat='no-repeat';
+   avatar.textContent='';
+  }else{
+   avatar.style.backgroundImage=
+    'linear-gradient(135deg,#9224aa,#c46bd1)';
+   avatar.textContent=name
+    ?name.split(/\s+/).slice(0,2)
+      .map(part=>part[0]).join('').toUpperCase()
+    :'TM';
+  }
+
+  const cameraButton=document.createElement('button');
+  cameraButton.type='button';
+  cameraButton.className='tm-edit-camera';
+  cameraButton.id='tmEditCameraButton';
+  cameraButton.setAttribute('aria-label','Take profile photo');
+  cameraButton.textContent='📷';
+  avatar.appendChild(cameraButton);
+
+  cameraButton.addEventListener('click',()=>{
+   target.querySelector('#tmEditCameraInput').click();
+  });
+ }
+     }
 function renderProfile(){
  const name=localStorage.getItem('tm-profile-name')||'Azad ali';
  const email=localStorage.getItem('tm-profile-email')||'azad5611@gmail.com';
